@@ -20,9 +20,15 @@ async function run(t,title,mode,nm,H,url,au){try{var ext=(nm.split('.').pop()||'
  catch(e){if(t.x)return;t.s=16;t.e=(/memory|alloc/i.test(e.message)?'الملف كبير على المتصفح. استخدم تطبيق أندرويد':'تعذر التحميل: '+(e.message||e))}}
 function dbg(m){if(window.PROXY_DEBUG===false)return;var d=document.getElementById('dbg');if(!d){d=document.createElement('div');d.id='dbg';d.style.cssText='position:fixed;top:0;inset-inline:0;z-index:99999;background:#b3261e;color:#fff;font:600 12px/1.5 Cairo,sans-serif;padding:8px 12px;direction:ltr;text-align:left';document.body.appendChild(d)}d.textContent='Proxy: '+m;d.style.display='block';clearTimeout(d.t);d.t=setTimeout(function(){d.style.display='none'},9000)}
 function ytb(){if(Date.now()-(ytb.t||0)<20000)return;ytb.t=Date.now();modal();var h=document.querySelector('#wam h2'),p=document.querySelector('#wam p');if(h)h.textContent='يوتيوب يعمل في تطبيق أندرويد';if(p)p.textContent='يوتيوب يحجب الطلبات القادمة من مواقع الويب، لذلك يعمل بكفاءة كاملة داخل تطبيق أندرويد. حمّل التطبيق وثبّته. بقية المنصات (تيك توك، فيسبوك، إنستغرام، بنترست وغيرها) تعمل هنا في الموقع.'}
+var cc='',cf=0;
+function rc(){if(!navigator.clipboard||!navigator.clipboard.readText||cf>3)return;navigator.clipboard.readText().then(function(t){t=(t||'').trim();if(t&&t!==cc){cc=t;if(window.chk)window.chk()}}).catch(function(){cf++})}
+addEventListener('focus',rc);document.addEventListener('visibilitychange',function(){if(!document.hidden)rc()});
+document.addEventListener('focusin',function(e){if(e.target&&e.target.id=='u'){cf=0;rc()}});
+addEventListener('pointerdown',function(){var n=Date.now();if(n-(rc.t||0)>5000){rc.t=n;rc()}},{capture:true,passive:true});
+setTimeout(rc,900);
 window.Native={
  fetch:function(id,url,m,hj,b){var h={};try{h=JSON.parse(hj||'{}')}catch(e){}
-  px(url,h,m,b).then(async function(r){var t=await r.text(),hh={};if(/youtubei\/v1\/player/.test(url)&&/not a bot|LOGIN_REQUIRED/.test(t))ytb();if(PROXY&&(r.status==502||r.status==403)&&t.length<200)dbg(new URL(url).hostname+': '+t);r.headers.forEach(function(v,k){hh[k]=v});window.__cb(id,{s:r.status||200,t:t,u:r.headers.get('x-final-url')||url,h:hh,c:''})}).catch(function(e){dbg(new URL(url).hostname+': '+(e&&e.message||e));window.__cb(id,{s:0,t:''})})},
+  (async function(){var yt=/youtubei\/v1\/player/.test(url),r,t;for(var i=0;i<(yt?6:1);i++){r=await px(url,h,m,b);t=await r.text();if(!(yt&&/not a bot|LOGIN_REQUIRED/.test(t)))break;await sleep(300+i*250)}return[r,t]})().then(async function(a){var r=a[0],t=a[1],hh={};if(/youtubei\/v1\/player/.test(url)&&/not a bot|LOGIN_REQUIRED/.test(t))ytb();if(PROXY&&(r.status==502||r.status==403)&&t.length<200)dbg(new URL(url).hostname+': '+t);r.headers.forEach(function(v,k){hh[k]=v});window.__cb(id,{s:r.status||200,t:t,u:r.headers.get('x-final-url')||url,h:hh,c:''})}).catch(function(e){dbg(new URL(url).hostname+': '+(e&&e.message||e));window.__cb(id,{s:0,t:''})})},
  sniff:function(id){setTimeout(function(){window.__sn&&window.__sn(id,'{}',[],'')},0)},
  task:function(k,title,kind,mode,nm,H,url,au){var h={};try{h=JSON.parse(H||'{}')}catch(e){}var t=T[k]={k:k,s:1,b:0,z:0,sp:0,e:'',sz:0,pth:''};run(t,title,mode,nm,h,url,au);return true},
  tstat:function(ks){return JSON.stringify(String(ks).split(',').filter(function(k){return T[k]}).map(function(k){var t=T[k];return{k:k,s:t.s,b:t.b,z:t.z,sp:t.sp,e:t.e,sz:t.sz,p:t.pth,id:k,c:t.x?1:0,d:0}}))},
@@ -30,7 +36,7 @@ window.Native={
  tdrop:function(k){var t=T[k];if(t)t.x=1;delete T[k]},
  open:function(id,p){var n=(p||'').split('/').pop();if(blobs[n])save(n,blobs[n])},
  night:function(){return matchMedia('(prefers-color-scheme: dark)').matches},
- net:function(){return 'wifi'},notifOk:function(){return true},clip:function(){return ''},
+ net:function(){return 'wifi'},notifOk:function(){return true},clip:function(){return cc},
  cfg:function(){},ready:function(){},batt:function(){},notifSettings:function(){},notifTest:function(){},allFiles:function(){},
  ls:function(){return ''},dirs:function(){return '{}'},fdir:function(){return ''},outDir:function(){return ''},mkdir:function(){return ''},mv:function(){return ''},
  rm:function(){},remove:function(){},share:function(){},readB64:function(){return ''},saveB64:function(){},finish:function(){return ''},
