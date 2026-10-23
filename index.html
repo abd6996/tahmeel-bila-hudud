@@ -113,7 +113,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 #toast{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,120px);padding:12px 22px;border-radius:16px;font-weight:700;transition:.5s;z-index:99}#toast.s{transform:translate(-50%,0)}
 @media(max-width:760px){.nl{display:none}.bn{grid-template-columns:1fr}.b4,.b2{grid-column:auto}.ig{grid-template-columns:1fr}.ar{display:none}section{padding:64px 0}.car{padding-inline:calc(50% - 115px)}.sl,.sl .dev{--w:230px;width:230px}.hero{padding-top:100px}.bc{padding:22px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.slot,h1 .l,.sub,.cta,.rv{opacity:1;transform:var(--t,none);filter:none}}
-.wg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.ls{list-style:none;padding:0;margin:14px 0 22px;display:grid;gap:9px;color:var(--mu);font-size:15px}.ls li::before{content:'✓ ';color:var(--pr);font-weight:900}.wg .bc{display:flex;flex-direction:column}.wg .btn{margin-top:auto;align-self:flex-start}@media(max-width:760px){.wg{grid-template-columns:1fr}}.ls li.no{color:var(--fg)}.ls li.no::before{content:'✕ ';color:#e5484d;font-weight:900}.ls small{display:block;color:var(--mu);font-size:13px;font-weight:400;margin-top:1px}@keyframes gw{0%{box-shadow:0 0 0 0 var(--gl)}40%{box-shadow:0 0 0 14px var(--gl)}100%{box-shadow:0 0 0 0 transparent}}#web:target .wg .bc{animation:gw 1.6s ease-out}.btn.ping{animation:pgl 1.1s ease-out 2}@keyframes pgl{0%{box-shadow:0 0 0 0 rgba(16,178,104,.65)}100%{box-shadow:0 0 0 24px transparent}}</style>
+.wg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.ls{list-style:none;padding:0;margin:14px 0 22px;display:grid;gap:9px;color:var(--mu);font-size:15px}.ls li::before{content:'✓ ';color:var(--pr);font-weight:900}.wg .bc{display:flex;flex-direction:column}.wg .btn{margin-top:auto;align-self:flex-start}@media(max-width:760px){.wg{grid-template-columns:1fr}}.ls li.no{color:var(--fg)}.ls li.no::before{content:'✕ ';color:#e5484d;font-weight:900}.ls small{display:block;color:var(--mu);font-size:13px;font-weight:400;margin-top:1px}@keyframes gw{0%{box-shadow:0 0 0 0 var(--gl)}40%{box-shadow:0 0 0 14px var(--gl)}100%{box-shadow:0 0 0 0 transparent}}#web:target .wg .bc{animation:gw 1.6s ease-out}#webbtn{animation:pgl 1.8s ease-out infinite}@keyframes pgl{0%{box-shadow:0 0 0 0 rgba(16,178,104,.65)}100%{box-shadow:0 0 0 24px transparent}}</style>
 </head>
 <body>
 <div class="aur"></div>
@@ -127,7 +127,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 <div class="eb gl"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>مجاني · بدون إعلانات</div>
 <h1><span class="l">حمّل أي شيء.</span><span class="l gr">بلا حدود.</span></h1>
 <p class="sub">فيديو وصوت وصور وحالات واتساب من أي منصة وبأي جودة. الصق الرابط والباقي علينا.</p>
-<div class="cta"><a class="btn pr" href="#dl"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>حمّل التطبيق</a><a class="btn gh" id="trywb" href="#webbtn">جرّب نسخة الويب</a><a class="btn gh" href="#tour">شاهد التطبيق</a></div>
+<div class="cta"><a class="btn pr" href="#dl"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>حمّل التطبيق</a><a class="btn gh" id="trywb" href="#web">جرّب نسخة الويب</a><a class="btn gh" href="#tour">شاهد التطبيق</a></div>
 <div class="trio t" id="trio">
 <div class="slot s2"><div class="dev"><div class="scr"><img data-i="1" alt="حالات واتساب"></div></div></div>
 <div class="slot s1"><div class="dev"><div class="scr"><img data-i="2" alt="التحميلات"></div></div></div>
@@ -173,7 +173,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 <details class="gl rv"><summary>هل يحمّل حالات واتساب؟</summary><p>نعم، حالات واتساب وواتساب بيزنس مع التصنيف حسب النوع.</p></details></div></section>
 
 <section id="dl" style="padding-top:20px"><div class="w"><div class="fin rv"><h2>جاهز تحمّل بلا حدود؟</h2><p>مجاني · بدون إعلانات · لأندرويد</p><a class="btn" id="dlb" href="#"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>تحميل التطبيق الآن</a><p style="margin:18px 0 0;font-size:15px;opacity:.9">أو <a href="app.html" style="color:#fff;font-weight:800">جرّبه من المتصفح</a></p></div></div></section>
-<footer>تحميل بلا حدود — مجاني وبدون إعلانات<br>تم إنشاء هذا التطبيق بواسطة <b>عبد الله طاهر</b><br>نسألكم الدعاء 🤍<br><small style="opacity:.55;font-size:12px">الإصدار 9</small></footer>
+<footer>تحميل بلا حدود — مجاني وبدون إعلانات<br>تم إنشاء هذا التطبيق بواسطة <b>عبد الله طاهر</b><br>نسألكم الدعاء 🤍<br><small style="opacity:.55;font-size:12px">الإصدار 10</small></footer>
 <div id="toast" class="gl">رابط التحميل سيتوفر قريبًا</div>
 
 <script>
@@ -227,5 +227,5 @@ $('ch').innerHTML=N.map(function(n,i){return '<button data-n="'+i+'"><i style="b
 function sn(i){[].forEach.call($('ch').children,function(b,j){b.classList.toggle('on',i==j)});$('nb').textContent=N[i][2];$('nb').style.borderColor=N[i][1];$('nb').style.color=N[i][1]}
 [].forEach.call($('ch').children,function(b,i){b.onclick=function(){sn(i)}});sn(2);
 </script>
-<script>(function(){var t=document.getElementById('trywb'),b=document.getElementById('webbtn');if(!t||!b)return;t.addEventListener('click',function(e){e.preventDefault();b.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){b.classList.add('ping');setTimeout(function(){b.classList.remove('ping')},2600)},700)})})();</script></body>
+<script>(function(){var t=document.getElementById('trywb'),h=document.querySelector('#web .hd');if(!t||!h)return;t.addEventListener('click',function(e){e.preventDefault();var y=h.getBoundingClientRect().top+window.pageYOffset-96;window.scrollTo({top:y,behavior:'smooth'})})})();</script></body>
 </html>
