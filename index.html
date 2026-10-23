@@ -113,7 +113,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 #toast{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,120px);padding:12px 22px;border-radius:16px;font-weight:700;transition:.5s;z-index:99}#toast.s{transform:translate(-50%,0)}
 @media(max-width:760px){.nl{display:none}.bn{grid-template-columns:1fr}.b4,.b2{grid-column:auto}.ig{grid-template-columns:1fr}.ar{display:none}section{padding:64px 0}.car{padding-inline:calc(50% - 115px)}.sl,.sl .dev{--w:230px;width:230px}.hero{padding-top:100px}.bc{padding:22px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.slot,h1 .l,.sub,.cta,.rv{opacity:1;transform:var(--t,none);filter:none}}
-.wg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.ls{list-style:none;padding:0;margin:14px 0 22px;display:grid;gap:9px;color:var(--mu);font-size:15px}.ls li::before{content:'✓ ';color:var(--pr);font-weight:900}.wg .bc{display:flex;flex-direction:column}.wg .btn{margin-top:auto;align-self:flex-start}@media(max-width:760px){.wg{grid-template-columns:1fr}}</style>
+.wg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.ls{list-style:none;padding:0;margin:14px 0 22px;display:grid;gap:9px;color:var(--mu);font-size:15px}.ls li::before{content:'✓ ';color:var(--pr);font-weight:900}.wg .bc{display:flex;flex-direction:column}.wg .btn{margin-top:auto;align-self:flex-start}@media(max-width:760px){.wg{grid-template-columns:1fr}}.ls li.no{color:var(--fg)}.ls li.no::before{content:'✕ ';color:#e5484d;font-weight:900}.ls small{display:block;color:var(--mu);font-size:13px;font-weight:400;margin-top:1px}@keyframes gw{0%{box-shadow:0 0 0 0 var(--gl)}40%{box-shadow:0 0 0 14px var(--gl)}100%{box-shadow:0 0 0 0 transparent}}#web:target .wg .bc{animation:gw 1.6s ease-out}</style>
 </head>
 <body>
 <div class="aur"></div>
@@ -127,7 +127,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 <div class="eb gl"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>مجاني · بدون إعلانات</div>
 <h1><span class="l">حمّل أي شيء.</span><span class="l gr">بلا حدود.</span></h1>
 <p class="sub">فيديو وصوت وصور وحالات واتساب من أي منصة وبأي جودة. الصق الرابط والباقي علينا.</p>
-<div class="cta"><a class="btn pr" href="#dl"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>حمّل التطبيق</a><a class="btn gh" href="app.html">جرّب نسخة الويب</a><a class="btn gh" href="#tour">شاهد التطبيق</a></div>
+<div class="cta"><a class="btn pr" href="#dl"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>حمّل التطبيق</a><a class="btn gh" href="#web">جرّب نسخة الويب</a><a class="btn gh" href="#tour">شاهد التطبيق</a></div>
 <div class="trio t" id="trio">
 <div class="slot s2"><div class="dev"><div class="scr"><img data-i="1" alt="حالات واتساب"></div></div></div>
 <div class="slot s1"><div class="dev"><div class="scr"><img data-i="2" alt="التحميلات"></div></div></div>
@@ -153,7 +153,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 
 <section id="web"><div class="w"><div class="hd rv"><h2>جرّبه من المتصفح</h2><p>بدون تثبيت، على أي جهاز: موبايل أو تابلت أو كمبيوتر</p></div>
 <div class="wg">
-<div class="bc gl rv"><span class="tag">نسخة الويب</span><h3>تعمل على أي متصفح</h3><ul class="ls"><li>تيك توك وفيسبوك وبنترست وغيرها</li><li>ويندوز وماك وآيفون وأندرويد</li><li>بدون تثبيت وبدون تسجيل</li><li>نفس تصميم التطبيق وألوانه</li></ul><a class="btn pr" href="app.html">افتح نسخة الويب</a></div>
+<div class="bc gl rv"><span class="tag">نسخة الويب</span><h3>تعمل على أي متصفح</h3><ul class="ls"><li>تيك توك وفيسبوك وبنترست وغيرها</li><li>ويندوز وماك وآيفون وأندرويد</li><li>بدون تثبيت وبدون تسجيل</li><li>نفس تصميم التطبيق وألوانه</li><li class="no"><b>يوتيوب</b><small>لا يعمل هنا: يوتيوب يحجب طلبات المواقع، ويحتاج تثبيت تطبيق أندرويد</small></li><li class="no"><b>حالات واتساب</b><small>لا تعمل هنا: تحتاج الوصول لملفات هاتفك، وهذا متاح في التطبيق فقط</small></li></ul><a class="btn pr" href="app.html">افتح نسخة الويب</a></div>
 <div class="bc gl rv"><span class="tag">تطبيق أندرويد</span><h3>للتجربة الكاملة</h3><ul class="ls"><li>يوتيوب بكل الجودات</li><li>حالات واتساب وواتساب بيزنس</li><li>تحويل MP3 والملفات الكبيرة</li><li>إشعارات وتحميل في الخلفية</li></ul><a class="btn" href="#dl">حمّل التطبيق</a></div>
 </div>
 <div class="nt gl rv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5m0 3h.01"/></svg><span>تنبيه: يوتيوب وحالات واتساب يحتاجان تثبيت تطبيق أندرويد على هاتفك ليعملا بكفاءة، لأن المتصفحات لا تستطيع الوصول إليهما.</span></div>
@@ -173,7 +173,7 @@ footer{text-align:center;padding:44px 20px 56px;color:var(--mu);font-size:15px}f
 <details class="gl rv"><summary>هل يحمّل حالات واتساب؟</summary><p>نعم، حالات واتساب وواتساب بيزنس مع التصنيف حسب النوع.</p></details></div></section>
 
 <section id="dl" style="padding-top:20px"><div class="w"><div class="fin rv"><h2>جاهز تحمّل بلا حدود؟</h2><p>مجاني · بدون إعلانات · لأندرويد</p><a class="btn" id="dlb" href="#"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>تحميل التطبيق الآن</a><p style="margin:18px 0 0;font-size:15px;opacity:.9">أو <a href="app.html" style="color:#fff;font-weight:800">جرّبه من المتصفح</a></p></div></div></section>
-<footer>تحميل بلا حدود — مجاني وبدون إعلانات<br>تم إنشاء هذا التطبيق بواسطة <b>عبد الله طاهر</b><br>نسألكم الدعاء 🤍<br><small style="opacity:.55;font-size:12px">الإصدار 7</small></footer>
+<footer>تحميل بلا حدود — مجاني وبدون إعلانات<br>تم إنشاء هذا التطبيق بواسطة <b>عبد الله طاهر</b><br>نسألكم الدعاء 🤍<br><small style="opacity:.55;font-size:12px">الإصدار 8</small></footer>
 <div id="toast" class="gl">رابط التحميل سيتوفر قريبًا</div>
 
 <script>
