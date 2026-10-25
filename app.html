@@ -16,7 +16,7 @@ async function run(t,title,mode,nm,H,url,au){try{var ext=(nm.split('.').pop()||'
  if(mode=='merge'){var a=await grab(au,H,t);t.s=6;var f=await ffm();f.FS('writeFile','v0',v);f.FS('writeFile','a0',a);await f.run('-i','v0','-i','a0','-map','0:v:0','-map','1:a:0','-c','copy','o.'+ext);out=f.FS('readFile','o.'+ext);['v0','a0','o.'+ext].forEach(function(n){try{f.FS('unlink',n)}catch(e){}})}
  else if(mode=='remux'){t.s=6;var f2=await ffm();f2.FS('writeFile','i0',v);await f2.run('-i','i0','-c','copy','o.'+ext);out=f2.FS('readFile','o.'+ext);['i0','o.'+ext].forEach(function(n){try{f2.FS('unlink',n)}catch(e){}})}
  else out=v;
- var bl=new Blob([out],{type:MIME[ext]||'application/octet-stream'});t.sz=bl.size;t.pth='Downloads/'+nm;save(nm,bl);try{window.__MEM[t.pth]=out}catch(e){}t.s=8}
+ var bl=new Blob([out],{type:MIME[ext]||'application/octet-stream'});t.sz=bl.size;t.pth='Downloads/'+nm;save(nm,bl);try{window.__MEM[t.pth]=out;window.__SRC=window.__SRC||{};window.__SRC[nm]=out}catch(e){}t.s=8}
  catch(e){if(t.x)return;t.s=16;t.e=(/memory|alloc/i.test(e.message)?'الملف كبير على المتصفح. استخدم تطبيق أندرويد':'تعذر التحميل: '+(e.message||e))}}
 function dbg(m){if(window.PROXY_DEBUG===false)return;var d=document.getElementById('dbg');if(!d){d=document.createElement('div');d.id='dbg';d.style.cssText='position:fixed;top:0;inset-inline:0;z-index:99999;background:#b3261e;color:#fff;font:600 12px/1.5 Cairo,sans-serif;padding:8px 12px;direction:ltr;text-align:left';document.body.appendChild(d)}d.textContent='Proxy: '+m;d.style.display='block';clearTimeout(d.t);d.t=setTimeout(function(){d.style.display='none'},9000)}
 function ytb(){if(Date.now()-(ytb.t||0)<20000)return;ytb.t=Date.now();modal();var h=document.querySelector('#wam h2'),p=document.querySelector('#wam p');if(h)h.textContent='يوتيوب يعمل في تطبيق أندرويد';if(p)p.textContent='يوتيوب يحجب الطلبات القادمة من مواقع الويب، لذلك يعمل بكفاءة كاملة داخل تطبيق أندرويد. حمّل التطبيق وثبّته. بقية المنصات (تيك توك، فيسبوك، إنستغرام، بنترست وغيرها) تعمل هنا في الموقع.'}
@@ -59,7 +59,7 @@ function px(u,h,m,b,sig){var o={method:m||'GET',signal:sig};if(PU){o.headers={'X
 function b64(u){var s='',i=0,C=32768;for(;i<u.length;i+=C)s+=String.fromCharCode.apply(null,u.subarray(i,i+C));return btoa(s)}
 function mat(p){var a=PEND[p];if(a){var n=0;a.forEach(function(x){n+=x.length});var u=new Uint8Array(n),o=0;a.forEach(function(x){u.set(x,o);o+=x.length});MEM[p]=u;delete PEND[p]}return MEM[p]}
 function nm(p){return String(p).split('/').pop()}
-N.readB64=function(p,off,len){var m=mat(p);if(!m||off>=m.length)return '';return b64(m.subarray(off,Math.min(m.length,off+len)))};
+window.__SRC=window.__SRC||{};N.readB64=function(p,off,len){var m=mat(p)||window.__SRC[nm(p)];if(!m||off>=m.length)return '';return b64(m.subarray(off,Math.min(m.length,off+len)))};
 N.saveB64=function(p,b,app){try{var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);if(!app){delete MEM[p];PEND[p]=[u]}else{if(MEM[p]){PEND[p]=[MEM[p]];delete MEM[p]}(PEND[p]=PEND[p]||[]).push(u)}return '1'}catch(e){return String(e)}};
 N.finish=function(p){var m=mat(p);if(m){var n=nm(p),e=(n.split('.').pop()||'').toLowerCase(),bl=new Blob([m],{type:MIME[e]||'application/octet-stream'}),a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},60000)}return 'w'+Date.now()};
 N.rm=function(p){delete MEM[p];delete PEND[p]};
@@ -2673,7 +2673,7 @@ async function loadMedia(rid,rep){
  if(ab.duration>MAXSEC)throw new Error('الحد الأقصى للمدة '+Math.round(MAXSEC/60)+' دقائق. قصّ الملف ثم أعد المحاولة');
  if(ab.numberOfChannels<2){const b2=mkBuf(ab.getChannelData(0),ab.getChannelData(0));ab=b2}
  MX.buf=ab;MX.len=ab.length;MX.dur=ab.duration;f.dur=ab.duration;
- if(f.vid)MX.parts=parts;MX.rd=null;releasePv();
+ if(f.vid){MX.parts=parts;window.__VP={n:f.n,parts:parts}}MX.rd=null;releasePv();
 }
 
 /* ---------- خط الفصل ---------- */
@@ -2878,8 +2878,7 @@ async function exportFinal(){
   toastP('جارٍ تجهيز الملف النهائي… ٠٪');
   const[L,R]=mixdown(compGain);let res;
   if(vid){
-   let parts=MX.parts;
-   if(!parts){try{parts=(await readParts(MX.file.p,900e6)).parts}catch(e){throw new Error('ملف الفيديو الأصلي غير متاح — احفظ كصوت فقط')}}
+   let parts=MX.parts;if(!parts&&window.__VP&&window.__VP.n===MX.file.n)parts=window.__VP.parts; if(!parts){try{parts=(await readParts(MX.file.p,900e6)).parts}catch(e){throw new Error('ملف الفيديو الأصلي غير متاح ('+((e&&e.message)||e)+') — احفظ كصوت فقط')}}
    const M=await muxLib();
    const x=await M.muxVideo(new Blob(parts),L.slice(),R.slice(),44100,192,p=>toastP('جارٍ دمج الصوت في الفيديو… '+toArN(Math.round(p*100))+'٪'));
    res={parts:[x.bytes],ext:x.ext,l:'فيديو · بدون موسيقى'};
@@ -2948,8 +2947,7 @@ async function autoFinish(rid){
  pgSet({ph:'جارٍ حفظ الملف النهائي…',target:97,cap:99,rate:.3});
  const f=MX.file,[L,R]=mixdown(compGain),vid=!!f.vid;let res;
  if(vid){
-  let parts=MX.parts;
-  if(!parts)parts=(await readParts(f.p,900e6,null,0,()=>guard(rid))).parts;
+  let parts=MX.parts;if(!parts&&window.__VP&&window.__VP.n===f.n)parts=window.__VP.parts; if(!parts)parts=(await readParts(f.p,900e6,null,0,()=>guard(rid))).parts;
   const M=await muxLib();
   const x=await M.muxVideo(new Blob(parts),L.slice(),R.slice(),44100,192,q=>{guard(rid);pgSet({target:97+q*2})});
   res={parts:[x.bytes],ext:x.ext};
@@ -3068,7 +3066,7 @@ function recentList(list){
  else if(MX.filt==='dl'){a=(typeof items!=='undefined'?items:[]).filter(x=>x.s===8&&x.p&&(VID.test(x.p)||AUD.test(x.p))).map(x=>({p:x.p,n:nameOf(x.p),s:x.z||0,t:+(String(x.key||'').replace(/\D/g,'').slice(0,13))||0,v:VID.test(x.p)}))}
  return a.length?a.slice(0,40).map(fileRow).join(''):'<p class="mx-em">لا توجد ملفات مطابقة</p>';
 }
-function webPick(){const i=document.createElement('input');i.type='file';i.accept='audio/*,video/*,.mp3,.m4a,.wav,.flac,.ogg,.aac,.opus,.mp4,.mkv,.webm,.mov';i.style.cssText='position:fixed;left:-9999px;top:0';i.onchange=async()=>{const f=i.files&&i.files[0];i.remove();if(!f)return;if(f.size>500e6){try{toastP('الملف كبير جدًا للمتصفح (الحد 500MB). استخدم تطبيق أندرويد')}catch(e){}setTimeout(()=>{try{toastHide()}catch(e){}},3500);return}try{toastP('جارٍ تحميل الملف…')}catch(e){}const u=new Uint8Array(await f.arrayBuffer());try{toastHide()}catch(e){}const p='/web/'+f.name.replace(/[\/\\]/g,'_');window.__MEM[p]=u;chooseFile(p,f.size)}; document.body.appendChild(i);i.click()}
+function webPick(){const i=document.createElement('input');i.type='file';i.accept='audio/*,video/*,.mp3,.m4a,.wav,.flac,.ogg,.aac,.opus,.mp4,.mkv,.webm,.mov';i.style.cssText='position:fixed;left:-9999px;top:0';i.onchange=async()=>{const f=i.files&&i.files[0];i.remove();if(!f)return;if(f.size>500e6){try{toastP('الملف كبير جدًا للمتصفح (الحد 500MB). استخدم تطبيق أندرويد')}catch(e){}setTimeout(()=>{try{toastHide()}catch(e){}},3500);return}try{toastP('جارٍ تحميل الملف…')}catch(e){}const u=new Uint8Array(await f.arrayBuffer());try{toastHide()}catch(e){}const p='/web/'+f.name.replace(/[\/\\]/g,'_');window.__MEM[p]=u;window.__SRC=window.__SRC||{};window.__SRC[f.name.replace(/[\/\\]/g,'_')]=u;chooseFile(p,f.size)}; document.body.appendChild(i);i.click()}
  function pickMain(){
  openSheet(`<div class="bx mx-pk"><div class="gr"></div><div class="shh"><h3>اختيار ملف</h3><button class="xb" data-mx="shx" aria-label="إغلاق">${ic('x')}</button></div>
  <div class="mx-fl">${filtChips()}</div>
