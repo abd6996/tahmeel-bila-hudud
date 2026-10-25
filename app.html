@@ -63,7 +63,7 @@ N.readB64=function(p,off,len){var m=mat(p);if(!m||off>=m.length)return '';return
 N.saveB64=function(p,b,app){try{var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);if(!app){delete MEM[p];PEND[p]=[u]}else{if(MEM[p]){PEND[p]=[MEM[p]];delete MEM[p]}(PEND[p]=PEND[p]||[]).push(u)}return '1'}catch(e){return String(e)}};
 N.finish=function(p){var m=mat(p);if(m){var n=nm(p),e=(n.split('.').pop()||'').toLowerCase(),bl=new Blob([m],{type:MIME[e]||'application/octet-stream'}),a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},60000)}return 'w'+Date.now()};
 N.rm=function(p){delete MEM[p];delete PEND[p]};
-N.fdir=function(){return '/web'};
+N.fdir=function(){return '/web'};N.outDir=function(){return '/web/out'};
 N.ls=function(d){d=String(d||'').replace(/\/$/,'');if(d==='/web/tmp')return JSON.stringify(Object.keys(IDX).map(function(n){return{n:n,s:IDX[n],t:0}}));if(d==='/web'){var o=[];Object.keys(MEM).forEach(function(p){if(p.indexOf('/web/')===0&&p.indexOf('/',5)<0)o.push({n:p.slice(5),s:MEM[p].length,t:0})});return o.length?JSON.stringify(o):''}return ''};
 N.jn=function(){};N.dctl=function(id,a){var d=DL[id];if(d)d.pz=(a==='pause')};
 async function keep(name,bl){try{var r=await navigator.storage.getDirectory(),fh=await r.getFileHandle(name,{create:true}),w=await fh.createWritable();await w.write(bl);await w.close();delete MB[name]}catch(e){MB[name]=bl}}
