@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><script src="config.js"></script><script>(function(){
+<meta charset="utf-8"><script src="config.js"></script><script>window.__MEM=window.__MEM||{};(function(){
 var PROXY=window.PROXY_URL||"",APK="https://github.com/abd6996/tahmeel-bila-hudud/releases/latest/download/tahmeel-bila-hudud.apk";
 var T={},blobs={},sleep=function(t){return new Promise(function(r){setTimeout(r,t)})};
 var MIME={mp4:'video/mp4',webm:'video/webm',mkv:'video/x-matroska',m4a:'audio/mp4',mp3:'audio/mpeg',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',ogg:'audio/ogg',opus:'audio/ogg'};
@@ -16,7 +16,7 @@ async function run(t,title,mode,nm,H,url,au){try{var ext=(nm.split('.').pop()||'
  if(mode=='merge'){var a=await grab(au,H,t);t.s=6;var f=await ffm();f.FS('writeFile','v0',v);f.FS('writeFile','a0',a);await f.run('-i','v0','-i','a0','-map','0:v:0','-map','1:a:0','-c','copy','o.'+ext);out=f.FS('readFile','o.'+ext);['v0','a0','o.'+ext].forEach(function(n){try{f.FS('unlink',n)}catch(e){}})}
  else if(mode=='remux'){t.s=6;var f2=await ffm();f2.FS('writeFile','i0',v);await f2.run('-i','i0','-c','copy','o.'+ext);out=f2.FS('readFile','o.'+ext);['i0','o.'+ext].forEach(function(n){try{f2.FS('unlink',n)}catch(e){}})}
  else out=v;
- var bl=new Blob([out],{type:MIME[ext]||'application/octet-stream'});t.sz=bl.size;t.pth='Downloads/'+nm;save(nm,bl);t.s=8}
+ var bl=new Blob([out],{type:MIME[ext]||'application/octet-stream'});t.sz=bl.size;t.pth='Downloads/'+nm;save(nm,bl);try{window.__MEM[t.pth]=out}catch(e){}t.s=8}
  catch(e){if(t.x)return;t.s=16;t.e=(/memory|alloc/i.test(e.message)?'الملف كبير على المتصفح. استخدم تطبيق أندرويد':'تعذر التحميل: '+(e.message||e))}}
 function dbg(m){if(window.PROXY_DEBUG===false)return;var d=document.getElementById('dbg');if(!d){d=document.createElement('div');d.id='dbg';d.style.cssText='position:fixed;top:0;inset-inline:0;z-index:99999;background:#b3261e;color:#fff;font:600 12px/1.5 Cairo,sans-serif;padding:8px 12px;direction:ltr;text-align:left';document.body.appendChild(d)}d.textContent='Proxy: '+m;d.style.display='block';clearTimeout(d.t);d.t=setTimeout(function(){d.style.display='none'},9000)}
 function ytb(){if(Date.now()-(ytb.t||0)<20000)return;ytb.t=Date.now();modal();var h=document.querySelector('#wam h2'),p=document.querySelector('#wam p');if(h)h.textContent='يوتيوب يعمل في تطبيق أندرويد';if(p)p.textContent='يوتيوب يحجب الطلبات القادمة من مواقع الويب، لذلك يعمل بكفاءة كاملة داخل تطبيق أندرويد. حمّل التطبيق وثبّته. بقية المنصات (تيك توك، فيسبوك، إنستغرام، بنترست وغيرها) تعمل هنا في الموقع.'}
@@ -51,6 +51,29 @@ window.Native={
 function modal(){if(document.getElementById('wam'))return;var d=document.createElement('div');d.id='wam';d.innerHTML='<div style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);display:grid;place-items:center;padding:20px" onclick="if(event.target==this)this.parentNode.remove()"><div style="background:var(--cd,#fff);color:var(--fg,#111);border-radius:28px;padding:28px 24px;max-width:380px;text-align:center;font-family:Cairo,sans-serif;box-shadow:0 30px 80px rgba(0,0,0,.4)"><div style="font-size:46px">📱</div><h2 style="font-size:22px;margin:6px 0">حالات واتساب</h2><p style="color:var(--mu,#666);line-height:1.8;margin-bottom:18px">هذه الميزة تحتاج الوصول إلى ملفات واتساب على هاتفك، لذلك تعمل فقط داخل تطبيق أندرويد. حمّل التطبيق وثبّته على هاتفك لتحفظ الحالات بضغطة واحدة.</p><a href="'+APK+'" style="display:block;background:linear-gradient(135deg,#10b268,#0c9a5c);color:#fff;text-decoration:none;font-weight:800;padding:14px;border-radius:16px;margin-bottom:10px">تحميل تطبيق أندرويد</a><button onclick="this.closest(\'#wam\').remove()" style="border:0;background:transparent;color:var(--mu,#666);font:700 15px Cairo,sans-serif;cursor:pointer;padding:8px">رجوع</button></div></div>';document.body.appendChild(d)}
 addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-t="st"],[data-a="plt"][data-n="واتساب"]');if(t){e.stopImmediatePropagation();e.preventDefault();modal()}},true);
 var st=document.createElement('style');st.textContent='html{height:100%;background:color-mix(in srgb,var(--bg) 86%,#10b268 14%)}body{transform:translateZ(0);margin:0 auto!important;width:100%}@media(min-width:760px){body{max-width:none}#m:has(.pg){display:grid;grid-template-columns:1.3fr 1fr;gap:18px;padding:6px 28px 130px;align-content:start}#m:has(.pg)>*{margin:0!important;min-width:0}#m:has(.pg)>*:nth-child(1){grid-column:1/-1}#m:has(.pg)>*:nth-child(2){grid-row:span 2}#m:not(:has(.pg))>*{max-width:920px;margin-inline:auto!important;width:100%}.pg{grid-template-columns:repeat(4,1fr)!important}nav{inset-inline:auto!important;left:50%!important;right:auto!important;transform:translateX(-50%);width:min(560px,calc(100% - 32px))}}@media(min-width:1100px){#m:has(.pg){gap:24px;padding:10px 48px 140px}.pg{gap:26px 10px}}@media(min-width:1560px){body{max-width:1480px;box-shadow:0 0 90px rgba(0,0,0,.22)}}';document.head.appendChild(st);
+})();
+</script><script>(function(){
+var MEM=window.__MEM,PEND={},DL={},IDX={},MB={},did=0,N=window.Native,PU=window.PROXY_URL||'',sleep=function(t){return new Promise(function(r){setTimeout(r,t)})};
+var MIME={mp3:'audio/mpeg',m4a:'audio/mp4',wav:'audio/wav',mp4:'video/mp4',webm:'video/webm',mkv:'video/x-matroska',flac:'audio/flac',ogg:'audio/ogg',jpg:'image/jpeg',png:'image/png'};
+function px(u,h,m,b,sig){var o={method:m||'GET',signal:sig};if(PU){o.headers={'X-H':JSON.stringify(h||{})};if(b)o.body=b;return fetch(PU+'?u='+encodeURIComponent(u),o)}if(b)o.body=b;return fetch(u,o)}
+function b64(u){var s='',i=0,C=32768;for(;i<u.length;i+=C)s+=String.fromCharCode.apply(null,u.subarray(i,i+C));return btoa(s)}
+function mat(p){var a=PEND[p];if(a){var n=0;a.forEach(function(x){n+=x.length});var u=new Uint8Array(n),o=0;a.forEach(function(x){u.set(x,o);o+=x.length});MEM[p]=u;delete PEND[p]}return MEM[p]}
+function nm(p){return String(p).split('/').pop()}
+N.readB64=function(p,off,len){var m=mat(p);if(!m||off>=m.length)return '';return b64(m.subarray(off,Math.min(m.length,off+len)))};
+N.saveB64=function(p,b,app){try{var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);if(!app){delete MEM[p];PEND[p]=[u]}else{if(MEM[p]){PEND[p]=[MEM[p]];delete MEM[p]}(PEND[p]=PEND[p]||[]).push(u)}return '1'}catch(e){return String(e)}};
+N.finish=function(p){var m=mat(p);if(m){var n=nm(p),e=(n.split('.').pop()||'').toLowerCase(),bl=new Blob([m],{type:MIME[e]||'application/octet-stream'}),a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},60000)}return 'w'+Date.now()};
+N.rm=function(p){delete MEM[p];delete PEND[p]};
+N.fdir=function(){return '/web'};
+N.ls=function(d){d=String(d||'').replace(/\/$/,'');if(d==='/web/tmp')return JSON.stringify(Object.keys(IDX).map(function(n){return{n:n,s:IDX[n],t:0}}));if(d==='/web'){var o=[];Object.keys(MEM).forEach(function(p){if(p.indexOf('/web/')===0&&p.indexOf('/',5)<0)o.push({n:p.slice(5),s:MEM[p].length,t:0})});return o.length?JSON.stringify(o):''}return ''};
+N.jn=function(){};N.dctl=function(id,a){var d=DL[id];if(d)d.pz=(a==='pause')};
+async function keep(name,bl){try{var r=await navigator.storage.getDirectory(),fh=await r.getFileHandle(name,{create:true}),w=await fh.createWritable();await w.write(bl);await w.close();delete MB[name]}catch(e){MB[name]=bl}}
+window.__getModel=async function(p){var n=nm(p);if(MB[n])return MB[n].arrayBuffer();var r=await navigator.storage.getDirectory(),fh=await r.getFileHandle(n),f=await fh.getFile();return f.arrayBuffer()};
+(async function(){try{var r=await navigator.storage.getDirectory();for await(var e of r.entries()){if(/^mdx_/.test(e[0])){var f=await e[1].getFile();IDX[e[0]]=f.size}}}catch(e){}})();
+N.download=function(url,name,H,title,mode){var id=String(++did),h={};try{h=JSON.parse(H||'{}')}catch(e){}var d=DL[id]={id:id,s:1,b:0,t:0,e:'',p:'/web/tmp/'+name,ac:new AbortController()};
+(async function(){try{var r=await px(url,h,'GET',null,d.ac.signal);if(!r.ok&&r.status!=206)throw new Error('HTTP '+r.status);d.t=+r.headers.get('content-length')||0;var rd=r.body.getReader(),ch=[];for(;;){while(d.pz)await sleep(250);var q=await rd.read();if(q.done)break;ch.push(q.value);d.b+=q.value.length}
+var bl=new Blob(ch);ch=null;if(/^mdx_/.test(name)){await keep(name,bl);IDX[name]=bl.size}else{MEM[d.p]=new Uint8Array(await bl.arrayBuffer())}d.t=d.b;d.s=8}catch(e){if(d.x)return;d.s=16;d.e=String(e&&e.message||e)}})();return id};
+N.status=function(ids){return JSON.stringify(String(ids).split(',').filter(function(i){return DL[i]}).map(function(i){var d=DL[i];return{id:d.id,s:d.s,b:d.b,t:d.t,e:d.e,p:d.p}}))};
+N.remove=function(id){var d=DL[id];if(d){d.x=1;try{d.ac.abort()}catch(e){}delete DL[id]}else{delete MEM[id];delete PEND[id]}};
 })();
 </script><script>try{var c=(JSON.parse(localStorage.getItem("cfg")||"{}").th)||"sys";document.documentElement.setAttribute("data-theme",c=="sys"?(Native.night()?"dark":"light"):c)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -393,6 +416,95 @@ body.svo{overflow:hidden}
 .svg{display:flex;gap:4px;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 0;position:relative;z-index:4;direction:ltr}.svg i{position:relative;flex:1;height:3px;border-radius:3px;background:#ffffff40}.svg i b{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:#fff}.svg i.dn b{width:100%}.svg i u{position:absolute;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#e8a317;box-shadow:0 0 0 2.5px #e8a31766;text-decoration:none}
 #sv .svt{padding-top:10px;gap:8px}#sv .svt button{font-size:15px;color:#e8a317}#sv .svt button svg{stroke:#fff}#sv .svt button:first-child{color:#fff}
 .sth{align-items:center}.sth .trq{margin-inline-start:10px}.sta{grid-template-columns:repeat(4,1fr)!important}.sta .dg{background:#e5484d22;color:#ff6b6b}.sta .dg svg{stroke:#ff6b6b}.sta button{font-size:12.5px!important;gap:4px!important}
+/* v23: light-mode status viewer + animated credits */
+:root[data-theme=light] #sv{background:#f3faf6;color:var(--fg)}
+:root[data-theme=light] .svt{background:linear-gradient(#f3faf6f2,#f3faf600)}
+:root[data-theme=light] .svt button{background:#fff;border:1px solid var(--ln);box-shadow:0 4px 14px -8px #0a5a3a66}
+:root[data-theme=light] .svt svg{stroke:var(--pd)}
+:root[data-theme=light] .svi b{color:var(--fg)}
+:root[data-theme=light] .svi small,:root[data-theme=light] #svc{color:var(--mu);opacity:1}
+:root[data-theme=light] .svs .em{color:var(--mu)}
+:root[data-theme=light] .svs{background:#e4f3ea}
+:root[data-theme=light] .svl{border-color:#10b26833;border-top-color:var(--pr)}
+:root[data-theme=light] .svnv{background:#ffffffdd;color:var(--pd);border:1px solid var(--ln);box-shadow:0 4px 14px -6px #0a5a3a66}
+:root[data-theme=light] .sva{background:linear-gradient(#f3faf600,#f3faf6 38%)}
+:root[data-theme=light] .sva button{background:#fff;color:var(--pd);border:1.5px solid var(--ln);box-shadow:0 6px 16px -10px #0a5a3a88}
+:root[data-theme=light] .sva svg{stroke:var(--pd)}
+:root[data-theme=light] .sva button.ok{background:linear-gradient(135deg,#10b268,#0a8f54);color:#fff;border-color:transparent}
+:root[data-theme=light] .sva button.ok svg{stroke:#fff}
+:root[data-theme=light] .svb{color:var(--pd)}
+:root[data-theme=light] .svb button{background:#fff;border:1px solid var(--ln)}
+:root[data-theme=light] .svb svg{stroke:var(--pd)}
+:root[data-theme=light] .svk{background:#10b26829}
+:root[data-theme=light] .svp{background:#ffffffd9}:root[data-theme=light] .svp svg{fill:var(--pd);stroke:var(--pd)}
+@property --ca{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes crs{to{--ca:360deg}}@keyframes crh{to{filter:hue-rotate(360deg)}}@keyframes crg{to{background-position:-200% 0}}
+.cr{isolation:isolate}
+.cr .nm{position:relative;display:inline-block;padding:5px 4px;background:linear-gradient(90deg,var(--pr),#7dffc0,var(--pr));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:crg 4s linear infinite}
+.cr .nm::before,.cr .nm::after{content:"";position:absolute;inset:-3px -15px;border-radius:999px;pointer-events:none;background:conic-gradient(from var(--ca),transparent 0,#19e58f 9%,transparent 24%,transparent 33%,#38bdf8 42%,transparent 57%,transparent 66%,#c084fc 75%,transparent 91%);animation:crs 3.6s linear infinite,crh 9s linear infinite}
+.cr .nm::before{padding:2px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.cr .nm::after{z-index:-1;filter:blur(9px);opacity:.45;animation:crs 3.6s linear infinite,crh 9s linear infinite}
+:root[data-theme=light] .cr{background:linear-gradient(160deg,#fff,#eafaf1);border:1px solid #bfe3cf;border-radius:26px;padding:22px 26px 20px;box-shadow:0 14px 34px -18px #0a5a3a88;width:max-content;max-width:100%}
+:root[data-theme=light] .cr .l1{color:#2f5d46;font-weight:600}
+:root[data-theme=light] .cr .ic{background:#10b26826}
+:root[data-theme=light] .cr .l3{color:#0b2418;opacity:1;font-weight:600}
+:root[data-theme=light] .cr .nm{background-image:linear-gradient(90deg,#075e3a,#10b268,#0891b2,#075e3a);font-size:19px}
+:root[data-theme=light] .cr .nm::after{opacity:.3}
+:root[data-theme=light] .cr+.ab{color:#2f5d46;opacity:1;font-weight:600;border-top-color:#bfe3cf}
+/* v24: light viewer fixes */
+:root[data-theme=light] #sv .svt button svg,:root[data-theme=light] #sv .svt svg{stroke:#075e3a;stroke-width:2.4}
+:root[data-theme=light] #sv .svt button{color:#b45309;font-size:17px;font-weight:800;background:#fff;border:1.5px solid #9fd3b6}
+:root[data-theme=light] #sv .svt button:first-child{color:#075e3a}
+:root[data-theme=light] #sv .svi b{color:#0b2418;font-weight:800}
+:root[data-theme=light] #sv .svi small,:root[data-theme=light] #sv #svc{color:#3b6650;font-weight:600}
+:root[data-theme=light] .svg i{background:#075e3a30;height:4px}
+:root[data-theme=light] .svg i b{background:linear-gradient(90deg,#0a8f54,#10b268);box-shadow:0 0 6px #10b26888}
+:root[data-theme=light] .svg i u{background:#d97706;box-shadow:0 0 0 3px #d9770655}
+:root[data-theme=light] .svb span{color:#075e3a;font-weight:800;font-size:13px}
+:root[data-theme=light] #sv .svb button svg{stroke:#075e3a;stroke-width:2.4}
+:root[data-theme=light] .svk{background:#075e3a30;height:6px}
+:root[data-theme=light] .svk i{background:linear-gradient(90deg,#0a8f54,#10b268)}
+:root[data-theme=light] .svk u{background:#d97706;box-shadow:0 0 0 4px #d9770644;border:2px solid #fff;width:13px;height:13px;margin:-6.5px 0 0 -6.5px}
+:root[data-theme=light] .svq{background:#fff4d6;border:1.5px solid #e0a526;color:#6b3f00;font-weight:600}
+:root[data-theme=light] .svq b{color:#c2410c}
+:root[data-theme=light] #sv .sva button{color:#075e3a;font-weight:800}
+:root[data-theme=light] #sv .sva button.ok{color:#fff}
+:root[data-theme=light] #sv .sva button.ok svg{stroke:#fff}
+
+.rmx{display:grid;grid-template-rows:1fr;opacity:1;margin:0 0 10px;transition:grid-template-rows .5s cubic-bezier(.2,.9,.3,1),opacity .35s,margin .5s cubic-bezier(.2,.9,.3,1);animation:rmin .55s cubic-bezier(.2,.9,.3,1) both}
+.rmx.off{grid-template-rows:0fr;opacity:0;margin:0;pointer-events:none}
+.rmx>div{overflow:hidden;min-height:0;padding:3px}
+@keyframes rmin{from{opacity:0;transform:translateY(10px) scale(.97)}}
+.rmb{position:relative;width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;background:var(--sf);text-align:start;overflow:hidden;box-shadow:inset 0 0 0 1.5px transparent;transition:background .35s,box-shadow .35s,transform .15s}
+.rmb:active{transform:scale(.98)}
+.rmb::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,color-mix(in srgb,var(--pr) 22%,transparent) 50%,transparent 70%);transform:translateX(-120%);opacity:0;pointer-events:none}
+.rmb.on{background:color-mix(in srgb,var(--pr) 12%,var(--sf));box-shadow:inset 0 0 0 1.5px var(--pr),0 10px 24px -14px var(--pr)}
+.rmb.on::before{opacity:1;animation:rmsh 2.6s ease-in-out infinite}
+@keyframes rmsh{0%{transform:translateX(-120%)}60%,100%{transform:translateX(120%)}}
+.rmi{flex:none;position:relative;width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:3px;background:var(--cd);color:var(--mu);transition:background .35s,color .35s,transform .35s}
+.rmb.on .rmi{background:linear-gradient(135deg,var(--pr),#0c9a5c);color:var(--on);transform:rotate(-4deg) scale(1.05)}
+.rmi i{display:block;width:3.5px;height:11px;border-radius:2px;background:currentColor;transform-origin:center}
+.rmi i:nth-child(2){height:18px}.rmi i:nth-child(3){height:13px}
+.rmb.on .rmi i{animation:rmeq .9s ease-in-out infinite}
+.rmb.on .rmi i:nth-child(2){animation-delay:.15s}.rmb.on .rmi i:nth-child(3){animation-delay:.3s}.rmb.on .rmi i:nth-child(4){animation-delay:.45s}
+@keyframes rmeq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1.2)}}
+.rmt{flex:1;min-width:0;position:relative}.rmt b{display:block;font-size:15px}
+.rmt small{display:block;color:var(--mu);font-size:12px;line-height:1.5;margin-top:1px}
+.rms{flex:none;position:relative;width:46px;height:28px;border-radius:14px;background:var(--ln);transition:background .35s}
+.rms u{position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px #0004;transition:inset-inline-start .4s cubic-bezier(.3,1.5,.5,1),width .2s}
+.rmb:active .rms u{width:27px}
+.rmb.on .rms{background:linear-gradient(135deg,var(--pr),#0c9a5c)}
+.rmb.on .rms u{inset-inline-start:21px}
+.bx.rm .op i::before{content:"✦ "}
+@media (prefers-reduced-motion:reduce){.rmb.on::before,.rmb.on .rmi i{animation:none}}
+
+.rme{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .5s cubic-bezier(.2,.9,.3,1),opacity .4s,margin .5s;margin:0}
+.rme.on{grid-template-rows:1fr;opacity:1;margin:10px 0 2px}
+.rme>div{overflow:hidden;min-height:0}
+.rmeg{display:flex;gap:6px;background:var(--sf);border-radius:18px;padding:4px}
+.rmeg button{flex:1;height:44px;border-radius:14px;font-weight:800;font-size:14.5px;color:var(--mu);transition:all .3s}
+.rmeg button.sel{background:linear-gradient(135deg,var(--pr),#0c9a5c);color:var(--on);box-shadow:0 8px 16px -10px var(--pr)}
+.rmen{color:var(--mu);font-size:12.5px;line-height:1.7;margin:8px 4px 4px;text-align:start;min-height:21px}
 </style>
 
 </head>
@@ -406,6 +518,7 @@ body.svo{overflow:hidden}
 <nav>
   <button data-t="home"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>الرئيسية</span></button>
   <button data-t="st"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="4"/></svg><span>الحالات</span></button>
+  <button data-t="mx"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg><span>إزالة الموسيقى</span></button>
   <button data-t="dl"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg><span>التحميلات</span><b class="nb" id="nb" hidden></b></button>
 </nav>
 <div id="sh" hidden></div>
@@ -725,7 +838,7 @@ const J=s=>{try{return JSON.parse(s)}catch(e){return null}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
 const UA='Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36';
 let items=J(localStorage.getItem('dl'))||[],tab='home',res=null,busy=0;
-items.forEach(x=>{if(x.mg&&x.s<8&&!x.t2){x.s=16;x.mg=0;x.e='انقطعت العملية (أُغلق التطبيق). أعد المحاولة'}});
+items.forEach(x=>{if(x.px){x.px=0;x.mg=0;x.s=8;x.rmq=0;x.z=x.z0||0;x.b=x.b0||x.z;x.l=String(x.l0||x.l||'')+' · لم تكتمل إزالة الموسيقى';return}if(x.mg&&x.s<8&&!x.t2){x.s=16;x.mg=0;x.e='انقطعت العملية (أُغلق التطبيق). أعد المحاولة'}});
 const keep=()=>{try{localStorage.setItem('dl',JSON.stringify(items))}catch(e){}};
 const toast=(t,ms)=>{const x=$('#tt');x.textContent=t;x.className='on';clearTimeout(toast.t);toast.t=setTimeout(()=>x.className='',ms||2600)};
 const mb=b=>b?(b/1048576).toFixed(b>1e7?0:1)+' MB':'';
@@ -766,11 +879,16 @@ async function yt(id){
   const ok=rs.filter(r=>r.c);
   if(!ok.length)throw new Error('يوتيوب رفض التحميل — '+rs.map(r=>r.why).join(' | '));
   const q=f=>f.height||parseInt(f.qualityLabel)||0,sz=f=>+f.contentLength||0,o=[],seen={};
+  /* ---- مسار الصوت الأصلي: استبعاد الدبلجة التلقائية (acont=dubbed-auto) ومسارات الوصف الصوتي ---- */
+  const trk=f=>{let t='';try{t+=decodeURIComponent((String(f.url||'').match(/[?&]xtags=([^&]+)/)||[])[1]||'')}catch(e){}try{t+=' '+atob(String(f.xtags||'').replace(/-/g,'+').replace(/_/g,'/'))}catch(e){}const k=f.audioTrack||{};return(t+' '+(k.displayName||'')+' '+(k.id||'')).toLowerCase()};
+  const dub=f=>/dubbed|descriptive|secondary/.test(trk(f)),org=f=>/original/.test(trk(f));
+  const rk=f=>org(f)?0:dub(f)?9:(f.audioTrack&&f.audioTrack.audioIsDefault===false)?5:1;
+  const bestA=a=>{if(!a.length)return a;const m=Math.min.apply(null,a.map(rk));return a.filter(f=>rk(f)==m)};
   const add=x=>{o.push(x)};
   let title='',vs=[];
-  ok.forEach(r=>{title=title||r.title;r.fm.forEach(f=>{const k='m'+q(f);if(!seen[k]){seen[k]=1;vs.push({q:q(f),x:{k:'v',l:q(f)+'p · فيديو مع صوت',ext:'mp4',sz:sz(f),u:f.url,h:r.h}})}})});
+  ok.forEach(r=>{title=title||r.title;r.multi=r.ad.some(f=>f.audioTrack||f.xtags)&&r.ad.some(f=>/^audio\//.test(f.mimeType)&&/^audio\/mp4/.test(f.mimeType));r.fm.filter(f=>!r.multi&&rk(f)<=1).forEach(f=>{const k='m'+q(f);if(!seen[k]){seen[k]=1;vs.push({q:q(f),x:{k:'v',l:q(f)+'p · فيديو مع صوت',ext:'mp4',sz:sz(f),u:f.url,h:r.h}})}})});
   ok.forEach(r=>{
-    const aus=r.ad.filter(f=>/^audio\//.test(f.mimeType)),m4a=aus.filter(f=>/^audio\/mp4/.test(f.mimeType)).sort((a,b)=>b.bitrate-a.bitrate)[0];
+    const aus=bestA(r.ad.filter(f=>/^audio\//.test(f.mimeType))),m4a=aus.filter(f=>/^audio\/mp4/.test(f.mimeType)).sort((a,b)=>b.bitrate-a.bitrate)[0];
     if(m4a)r.ad.filter(f=>/^video\/mp4/.test(f.mimeType)&&/avc1/.test(f.mimeType)).forEach(f=>{const k='m'+q(f);if(seen[k])return;seen[k]=1;vs.push({q:q(f),x:{k:'v',l:q(f)+'p · فيديو مع صوت (دمج)',ext:'mp4',sz:sz(f)+sz(m4a),u:f.url,a:m4a.url,h:r.h}})});
     aus.forEach(f=>{const k='a'+f.itag;if(seen[k])return;seen[k]=1;const w=/webm/.test(f.mimeType);add({k:'a',l:Math.round(f.bitrate/1000)+' kbps · '+(w?'OPUS':'AAC'),ext:w?'webm':'m4a',sz:sz(f),u:f.url,h:r.h,b:f.bitrate,w})});
   });
@@ -780,7 +898,7 @@ async function yt(id){
   const imgs=[['maxresdefault','1280×720'],['sddefault','640×480'],['hqdefault','480×360'],['mqdefault','320×180']].map(([n,d])=>Object.assign(IMG('صورة مصغّرة · '+d,'https://i.ytimg.com/vi/'+id+'/'+n+'.jpg',{}),{chk:1}));
   return{title:title||'فيديو يوتيوب',thumb:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',dur:(ok.find(r=>r.dur)||{}).dur||0,o:vids.concat(aud,imgs)};
 }
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));const jtxt=x=>{const p=pct(x),z=x.s==4;return x.mg?(z?'التحويل متوقف مؤقتًا · ':'جارٍ التحويل إلى MP3 · ')+p+'%':(z?'متوقف مؤقتًا · ':'')+p+'%'+(x.z>0?' · '+fs(x.b||0)+' / '+fs(x.z):(x.b>0?' · '+fs(x.b):''))};const jnv=(x,t,p,m)=>{const k=x.key||x.id,ti=x.title||'',pp=Math.max(0,Math.min(100,Math.round(p||0)));try{Native.jn(k,ti,t,pp,m)}catch(e){}if(m===1)setTimeout(()=>{try{Native.jn(k,ti,t,pp,1)}catch(e){}},1300)};const yld=()=>new Promise(r=>{try{const c=new MessageChannel();c.port1.onmessage=()=>{c.port1.close();r()};c.port2.postMessage(0)}catch(e){setTimeout(r,0)}});
 const DESK='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 const absu=(b,p)=>!p?'':/^https?:/.test(p)?p:b+(p[0]=='/'?'':'/')+p;
 const short=e=>String((e&&e.message)||e||'').slice(0,40);
@@ -1096,7 +1214,7 @@ async function fileBytes(p,cap){
     const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);
     parts.push(u);off+=u.length;
     if(cap&&off>cap)throw new Error('الملف كبير جدًا للتحويل إلى MP3 داخل التطبيق');
-    await sleep(0);
+    await yld();
   }
   return{parts,off};
 }
@@ -1111,8 +1229,11 @@ async function toMp3(src,out,cap,bt,prog,ctl){
   const ctx=new OC(2,44100,44100);
   const ab=await new Promise((ok,no)=>{try{const pr=ctx.decodeAudioData(all.buffer,ok,no);if(pr&&pr.catch)pr.catch(no)}catch(e){no(e)}}).catch(e=>{throw new Error('تعذر فك ترميز الصوت')});
   all=null;await gate();
-  const ch=Math.min(2,ab.numberOfChannels),sr=ab.sampleRate,N=ab.length;
-  const enc=new lamejs.Mp3Encoder(ch,sr,bt||128),L=ab.getChannelData(0),R=ch>1?ab.getChannelData(1):null;
+  /* lamejs يُخرج صوتًا شبه معدوم في ستيريو أقل من 128kbps (ثبت بالاختبار) → دمج mono للجودات المنخفضة */
+  const MN=(bt||128)<128,ch=MN?1:Math.min(2,ab.numberOfChannels),sr=ab.sampleRate,N=ab.length;
+  let L=ab.getChannelData(0);const R=ch>1?ab.getChannelData(1):null;
+  if(MN&&ab.numberOfChannels>1){const L2=ab.getChannelData(1),M=new Float32Array(N);for(let i=0;i<N;i++)M[i]=(L[i]+L2[i])*.5;L=M}
+  const enc=new lamejs.Mp3Encoder(ch,sr,bt||128);
   const cv=(f,a,b)=>{const o=new Int16Array(b-a);for(let i=a;i<b;i++){const s=Math.max(-1,Math.min(1,f[i]));o[i-a]=s<0?s*32768:s*32767}return o};
   let buf=[],bl=0,first=1,TOT=0;
   const put=m=>{if(m&&m.length){buf.push(Uint8Array.from(m,v=>v&255));bl+=m.length}};
@@ -1127,7 +1248,7 @@ async function toMp3(src,out,cap,bt,prog,ctl){
   for(let i=0;i<N;i+=STEP){
     const e=Math.min(N,i+STEP);
     put(enc.encodeBuffer(cv(L,i,e),R?cv(R,i,e):undefined));flush();
-    prog(4+Math.round(i/N*94));await sleep(0);if(ctl&&(ctl.cvp||ctl.cvx))await gate();
+    prog(4+Math.round(i/N*94));await yld();if(ctl&&(ctl.cvp||ctl.cvx))await gate();
   }
   put(enc.flush());flush(1);prog(100);return TOT;
 }
@@ -1136,14 +1257,14 @@ async function conv(x){
   try{
     const dir=Native.outDir();if(!dir)throw new Error('لا يوجد مكان للحفظ');
     out=dir+'/'+x.nm;let lp=-1;
-    await toMp3(x.tp,out,Math.max(x.cap||0,200e6),x.bt||128,p=>{x.cp=p;if(p!=lp&&tab=='dl'){lp=p;draw()}},x);
+    await toMp3(x.tp,out,Math.max(x.cap||0,200e6),x.bt||128,p=>{x.cp=p;if(p!=lp){lp=p;jnv(x,jtxt(x),p,x.cvp?2:0);if(tab=='dl')draw()}},x);
     const id=Native.finish(out);
     Native.rm(x.tp);Native.remove(x.id);
-    x.id=id;x.s=8;x.mg=0;x.cv=0;x.p=out;x.b=x.z=0;
+    x.id=id;x.s=8;x.mg=0;x.cv=0;x.p=out;x.b=x.z=0;jnv(x,out,100,1);
   }catch(e){
     Native.rm(x.tp);if(out)Native.rm(out);Native.remove(x.id);
-    if(e&&e.message=='__cx'){items=items.filter(i=>i!==x);keep();draw();return}
-    x.s=16;x.mg=0;x.e='فشل التحويل: '+short(e);
+    if(e&&e.message=='__cx'){jnv(x,'',0,3);if(!x.cxl)items=items.filter(i=>i!==x);keep();draw();return}
+    x.s=16;x.mg=0;x.e='فشل التحويل: '+short(e);jnv(x,'فشل التحويل',0,1);
   }
   keep();draw();
 }
@@ -1314,7 +1435,7 @@ async function mp4Fix(bl){try{
 }catch(e){return null}}
 const sc4=d=>d.subarray(0,4);
 const b64Of=bl=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]||'');r.onerror=no;r.readAsDataURL(bl)});
-async function blobSave(bl,out){let off=0,first=1;const CH=3145728;while(off<bl.size){const b=await b64Of(bl.slice(off,off+CH)),r=Native.saveB64(out,b,first?0:1);first=0;if(r!=='1')throw new Error(r);off+=CH;await sleep(0)}}
+async function blobSave(bl,out){let off=0,first=1;const CH=3145728;while(off<bl.size){const b=await b64Of(bl.slice(off,off+CH)),r=Native.saveB64(out,b,first?0:1);first=0;if(r!=='1')throw new Error(r);off+=CH;await yld()}}
 function svEnsure(){
   if(SV.el)return;stIc();IC.spk='<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 9a4 4 0 010 6"/>';IC.mut='<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l4 6M21 9l-4 6"/>';
   const d=document.createElement('div');d.id='sv';d.hidden=true;
@@ -1383,7 +1504,7 @@ function stDelete(idx){
 async function stRestore(ids){
   let ok=0,bad=0;
   for(const id of ids){const t=trash.find(x=>x.id==id);if(!t)continue;
-    try{let off=0,first=1;while(off<t.z){const b=Native.readB64(t.p,off,3145728);if(!b)break;const r=Native.saveB64(t.op,b,first?0:1);first=0;if(r!=='1')throw 0;off+=3145728;await sleep(0)}
+    try{let off=0,first=1;while(off<t.z){const b=Native.readB64(t.p,off,3145728);if(!b)break;const r=Native.saveB64(t.op,b,first?0:1);first=0;if(r!=='1')throw 0;off+=3145728;await yld()}
       Native.rm(t.p);trash=trash.filter(x=>x!==t);trSel.delete(id);ok++}catch(e){bad++}}
   tkeep();sx.sig='';loadSt(true);trRender();toast(bad?'تعذر استرجاع '+bad+' — تحقق من وجود المجلد الأصلي':'تم استرجاع '+ok+' إلى الحالات ✓');
 }
@@ -1412,7 +1533,7 @@ async function stSave(i,quiet){
     const out=stOut(f),nm=out.split('/').pop();let fx=null;
     if(f.v&&/^(mp4|mov|3gp|m4v)$/.test(f.x)&&f.s<90e6){const bl=await fileBlob(f.p,'video/mp4');if(await mp4Part(bl)<1){fx=await mp4Fix(bl);if(!fx||!fx.blob)throw new Error('الفيديو غير مكتمل')}}
     if(fx)await blobSave(fx.blob,out);
-    else{let off=0,first=1;while(off<f.s){const b=Native.readB64(f.p,off,3145728);if(!b)break;const r=Native.saveB64(out,b,first?0:1);first=0;if(r!=='1')throw new Error(r);off+=Math.min(3145728,f.s-off);await sleep(0)}}
+    else{let off=0,first=1;while(off<f.s){const b=Native.readB64(f.p,off,3145728);if(!b)break;const r=Native.saveB64(out,b,first?0:1);first=0;if(r!=='1')throw new Error(r);off+=Math.min(3145728,f.s-off);await yld()}}
     const id=Native.finish(out),who=stNm(f);sx.sv.add(f.n);stKeep();
     items.unshift({id,key:'k'+Date.now()+i,nm,title:who?'حالة '+who:'حالة واتساب',thumb:(sx.th[f.p]&&sx.th[f.p].length<30000?sx.th[f.p]:''),l:f.v?'فيديو':'صورة',ext:f.x,s:8,b:0,z:0,mg:0,e:'',p:out});keep();
     if(!quiet){toast(fx?'تم حفظ الجزء المشاهد كفيديو ✓':'تم الحفظ في التحميلات ✓');if(tab=='st'&&SV.el&&SV.el.hidden)draw()}
@@ -1433,23 +1554,44 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&tab=='st'
 function kind(x){return x.k||(/^(jpe?g|png|webp|gif|bmp)$/.test(x.ext)?'i':/^(m4a|mp3|aac|ogg|opus|wav)$/.test(x.ext)?'a':'v')}
 const TL={v:'فيديو',a:'صوت',i:'صور'};
 function sheet(r){
-  r.o.forEach(x=>x.k=kind(x));res=r;r.ks=['v','a','i'].filter(k=>r.o.some(x=>x.k==k));r.tab=r.ks[0];
+  r.o.forEach(x=>x.k=kind(x));res=r;r.ks=['v','a','i'].filter(k=>r.o.some(x=>x.k==k&&!(k=='a'&&x.ext!='mp3')));r.tab=r.ks[0];
   const s=$('#sh');s.innerHTML='<div class="bx"></div>';sheetBody();
   s.hidden=0;requestAnimationFrame(()=>s.classList.add('on'));
 }
-function sheetBody(){
-  const r=res;
-  $('#sh .bx').innerHTML=`<div class="gr"></div>${r.thumb?`<img src="${esc(r.thumb)}" alt="">`:''}<h3>${esc(r.title)}</h3>${r.ks.length>1?`<div class="tb">${r.ks.map(k=>`<button data-k="${k}" class="${r.tab==k?'sel':''}">${TL[k]}</button>`).join('')}</div>`:''}${r.o.map((x,i)=>x.k==r.tab?`<button class="op" data-i="${i}"><span><b>${esc(x.l)}</b><small>${esc(x.ext.toUpperCase())}${x.sz?' · '+(x.est?'≈':'')+mb(x.sz):''}</small></span><i>تحميل</i></button>`:'').join('')}`;
-}
+  const ENN={fast:'نموذج خفيف وسريع، مناسب للكلام والأناشيد.',hq:'نموذج متقدم أدق في عزل الصوت، لكنه أبطأ.'};
+  const rmCur=()=>{try{return window.mxEng()||'fast'}catch(e){return 'fast'}};
+  function rmEng(v){try{window.mxSetEng(v)}catch(e){}document.querySelectorAll('#sh .rmeg button').forEach(b=>b.classList.toggle('sel',b.dataset.eg==v));const n=document.querySelector('#sh .rmen');if(n)n.textContent=ENN[v]||''}
+  const rmTxt=on=>on?'سيُفصل الصوت عن الموسيقى تلقائيًا بعد التحميل':'احذف الموسيقى من الفيديو أو الصوت بعد التحميل';
+  function rmHtml(r){return `<div class="rmx${r.tab=='i'?' off':''}"><div><button class="rmb${r.rm?' on':''}" data-rm="1" role="switch" aria-checked="${r.rm?'true':'false'}"><span class="rmi"><i></i><i></i><i></i><i></i></span><span class="rmt"><b>إزالة الموسيقى</b><small>${rmTxt(r.rm)}</small></span><span class="rms"><u></u></span></button><div class="rme${r.rm?' on':''}"><div><div class="rmeg"><button data-eg="fast" class="${rmCur()=='fast'?'sel':''}">سريع</button><button data-eg="hq" class="${rmCur()=='hq'?'sel':''}">دقة عالية</button></div><p class="rmen">${ENN[rmCur()]||''}</p></div></div></div></div>`}
+  function optsHtml(r){return r.o.map((x,i)=>x.k==r.tab&&!(x.k=='a'&&x.ext!='mp3')?`<button class="op" data-i="${i}"><span><b>${esc(x.l)}</b><small>${esc(x.ext.toUpperCase())}${x.sz?' · '+(x.est?'≈':'')+mb(x.sz):''}</small></span><i>تحميل</i></button>`:'').join('')}
+  function sheetBody(){
+    const r=res,hasM=r.ks.includes('v')||r.ks.includes('a');
+    $('#sh .bx').classList.toggle('rm',!!r.rm);
+    $('#sh .bx').innerHTML=`<div class="gr"></div>${r.thumb?`<img src="${esc(r.thumb)}" alt="">`:''}<h3>${esc(r.title)}</h3>${hasM?rmHtml(r):''}${r.ks.length>1?`<div class="tb">${r.ks.map(k=>`<button data-k="${k}" class="${r.tab==k?'sel':''}">${TL[k]}</button>`).join('')}</div>`:''}<div id="opl">${optsHtml(r)}</div>`;
+  }
+  function sheetTab(k){
+    const r=res;r.tab=k;
+    document.querySelectorAll('#sh .tb button').forEach(b=>b.classList.toggle('sel',b.dataset.k==k));
+    const w=document.querySelector('#sh .rmx');if(w)w.classList.toggle('off',k=='i');
+    const o=$('#opl');if(o)o.innerHTML=optsHtml(r);
+  }
+  function rmToggle(){
+    const r=res;r.rm=!r.rm;
+    const b=document.querySelector('#sh .rmb');if(!b)return;
+    b.classList.toggle('on',r.rm);b.setAttribute('aria-checked',r.rm?'true':'false');
+    const t=b.querySelector('small');if(t)t.textContent=rmTxt(r.rm);
+    const bx=$('#sh .bx');if(bx)bx.classList.toggle('rm',r.rm);const ee=document.querySelector('#sh .rme');if(ee)ee.classList.toggle('on',r.rm);
+    try{navigator.vibrate&&navigator.vibrate(r.rm?[8,24,10]:6)}catch(e){}
+  }
 function hide(){const s=$('#sh');s.querySelectorAll('audio,video').forEach(m=>{try{m.pause()}catch(e){}});if(sx.cur){URL.revokeObjectURL(sx.cur);sx.cur=''}try{sndStop()}catch(e){}s.classList.remove('on');setTimeout(()=>{if(!s.classList.contains('on'))s.hidden=1},220)}
 function retryDone(){if(!retryOf)return;const o=retryOf,u=retrySrc;retryOf='';retrySrc='';const q=items.find(z=>z.id==o);if(q&&q.s==16&&(!u||curSrc==u))delItem(o,true)}
 function start(i){
   const x=res.o[i],T=(res.title||'video').replace(/[\\\/:*?"<>|\n\r]+/g,' ').trim().slice(0,70),nm=T+' ['+String(x.l).replace(/ · /g,' ').replace(/[\\\/:*?"<>|]+/g,' ').trim().slice(0,40)+'].'+x.ext,key='k'+Date.now(),H=JSON.stringify(x.h||{});
-  let id,aid='';
-  if(x.cv){id=Native.download(x.u,'t'+key+'.'+(x.src||'m4a'),H,res.title||nm,'1');if(!id)return toast('تعذر بدء التحميل، تحقق من صلاحية التخزين');items.unshift({src:curSrc,id,key,nm,title:res.title,thumb:res.thumb||'',l:x.l,ext:'mp3',s:1,b:0,z:0,mg:0,cv:1,bt:x.bt,cap:x.cap,e:'',p:''});retryDone();keep();hide();tab='dl';draw();toast('بدأ التحميل');return}
+  let id,aid='';const rq=res.rm&&(x.k=='v'||x.k=='a')?1:0;
+  if(x.cv){id=Native.download(x.u,'t'+key+'.'+(x.src||'m4a'),H,res.title||nm,'1');if(!id)return toast('تعذر بدء التحميل، تحقق من صلاحية التخزين');jnv({key,title:res.title||nm},'جارٍ تحميل الصوت…',0,0);items.unshift({src:curSrc,id,key,nm,title:res.title,thumb:res.thumb||'',l:x.l,ext:'mp3',s:1,b:0,z:0,mg:0,cv:1,bt:x.bt,cap:x.cap,rmq:rq,e:'',p:''});retryDone();keep();hide();tab='dl';draw();toast(rq?'بدأ التحميل · ستُزال الموسيقى تلقائيًا':'بدأ التحميل');return}
   const mode=x.a?'merge':x.rx?'remux':'direct',kind=ik({ext:x.ext});
   if(!Native.task(key,res.title||nm,kind,mode,nm,H,x.u,x.a||''))return toast('تعذر بدء التحميل، تحقق من صلاحية التخزين');
-  items.unshift({src:curSrc,id:key,key,t2:1,nm,title:res.title,thumb:res.thumb||'',l:x.l,ext:x.ext,s:1,b:0,z:0,mg:0,sp:0,e:'',p:''});retryDone();keep();hide();tab='dl';draw(1);toast('بدأ التحميل');
+  items.unshift({src:curSrc,id:key,key,t2:1,nm,title:res.title,thumb:res.thumb||'',l:x.l,ext:x.ext,s:1,b:0,z:0,mg:0,sp:0,rmq:rq,e:'',p:''});retryDone();keep();hide();tab='dl';draw(1);toast(rq?'بدأ التحميل · ستُزال الموسيقى تلقائيًا':'بدأ التحميل');
 }
 const fs=b=>b>=1e9?(b/1073741824).toFixed(2)+' GB':b>=1048576?(b/1048576).toFixed(1)+' MB':Math.round(b/1024)+' KB';
 const fd=ms=>{const t=Math.round(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),c=t%60;return h?h+':'+String(m).padStart(2,'0')+':'+String(c).padStart(2,'0'):m+':'+String(c).padStart(2,'0')};
@@ -1518,7 +1660,7 @@ const hue=x=>x.s==4?262:x.s==16?0:x.s==8?145:Math.round(28+pct(x)*1.17);
 function sgOf(x){
   if(x.s==8)return '';
   if(x.s==16)return `<span class="sg er"><i class="bd">${uic('x')}</i></span>`;
-  if(x.mg&&!x.cv)return `<span class="sg"><i class="rg mx"><b>${uic('refresh')}</b></i></span>`;
+  if(x.mg&&!x.cv&&x.s!=4)return `<span class="sg"><i class="rg mx"><b>${uic('refresh')}</b></i></span>`;
   return `<span class="sg"><i class="rg"><b>${uic(x.s==4?'pause':x.s==1?'dots':'dl')}</b></i></span>`;
 }
 function thumbOf(x,badge){const k=ik(x);return `<div class="th"${x.s==8&&badge?` data-a="open"`:''}>${x.thumb?`<img src="${esc(x.thumb)}" alt="" onerror="this.remove()">`:`<span>${uic(k=='a'?'music':k=='i'?'img':'vid')}</span>`}<span class="tb2">${k=='a'?'صوت':k=='i'?'صورة':'فيديو'}</span>${x.s==8&&badge?`<span class="pp">${uic('play')}</span>`:''}${badge?sgOf(x):''}</div>`}
@@ -1527,6 +1669,7 @@ const rcls=x=>x.s==8?'ok':x.s==16?'er':x.s==4?'pz':x.s==2?'run':'pd';
 const N=s=>`<span class="n">${s}</span>`;
 function statsHtml(x){
   const p=pct(x);
+  if(x.px)return `<span class="pc">${p}%</span><span class="mu">${esc(x.pxT||'جارٍ إزالة الموسيقى…')}</span>${x.pxR?`<span class="sp">${uic('clock')}${N(esc(x.pxR))}</span>`:''}${x.s==4?`<span class="sp ps">اضغط للاستئناف</span>`:''}`;
   if(x.s==8)return `<span class="ok1"><svg class="ck" viewBox="0 0 24 24"><path pathLength="1" d="M5 12l5 5L20 7"/></svg>اكتمل</span>${x.d>0?`<span class="mu">${uic('clock')}${N(fd(x.d))}</span>`:''}${x.z>0?`<span class="mu">${uic('box')}${N(fs(x.z))}</span>`:''}`;
   if(x.s==16)return x.cxl?`<span class="bad">⛔ أُلغي التحميل</span><span class="mu">اسحب لليمين للحذف</span>`:`<span class="bad">✕ تعذر التحميل</span>`;
   if(x.cv&&x.mg)return x.s==4?`<span class="pc">${p}%</span><span class="mu">التحويل متوقف مؤقتًا</span><span class="sp ps">اضغط للاستئناف</span>`:`<span class="pc">${p}%</span><span class="mu">جارٍ التحويل إلى MP3…</span><span class="sp">اضغط للإيقاف المؤقت</span>`;
@@ -1538,9 +1681,9 @@ function statsHtml(x){
   return `<span class="pc">${x.z>0?p+'%':'…'}</span><span class="mu">${sz}</span><span class="sp">${x.sp>0?uic('bolt')+N(fs(x.sp)+'/ث'):''}${eta}</span>`;
 }
 function rowInner(x){
-  const cva=x.cv&&x.mg&&x.s<8,act=(x.t2&&x.s<8&&!x.mg)||cva,tap=act?'pz':x.s==8?'open':x.s==16?'mn':'';
+  const cva=x.cv&&x.mg&&x.s<8,act=(x.t2&&x.s<8&&!x.mg)||cva||(x.cv&&!x.mg&&!x.t2&&x.s<8),pxa=!!(x.px&&x.s<8),tap=(act||pxa)?'pz':x.s==8?'open':x.s==16?'mn':'';
   const ctl=act?`<button class="cxb2" data-a="cx" aria-label="إلغاء">${uic('x')}</button>`:`<button class="dots" data-a="mn" aria-label="خيارات">${uic('dots')}</button>`;
-  return `<div class="row ${rcls(x)}${act?' tp':''}${selMode&&sel.has(x.id)?' sel':''}" data-id="${esc(x.id)}"${tap?` data-a="${tap}"`:''} style="--h:${hue(x)};--p:${pct(x)}"><i class="ck2">${uic('check')}</i><div class="rtop">${thumbOf(x,1)}<div class="tx"><b class="tt">${esc(x.title)}</b><div class="chs"><em>${esc(x.l)}</em></div></div>${ctl}</div>${x.s<8?`<div class="bar"><i style="--sx:${pct(x)/100}"></i></div>`:''}<div class="st3">${statsHtml(x)}</div>${x.s==16&&x.e?`<small class="er">${esc(x.e)}</small>`:''}</div>`;
+  return `<div class="row ${rcls(x)}${act||pxa?' tp':''}${selMode&&sel.has(x.id)?' sel':''}" data-id="${esc(x.id)}"${tap?` data-a="${tap}"`:''} style="--h:${hue(x)};--p:${pct(x)}"><i class="ck2">${uic('check')}</i><div class="rtop">${thumbOf(x,1)}<div class="tx"><b class="tt">${esc(x.title)}</b><div class="chs"><em>${esc(x.l)}</em></div></div>${ctl}</div>${x.s<8?`<div class="bar"><i style="--sx:${pct(x)/100}"></i></div>`:''}<div class="st3">${statsHtml(x)}</div>${x.s==16&&x.e?`<small class="er">${esc(x.e)}</small>`:''}</div>`;
 }
 const seenK={};
 function nbUpdate(){const nb=$('#nb');if(!nb)return;const a=items.filter(x=>x.s<8);const show=a.length>0&&a.some(x=>!seenK[x.key])&&tab!='dl';if(show){if(nb.hidden||nb.textContent!=a.length){nb.textContent=a.length;nb.hidden=0;nb.classList.remove('pp2');void nb.offsetWidth;nb.classList.add('pp2')}}else nb.hidden=1}
@@ -1581,7 +1724,7 @@ function patch(){
     const s=r.querySelector('.st3');if(s){const h=statsHtml(x);if(s.dataset.h!=h){s.dataset.h=h;s.innerHTML=h}}
   });
 }
-function draw(anim){
+function draw(anim){try{rmChk()}catch(e){}
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('a',b.dataset.t==tab));
   if(tab=='dl'){
     const sig=dlf+'|'+(selMode?'S'+[...sel].join(','):'')+'|'+swOpen+'|'+items.map(x=>x.id+'/'+x.s+'/'+x.mg+'/'+(x.e||'')+'/'+x.l+'/'+(x.cxl||'')).join(',');
@@ -1590,7 +1733,7 @@ function draw(anim){
   }else dsig='';
   const v=$('#u')&&$('#u').value;
   Mn.className=(anim?'ani':'')+(tab=='dl'&&selMode?' sm':'');
-  Mn.innerHTML=tab=='home'?home():tab=='st'?statuses():downloads();
+  Mn.innerHTML=tab=='home'?home():tab=='st'?statuses():tab=='mx'&&window.mxPage?window.mxPage():downloads();
   if(tab=='home'&&v)$('#u').value=v;
   if(anim)Mn.scrollTop=0;
 }
@@ -1608,7 +1751,7 @@ ${x.s==8&&x.p&&!x.mg?`<button class="mi red" data-a="mdp">${uic('trash')}حذف 
 }
 function copyTxt(t){try{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast('تم نسخ الرابط')}catch(e){toast('تعذر النسخ')}}
 function delItem(id,silent,perm){
-  const it=items.find(x=>x.id==id);if(!it)return;let moved=0;if(it.cv&&it.mg)it.cvx=1;
+  const it=items.find(x=>x.id==id);if(!it)return;let moved=0;if(it.px){try{window.mxAutoCancel&&window.mxAutoCancel(it)}catch(e){}it.px=0;it.mg=0;it.s=8;it.z=it.z0||0;it.b=it.b0||it.z}if(it.cv&&it.mg)it.cvx=1;
   try{if(it.t2){try{Native.tctl(it.key,'cancel')}catch(e){}try{Native.tdrop(it.key)}catch(e){}}
     if(it.aid)Native.remove(it.aid);Native.remove(id);
     if(perm&&it.p&&!it.mg)Native.rm(it.p);
@@ -1624,15 +1767,16 @@ function trPurge(){const lim=Date.now()-30*864e5,old=trash.filter(x=>x.t<lim);if
 const trKind=x=>/^(jpe?g|png|webp|gif|bmp)$/.test(x.ext)?'img':/^(mp3|m4a|aac|weba|ogg|opus|wav)$/.test(x.ext)?'music':'vid';
 var trF='all';
 function trLists(){return trK?[_dtr||[],trash]:[trash,strash]}
-function trView(){const l=trLists();const a=trF=='dl'?l[0]:trF=='st'?l[1]:l[0].concat(l[1]);return a.slice().sort((x,y)=>y.t-x.t)}
-async function trBy(ids,fn){const st=ids.filter(i=>/^st/.test(i)),dl=ids.filter(i=>!/^st/.test(i));if(dl.length){trSwap(0);await fn(dl)}if(st.length){trSwap(1);await fn(st)}trSwap(0)}
+const mxL=()=>window.mxTrash?mxTrash.list():[];
+function trView(){const l=trLists();const a=trF=='dl'?l[0]:trF=='st'?l[1]:trF=='mx'?mxL():l[0].concat(l[1],trF=='all'?mxL():[]);return a.slice().sort((x,y)=>y.t-x.t)}
+async function trBy(ids,fn){const st=ids.filter(i=>/^st/.test(i)),dl=ids.filter(i=>!/^(st|mx)/.test(i));if(dl.length){trSwap(0);await fn(dl)}if(st.length){trSwap(1);await fn(st)}trSwap(0)}
 function trashHtml(){
-  trPurge();const l=trLists(),nd=l[0].length,ns=l[1].length,V=trView();trSel=new Set([...trSel].filter(i=>V.some(x=>x.id==i)));
-  const chips='<div class="trF">'+[['all','الكل',nd+ns],['dl','التحميلات',nd],['st','الحالات',ns]].map(c=>`<button class="${trF==c[0]?'on':''}" data-a="trf" data-v="${c[0]}">${c[1]} <i>${c[2]}</i></button>`).join('')+'</div>';
+  trPurge();const l=trLists(),nd=l[0].length,ns=l[1].length,nmx=mxL().length,V=trView();trSel=new Set([...trSel].filter(i=>V.some(x=>x.id==i)));
+  const chips='<div class="trF">'+[['all','الكل',nd+ns+nmx],['dl','التحميلات',nd],['st','الحالات',ns],['mx','إزالة الموسيقى',nmx]].map(c=>`<button class="${trF==c[0]?'on':''}" data-a="trf" data-v="${c[0]}">${c[1]} <i>${c[2]}</i></button>`).join('')+'</div>';
   if(!V.length)return chips+`<div class="trE">${uic('trash','big')}<b>سلة المهملات فارغة</b><small>الملفات التي تحذفها تظهر هنا لمدة 30 يومًا ويمكنك استرجاعها في أي وقت</small></div>`;
   const all=trSel.size==V.length,n=trSel.size,now=Date.now();
   const bar=`<div class="trB"><button data-a="tra">${uic('check')}${all?'إلغاء التحديد':'تحديد الكل'}</button><button data-a="trr"${n?'':' disabled'}>${uic('refresh')}استرجاع${n?' ('+n+')':''}</button><button class="rd" data-a="trd"${n?'':' disabled'}>${uic('trash')}حذف${n?' ('+n+')':''}</button></div>`;
-  const rows=V.map(x=>{const dd=Math.floor((now-x.t)/864e5),left=Math.max(1,30-dd),isS=/^st/.test(x.id);return `<div class="trR${trSel.has(x.id)?' sel':''}" data-a="trs" data-i="${x.id}"><span class="trC">${uic('check')}</span><span class="trI">${x.thumb?`<img src="${esc(x.thumb)}" alt="" onerror="this.remove()">`:uic(trKind(x))}</span><div class="st2"><b>${esc(x.title||x.nm||'ملف')}</b><small>${isS?'حالات · ':'تحميلات · '}${x.z>0?fs(x.z)+' · ':''}${dd<1?'حُذف اليوم':dd==1?'حُذف أمس':'حُذف منذ '+dd+' أيام'} · يُمسح بعد ${left} ${left>10?'يومًا':'أيام'}</small></div><button class="trA" data-a="tr1" data-i="${x.id}" aria-label="استرجاع">${uic('refresh')}</button><button class="trA rd" data-a="trx" data-i="${x.id}" aria-label="حذف نهائي">${uic('trash')}</button></div>`}).join('');
+  const rows=V.map(x=>{const dd=Math.floor((now-x.t)/864e5),left=Math.max(1,30-dd),isS=/^st/.test(x.id);return `<div class="trR${trSel.has(x.id)?' sel':''}" data-a="trs" data-i="${x.id}"><span class="trC">${uic('check')}</span><span class="trI">${x.thumb?`<img src="${esc(x.thumb)}" alt="" onerror="this.remove()">`:uic(trKind(x))}</span><div class="st2"><b>${esc(x.title||x.nm||'ملف')}</b><small>${isS?'حالات · ':/^mx/.test(x.id)?'إزالة الموسيقى · ':'تحميلات · '}${x.z>0?fs(x.z)+' · ':''}${dd<1?'حُذف اليوم':dd==1?'حُذف أمس':'حُذف منذ '+dd+' أيام'} · يُمسح بعد ${left} ${left>10?'يومًا':'أيام'}</small></div><button class="trA" data-a="tr1" data-i="${x.id}" aria-label="استرجاع">${uic('refresh')}</button><button class="trA rd" data-a="trx" data-i="${x.id}" aria-label="حذف نهائي">${uic('trash')}</button></div>`}).join('');
   return chips+bar+rows+`<button class="sr" data-a="tre" style="margin-top:6px"><span class="si">${uic('trash')}</span><div class="st2"><b>إفراغ السلة</b><small>حذف كل العناصر الظاهرة نهائيًا</small></div></button>`;
 }
 function trRender(){const c=$('#cf .cs');if(!c||scr!='tr')return;const t=c.scrollTop;c.innerHTML=trashHtml();c.scrollTop=t;c.style.animation='none'}
@@ -1641,11 +1785,11 @@ function trRestore0(ids){if(trK)return stRestore(ids);let ok=0,bad=0;
     if(np){const key='r'+Date.now()+Math.random().toString(36).slice(2,5);items.unshift({src:t.src,id:key,key,nm:t.nm,title:t.title,thumb:t.thumb,l:t.l,ext:t.ext,s:8,b:t.z,z:t.z,d:t.d,mg:0,sp:0,e:'',p:np});trash=trash.filter(x=>x!==t);trSel.delete(id);ok++}else bad++});
   tkeep();keep();dlf='all';dsig='';draw();trRender();
   if(bad)toast('تعذر استرجاع '+bad+' — الملف غير موجود');else if(ok)toast('تم استرجاع '+ok+(ok>10?' ملف':' ملفات')+' إلى التحميلات ✓')}
-async function trRestore(ids){await trBy(ids,trRestore0)}
+async function trRestore(ids){const mi=ids.filter(i=>/^mx/.test(i));if(mi.length&&window.mxTrash){mxTrash.restore(mi);mi.forEach(i=>trSel.delete(i));trRender();toast('تم استرجاع '+mi.length+' إلى سجل إزالة الموسيقى ✓')}ids=ids.filter(i=>!/^mx/.test(i));if(ids.length)await trBy(ids,trRestore0)}
 function trConfirm(ids){trDel=ids;const s=$('#sh');
   s.innerHTML=`<div class="bx"><div class="gr"></div><div class="mh"><div class="tx"><b>حذف ${ids.length} ${ids.length>10?'عنصر':'عناصر'} نهائيًا؟</b><small>سيتم حذف الملفات من الهاتف ولا يمكن التراجع</small></div></div><button class="mi red" data-a="trdy">${uic('trash')}حذف نهائي</button><button class="mi" data-a="shx">${uic('x')}إلغاء</button></div>`;
   s.hidden=0;requestAnimationFrame(()=>s.classList.add('on'))}
-async function trPurgeIds(ids){await trBy(ids,a=>{a.forEach(id=>{const t=trash.find(x=>x.id==id);if(t)try{Native.rm(t.p)}catch(e){}});trash=trash.filter(x=>!a.includes(x.id));tkeep()});trDel=[];ids.forEach(i=>trSel.delete(i));hide();trRender();toast('تم الحذف نهائيًا')}
+async function trPurgeIds(ids){{const mi=ids.filter(i=>/^mx/.test(i));if(mi.length&&window.mxTrash)mxTrash.purge(mi)}await trBy(ids,a=>{a.forEach(id=>{const t=trash.find(x=>x.id==id);if(t)try{Native.rm(t.p)}catch(e){}});trash=trash.filter(x=>!a.includes(x.id));tkeep()});trDel=[];ids.forEach(i=>trSel.delete(i));hide();trRender();toast('تم الحذف نهائيًا')}
 setTimeout(trPurge,2500);
 
 /* ===== نغمات الاكتمال ===== */
@@ -1713,7 +1857,7 @@ setTimeout(()=>{try{sv()}catch(e){}},400);
 
 function cancelConv(it){it.cvx=1;it.cvp=0;items=items.filter(x=>x!==it);keep();draw();vib([10,30,10]);toast('تم إلغاء التحويل')}
 function cancelItem(it){
-  try{if(it.t2){Native.tctl(it.key,'cancel');Native.tdrop(it.key)}else{if(it.aid)Native.remove(it.aid);Native.remove(it.id)}}catch(e){}
+  try{if(it.t2){Native.tctl(it.key,'cancel');Native.tdrop(it.key)}else{if(it.aid)Native.remove(it.aid);Native.remove(it.id);if(it.cv)jnv(it,'',0,3)}}catch(e){}
   it.s=16;it.mg=0;it.cxl=1;it.e='';it.sp=0;keep();draw();vib([10,30,10]);toast('تم إلغاء التحميل — يبقى في القائمة حتى تحذفه')}
 
 let curAud=null;
@@ -1740,13 +1884,13 @@ async function toAudio(it,bt){
   let out='';
   try{
     const dir=Native.outDir();out=dir+'/'+nm;let lp=-1;
-    const tot=await toMp3(it.p,out,250e6,bt,p=>{n.cp=p;if(p!=lp&&tab=='dl'){lp=p;draw()}},n);
+    const tot=await toMp3(it.p,out,250e6,bt,p=>{n.cp=p;if(p!=lp){lp=p;jnv(n,jtxt(n),p,n.cvp?2:0);if(tab=='dl')draw()}},n);
     const hd=atob(Native.readB64(out,0,4)||'');
     if(!(hd.length>=2&&((hd.charCodeAt(0)==255&&(hd.charCodeAt(1)&224)==224)||hd.slice(0,3)=='ID3')))throw new Error('الملف الناتج غير صالح');
-    const fid=Native.finish(out);if(fid)n.id=fid;n.s=8;n.mg=0;n.cv=0;n.p=out;n.z=tot||0;vib([10,30,14]);toast('✓ اكتمل التحويل — اضغط للتشغيل',3500);
+    const fid=Native.finish(out);if(fid)n.id=fid;n.s=8;n.mg=0;n.cv=0;n.p=out;n.z=tot||0;jnv(n,out,100,1);vib([10,30,14]);toast('✓ اكتمل التحويل — اضغط للتشغيل',3500);
   }catch(e){if(out)try{Native.rm(out)}catch(_){}
-    if(e&&e.message=='__cx'){items=items.filter(i=>i!==n);keep();draw();return}
-    n.s=16;n.mg=0;n.e='فشل التحويل: '+short(e)}
+    if(e&&e.message=='__cx'){jnv(n,'',0,3);if(!n.cxl)items=items.filter(i=>i!==n);keep();draw();return}
+    n.s=16;n.mg=0;n.e='فشل التحويل: '+short(e);jnv(n,'فشل التحويل',0,1)}
   keep();draw();
 }
 /* الإعدادات */
@@ -1792,9 +1936,9 @@ function openCfg(){scr='main';cfgBody();const c=$('#cf');c.hidden=0;requestAnima
 function closeCfg(){trFrom=0;const c=$('#cf');c.classList.remove('on');setTimeout(()=>c.hidden=1,400)}
 function cfgBack(){if(scr=='tr'&&trFrom){trFrom=0;scr='main';closeCfg();return}if(scr!='main'){scr='main';cfgBody()}else closeCfg()}
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-t],[data-a],[data-k],[data-df],.op,#go,#sh');if(!b)return;
+  const b=e.target.closest('[data-t],[data-a],[data-k],[data-rm],[data-eg],[data-df],.op,#go,#sh');if(!b)return;
   const a=b.dataset.a;
-  if(b.dataset.k){res.tab=b.dataset.k;sheetBody();return}
+  if(b.dataset.eg){rmEng(b.dataset.eg);return}if(b.dataset.rm){rmToggle();return}if(b.dataset.k){sheetTab(b.dataset.k);return}
   if(b.dataset.t){tab=b.dataset.t;if(tab=='dl')items.forEach(x=>{if(x.s<8)seenK[x.key]=1});draw(1);if(tab=='st'&&!sx.list)loadSt();return}
   if(b.dataset.df){dlf=b.dataset.df;draw(1);return}
   if(b.id=='go'){if(busy)anCancel();else analyze($('#u').value);return}
@@ -1853,7 +1997,7 @@ document.addEventListener('click',e=>{
     case 'cfo':if(b.dataset.s=='tr'){trF='all';trSel.clear()}scr=b.dataset.s;cfgBody();break;
     case 'sw':cfg[b.dataset.c]=cfg[b.dataset.c]?0:1;sv();b.querySelector('.sw').classList.toggle('on',!!cfg[b.dataset.c]);if(b.dataset.c=='nSound')cfgBody(1);break;
     case 'th':cfg.th=b.dataset.v;sv();applyTh();cfgBody(1);break;
-    case 'pz':if(it&&it.cv&&it.mg&&it.s<8){const rs=it.s==4;it.cvp=rs?0:1;it.s=rs?2:4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}else if(it&&it.t2){const rs=it.s==4;try{Native.tctl(it.key,rs?'resume':'pause')}catch(_){}it.s=rs?2:4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}break;
+    case 'pz':if(it&&it.px&&it.s<8){if(window.mxPxToggle&&window.mxPxToggle(it)){const rs=it.s!=4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}}else if(it&&it.cv&&it.mg&&it.s<8){const rs=it.s==4;it.cvp=rs?0:1;it.s=rs?2:4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}else if(it&&it.cv&&!it.mg&&!it.t2&&it.s<8){const rs=it.s==4;it.pzd=rs?0:1;try{Native.dctl(it.id,rs?'resume':'pause')}catch(_){}it.s=rs?2:4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}else if(it&&it.t2){const rs=it.s==4;try{Native.tctl(it.key,rs?'resume':'pause')}catch(_){}it.s=rs?2:4;draw();tapFx(it.id,e,rs?'rs':'ps');vib(rs?10:[8,30,8])}break;
     case 'cx':if(it){if(it.cv&&it.mg&&it.s<8)cancelConv(it);else cancelItem(it)}break;
     case 'mx':hide();if(mt){if(mt.cv&&mt.mg&&mt.s<8)cancelConv(mt);else cancelItem(mt)}break;
     case 'sx':exitSel();break;
@@ -1885,7 +2029,7 @@ window.back=()=>{if(!$('#sh').hidden){hide();return 1}if(!$('#cf').hidden){cfgBa
 const fu=s=>(String(s||'').match(/https?:\/\/[^\s]+/)||[])[0]||'';
 let lc=localStorage.getItem('lc')||'';
 window.chk=()=>{try{const u=fu(Native.clip());if(u&&u!=lc&&!busy){lc=u;try{localStorage.setItem('lc',u)}catch(e){}tab='home';draw();analyze(u)}}catch(e){}};
-window.onShared=t=>{try{lc=fu(Native.clip());localStorage.setItem('lc',lc)}catch(e){}tab='home';draw();analyze(t)};
+window.onShared=t=>{if(t==='@@dl'){try{hide()}catch(e){}tab='dl';dlf='all';draw(1);return}try{lc=fu(Native.clip());localStorage.setItem('lc',lc)}catch(e){}tab='home';draw();analyze(t)};
 window.__m=(k,ok,r,pa)=>{const x=items.find(y=>y.key==k);if(!x)return;x.mg=0;if(ok){x.id=r;x.aid='';x.s=8;x.p=pa||''}else{x.s=16;x.e='فشل الدمج: '+r}keep();draw();if(!ok)toast('تعذر دمج الصوت والفيديو')};
 function pollT2(){
   const t2=items.filter(x=>x.t2&&x.s<8);if(!t2.length)return 0;
@@ -1893,7 +2037,7 @@ function pollT2(){
   t2.forEach(x=>{
     const o=r.find(y=>y.k==x.key);
     if(!o){x.s=16;x.mg=0;x.e='انقطع التحميل (أُغلق التطبيق). أعد المحاولة';return}
-    if(o.c){items=items.filter(y=>y!==x);try{Native.tdrop(x.key)}catch(e){}return}
+    if(o.c){x.s=16;x.mg=0;x.cxl=1;x.e='';x.sp=0;try{Native.tdrop(x.key)}catch(e){}return}
     x.sp=o.sp;x.b=o.b;x.z=o.z;x.e=o.e;
     if(o.s==8){x.s=8;x.mg=0;x.id=o.id||x.id;x.p=o.p;x.z=o.sz||x.z;x.d=o.d;if(o.p)x.ext=o.p.split('.').pop().toLowerCase()}
     else if(o.s==16){x.s=16;x.mg=0}
@@ -1914,10 +2058,21 @@ setInterval(()=>{
     if(x.aid){x.b=o.b+p.b;x.z=(o.t>0&&p.t>0)?o.t+p.t:0;
       if(o.s==8&&p.s==8){x.mg=1;x.s=2;Native.merge(x.id,x.aid,x.nm,x.key)}else x.s=(o.s==16||p.s==16)?16:2}
     else if(x.rx){x.s=o.s;x.b=o.b;x.z=o.t;if(o.s==8){x.mg=1;x.s=2;Native.remux(x.id,x.nm,x.key)}}
-    else{x.s=o.s;x.b=o.b;x.z=o.t;if(o.s==8){if(x.cv){x.mg=1;x.s=2;x.tp=o.p;x.cp=0;conv(x)}else x.p=o.p}}
+    else{x.s=(x.pzd&&o.s<8)?4:o.s;x.b=o.b;x.z=o.t;if(x.cv){if(o.s<8)jnv(x,jtxt(x),pct(x),x.s==4?2:0);else if(o.s==16)jnv(x,'تعذر تحميل الصوت',0,1)}if(o.s==8){if(x.cv){x.mg=1;x.s=2;x.tp=o.p;x.cp=0;conv(x)}else x.p=o.p}}
   });
   keep();if(tab=='dl')draw();
 },900);
+
+
+/* تحكم الإشعارات في مهام الصوت (إيقاف مؤقت / استئناف / إلغاء) */
+window.nctl=(k,a)=>{
+  const it=items.find(x=>x.key==k&&x.cv&&!x.t2&&x.s<8);if(!it)return;
+  if(a=='cancel'){if(it.mg){it.cvx=1;it.cvp=0}cancelItem(it);return}
+  const rs=a=='resume';if(a!='pause'&&!rs)return;if((it.s==4)==!rs)return;
+  if(it.mg){it.cvp=rs?0:1}else{it.pzd=rs?0:1;try{Native.dctl(it.id,rs?'resume':'pause')}catch(_){}}
+  it.s=rs?2:4;nzs(it);keep();if(tab=='dl')draw()};
+function nzs(x){const z=x.s==4?1:0;x._nz=z;jnv(x,jtxt(x),pct(x),z?2:0)}
+setInterval(()=>{items.forEach(x=>{if(x.cv&&!x.t2&&x.s<8&&x.s!=1&&(x.s==4?1:0)!==(x._nz||0))nzs(x)})},700);
 
 let ftBusy=0;
 async function fixThumbs(){
@@ -2017,10 +2172,1145 @@ setInterval(()=>{if(tab=='dl'&&!document.hidden)syncFiles()},3500);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(syncFiles,400)});
 const _ck=window.chk;window.chk=()=>{try{syncFiles()}catch(e){}if(_ck)_ck()};
 
+
+/* ===== إزالة الموسيقى التلقائية بعد التحميل ===== */
+function rmChk(){
+  if(!window.mxAuto)return;
+  let ch=0;
+  items.forEach(x=>{
+    if(x.rmq&&x.s==8&&x.p&&!x.mg&&!x.px){
+      x.rmq=0;x.px=1;x.z0=x.z;x.b0=x.b;x.l0=x.l;x.s=2;x.mg=1;
+      if(x.t2){x.t2=0;try{Native.tdrop(x.key)}catch(e){}}
+      x.cv=0;x.b=0;x.z=1000;x.sp=0;x.pxT='في الانتظار…';x.pxR='';ch=1;
+      window.mxAuto(x);
+    }
+  });
+  if(ch)keep();
+}
+setInterval(()=>{try{if(items.some(x=>x.rmq&&x.s==8)){rmChk();if(tab=='dl')draw()}}catch(e){}},500);
+
 draw(1);
 Native.ready();
 {const _b2=window.back;window.back=()=>{if(!$('#sh').hidden)return _b2?_b2():0;if(SV.el&&!SV.el.hidden){svClose();return 1}if(tab=='st'&&sx.selM){sx.selM=0;sx.sel=new Set();draw();return 1}return _b2?_b2():0}}
 {const _cc=closeCfg;closeCfg=function(){trSwap(0);_cc()};const _cb=cfgBody;cfgBody=function(k){if(scr!='tr')trSwap(0);return _cb.apply(this,arguments)}}
+</script>
+<script>
+/* صفحة «إزالة الموسيقى» v2 */
+(()=>{
+'use strict';
+/* ===== صفحة «إزالة الموسيقى» v2 — الجزء 1: الثوابت والحالة والأنماط ===== */
+const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
+const Y=(()=>{const q=[],mc=new MessageChannel();mc.port1.onmessage=()=>{const f=q.shift();f&&f()};return()=>new Promise(r=>{q.push(r);mc.port2.postMessage(0)})})(),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const fsz=b=>b>=1e9?(b/1073741824).toFixed(2)+' GB':b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
+const fmt=t=>{t=Math.max(0,Math.round(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+const toArN=s=>String(s).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const J=s=>{try{return JSON.parse(s)}catch(e){return null}};
+const VID=/\.(mp4|m4v|mov|mkv|webm|3gp|ts|avi|flv|wmv)$/i,AUD=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac|amr|wma|mka)$/i;
+const MAXSEC=600,AUTOSEC=0,BASE='https://github.com/TRvlvr/model_repo/releases/download/all_public_uvr_models/';
+const nameOf=p=>String(p).split('/').pop(),baseOf=n=>n.replace(/\.[^.]+$/,''),clean=s=>String(s).replace(/[\\\/:*?"<>|\n\r]+/g,' ').trim().slice(0,80);
+const isVid=n=>VID.test(n||'');
+const ago=t=>{const d=Math.floor((Date.now()-t)/864e5);if(d<1){const h=Math.floor((Date.now()-t)/36e5);return h<1?'الآن':'منذ '+toArN(h)+' ساعة'}return d===1?'أمس':'منذ '+toArN(d)+' أيام'};
+
+/* المسارات (الصفوف) */
+const ST=[
+ {k:'voc',n:'الأصوات البشرية',h:'كلام · غناء',c:['#2ee08a','#22d3ee']},
+ {k:'drm',n:'الطبول والإيقاع',h:'طبل · دف · نقر',c:['#ffb142','#ff5e62']},
+ {k:'bas',n:'الباص والأوتار الغليظة',h:'الترددات المنخفضة',c:['#b794f6','#6366f1']},
+ {k:'nat',n:'الأصوات الطبيعية',h:'ضوضاء الخلفية: رياح · مطر · مياه · زحام',c:['#bef264','#16a34a']},
+ {k:'oth',n:'أخرى',h:'الآلات والمؤثرات',c:['#4fd1ff','#818cf8']}];
+const SK=Object.fromEntries(ST.map(s=>[s.k,s]));
+/* نماذج الفصل */
+const MODELS={
+ voc_fast:{f:'kuielab_a_vocals.onnx',sz:29703204,P:{nfft:6144,dimF:2048,dimT:512,hop:1024,compensate:1.035},sp:3},
+ voc_hq:{f:'UVR-MDX-NET-Voc_FT.onnx',sz:66762490,P:{nfft:7680,dimF:3072,dimT:256,hop:1024,compensate:1.021},sp:9},
+ drm:{f:'kuielab_a_drums.onnx',sz:29703204,P:{nfft:4096,dimF:2048,dimT:512,hop:1024,compensate:1.035},sp:3},
+ bas:{f:'kuielab_a_bass.onnx',sz:29703204,P:{nfft:16384,dimF:2048,dimT:512,hop:1024,compensate:1.035},sp:3},
+ kara:{f:'UVR_MDXNET_KARA_2.onnx',sz:52786726,P:{nfft:5120,dimF:2048,dimT:256,hop:1024,compensate:1.065},sp:3}};
+const mkey=(k,eng)=>k==='voc'?'voc_'+eng:k;
+
+/* الحالة */
+const saved=J(localStorage.getItem('mxcfg'))||{};
+const MX={stage:'pick',file:null,on:false,eng:saved.eng||'fast',bakOn:false,
+ on_:{voc:true,drm:false,bas:false,nat:false,oth:false},lv:{voc:100,drm:0,bas:0,nat:0,oth:0},
+ outA:saved.outA||'mp3',outV:'video',
+ buf:null,len:0,dur:0,st:{},pk:{},have:{},solo:'',mute:{},res:null,parts:null,rd:null,rdP:null,pvUrl:'',pa:null,
+ runId:0,busy:0,bg:null,cur:'',dlOk:{},selM:0,sel:new Set(),filt:'all',
+ pl:{playing:0,off:0,t0:0,src:{},gn:{},ctx:null,raf:0}};
+const keepCfg=()=>{try{localStorage.setItem('mxcfg',JSON.stringify({eng:MX.eng,outA:MX.outA}))}catch(e){}};
+const eff=k=>MX.on_[k]?MX.lv[k]/100:0;
+const CX='__cx';
+const guard=rid=>{if(rid!==MX.runId)throw new Error(CX)};
+
+/* أيقونات */
+const IC={
+ mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+ drm:'<ellipse cx="12" cy="10" rx="8" ry="3"/><path d="M4 10v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6M8 13v5M12 13.2v5.6M16 13v5"/><path d="M15.5 5l4.5-2.5M8.5 5L4 2.5"/>',
+ bas:'<circle cx="8" cy="16" r="4.6"/><path d="M11.4 12.6L19 5M16.8 2.8l4.4 4.4M5.4 16h5.2"/>',
+ leaf:'<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c2-5 5-8 9-10"/>',
+ note:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+ magic:'<path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>',
+ play:'<path d="M7 4.5l12.5 7.5L7 19.5z" fill="currentColor" stroke="none"/>',pause:'<path d="M8 5v14M16 5v14" stroke-width="3.2"/>',
+ dots:'<circle cx="12" cy="5" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="19" r="1.7" fill="currentColor"/>',
+ vid:'<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3z"/>',aud:'<path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/>',
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ dl:'<path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+ solo:'<path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9a4 4 0 0 1 0 6"/>',mute:'<path d="M3 9v6h4l5 4V5L7 9z"/><path d="M17 9l5 6M22 9l-5 6"/>',
+ b10:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',f10:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+ up:'<path d="M12 19V5M5 12l7-7 7 7"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-4M8.6 13.4l6.8 4"/>',
+ shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',bolt:'<path d="M13 2L3 14h8l-1 8 10-12h-8z"/>',
+ trash:'<path d="M3 6h18M8 6V4h8v2m-9 0l1 14h8l1-14"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ warn:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18.2v.1" stroke-width="2.6"/>',
+ home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',dl2:'<path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/>',
+ all:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+ whatsapp:'<path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 19z"/>',cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+ usb:'<path d="M5 3h14v18H5z"/><path d="M9 3v5h6V3"/>',hist:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l3 2"/>'};
+const ic=(n,c)=>`<svg class="i${c?' '+c:''}" viewBox="0 0 24 24">${IC[n]||''}</svg>`;
+const SI={voc:'mic',drm:'drm',bas:'bas',nat:'leaf',oth:'note'};
+
+/* الأنماط */
+const css=document.createElement('style');css.textContent=`
+@property --mxa{syntax:'<angle>';inherits:false;initial-value:0deg}
+.mx-hero{position:relative;overflow:hidden;text-align:center;padding:22px 18px 20px}
+.mx-hero:before{content:"";position:absolute;inset:-40% -20% auto;height:90%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pr) 26%,transparent),transparent);pointer-events:none}
+.mx-eq{display:flex;gap:5px;justify-content:center;align-items:flex-end;height:54px;margin:2px 0 12px}
+.mx-eq i{width:7px;border-radius:5px;background:linear-gradient(180deg,var(--pr),#22d3ee);height:100%;transform-origin:bottom;animation:mxeq 1.15s ease-in-out infinite}
+.mx-eq i:nth-child(2n){background:linear-gradient(180deg,#ffb142,#ff5e62)}.mx-eq i:nth-child(3n){background:linear-gradient(180deg,#b794f6,#6366f1)}
+.mx-eq i:nth-child(1){animation-delay:-.9s}.mx-eq i:nth-child(2){animation-delay:-.3s}.mx-eq i:nth-child(3){animation-delay:-.7s}.mx-eq i:nth-child(4){animation-delay:-.1s}.mx-eq i:nth-child(5){animation-delay:-.5s}.mx-eq i:nth-child(6){animation-delay:-.8s}.mx-eq i:nth-child(7){animation-delay:-.2s}.mx-eq i:nth-child(8){animation-delay:-.6s}.mx-eq i:nth-child(9){animation-delay:-.4s}
+@keyframes mxeq{0%,100%{transform:scaleY(.18)}50%{transform:scaleY(1)}}
+.mx-hero h2{font:800 20px/1.4 Cairo,sans-serif}.mx-hero p{color:var(--mu);font-size:13px;margin:4px 0 14px}
+.mx-big{width:100%;height:52px;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap}
+.mx-big:active{transform:scale(.97)}.mx-big:disabled{filter:grayscale(.6);box-shadow:none;opacity:.7}
+.mx-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.mx-chips span{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--mu);background:var(--sf);padding:6px 11px;border-radius:14px}
+.mx-chips svg{width:15px;height:15px;color:var(--pr)}
+.mx-file{display:flex;align-items:center;gap:12px}
+.mx-fi{width:50px;height:50px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pr),#22d3ee);color:#fff;flex:none;box-shadow:0 10px 20px -10px var(--pr)}
+.mx-fi svg{width:26px;height:26px}
+.mx-ft{flex:1;min-width:0}.mx-ft b{display:block;font-size:14px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mx-ft small{color:var(--mu);font-size:12px}
+.mx-chg{background:var(--sf);border-radius:14px;padding:8px 13px;font-weight:800;font-size:12.5px;color:var(--pr)}
+.mx-mh{display:flex;align-items:center;gap:12px}
+.mx-mh .mx-fi{background:linear-gradient(135deg,#7c5cff,#22d3ee)}
+.mx-mh h3{font:800 16px/1.4 Cairo,sans-serif}.mx-mh small{display:block;color:var(--mu);font-size:12px;line-height:1.5}
+.mx-sw{position:relative;width:54px;height:32px;border-radius:20px;background:var(--ln);flex:none;transition:background .3s;box-shadow:inset 0 0 0 1px #0002}
+.mx-sw:after{content:"";position:absolute;top:4px;inset-inline-start:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 8px #0004;transition:inset-inline-start .35s cubic-bezier(.3,1.5,.5,1),transform .2s}
+.mx-sw[aria-pressed=true]{background:linear-gradient(135deg,var(--c1,var(--pr)),var(--c2,#22d3ee))}
+.mx-sw[aria-pressed=true]:after{inset-inline-start:26px}.mx-sw:active:after{transform:scale(.88,1.1)}
+.mx-p{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.9,.3,1),opacity .4s;opacity:0}
+.mx-p>div{overflow:hidden;min-height:0}.mx-p.on{grid-template-rows:1fr;opacity:1}
+.mx-eng{margin:14px 0 6px}.mx-eng .tb{margin:0}
+.mx-note{color:var(--mu);font-size:11.5px;line-height:1.7;margin:6px 2px 0}
+.mx-row{--c1:#2ee08a;--c2:#22d3ee;position:relative;background:var(--sf);border-radius:22px;padding:13px 14px 12px;margin-top:10px;transition:background .3s,box-shadow .3s;animation:mxin .5s cubic-bezier(.2,.8,.3,1) both}
+.mx-row:nth-child(2){animation-delay:.05s}.mx-row:nth-child(3){animation-delay:.1s}.mx-row:nth-child(4){animation-delay:.15s}.mx-row:nth-child(5){animation-delay:.2s}
+@keyframes mxin{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.mx-row.act{box-shadow:0 12px 26px -16px var(--c2),inset 0 0 0 1px color-mix(in srgb,var(--c2) 40%,transparent)}
+.mx-rh{display:flex;align-items:center;gap:11px}
+.mx-ib{position:relative;width:44px;height:44px;border-radius:15px;display:grid;place-items:center;color:var(--mu);background:var(--cd);flex:none;transition:all .35s}
+.mx-ib svg{width:24px;height:24px}
+.act .mx-ib{color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 8px 18px -8px var(--c2)}
+.act .mx-ib:before{content:"";position:absolute;inset:-4px;border-radius:19px;border:2px solid var(--c2);opacity:0;animation:mxring 2s ease-out infinite}
+@keyframes mxring{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+.act[data-k=drm] .mx-ib svg{animation:mxhit .7s ease-in-out infinite}.act[data-k=bas] .mx-ib svg{animation:mxbass 1s ease-in-out infinite}.act[data-k=oth] .mx-ib svg{animation:mxfloat 1.8s ease-in-out infinite}.act[data-k=voc] .mx-ib svg{animation:mxpulse 1.4s ease-in-out infinite}.act[data-k=nat] .mx-ib svg{animation:mxsway 2.2s ease-in-out infinite}
+@keyframes mxhit{0%,100%{transform:rotate(0)}30%{transform:rotate(-9deg) scale(1.08)}60%{transform:rotate(5deg)}}
+@keyframes mxbass{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}@keyframes mxfloat{50%{transform:translateY(-3px) rotate(6deg)}}@keyframes mxpulse{50%{transform:scale(1.14)}}@keyframes mxsway{50%{transform:rotate(-12deg) translateX(1px)}}
+.mx-rt{flex:1;min-width:0}.mx-rt b{display:block;font-size:14px;line-height:1.4}.mx-rt small{display:block;color:var(--mu);font-size:11.5px;line-height:1.5}
+.mx-sl{display:flex;align-items:center;gap:10px;margin-top:10px}
+.mx-v{font:800 14px/1 Cairo,sans-serif;min-width:46px;text-align:center;color:var(--mu);transition:color .3s;font-variant-numeric:tabular-nums}
+.act .mx-v{color:var(--c2)}
+.mx-r{-webkit-appearance:none;appearance:none;display:block;flex:1;min-width:0;height:12px;border-radius:8px;outline:none;margin:8px 0;direction:rtl;background:linear-gradient(to left,var(--c1) 0%,var(--c2) var(--v,0%),var(--ln) var(--v,0%),var(--ln) 100%);transition:filter .3s,opacity .3s}
+.mx-row:not(.act) .mx-r{filter:saturate(.25);opacity:.8}
+.mx-r::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;border:3px solid color-mix(in srgb,var(--c2) 55%,#6b7280);background:radial-gradient(circle,var(--c2) 0 4.5px,#141c18 5.5px);box-shadow:0 4px 12px #0006,0 0 0 4px color-mix(in srgb,var(--c2) 18%,transparent);transition:transform .15s}
+.mx-r:active::-webkit-slider-thumb{transform:scale(1.18)}.mx-r:disabled{opacity:.35}
+.mx-mini{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:var(--mu);background:var(--cd);flex:none}.mx-mini:active{transform:scale(.88)}.mx-mini svg{width:20px;height:20px}
+.mx-lock{opacity:.7}.mx-lock .mx-r{pointer-events:none}
+.mx-spin{width:18px;height:18px;border-radius:50%;border:2.5px solid color-mix(in srgb,var(--c2) 30%,transparent);border-top-color:var(--c2);animation:mxsp 1s linear infinite;flex:none}
+@keyframes mxsp{to{transform:rotate(360deg)}}
+.mx-wr{display:flex;align-items:center;gap:10px;margin-top:6px}
+.mx-rp{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 6px 14px -6px var(--c2);transition:transform .2s}.mx-rp:active{transform:scale(.88)}.mx-rp svg{width:20px;height:20px}
+.mx-wv{display:block;flex:1;min-width:0;height:38px;border-radius:8px;touch-action:none;cursor:pointer}
+.mx-sub{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 11px;border-radius:15px;background:var(--cd);font-size:12px;line-height:1.5}.mx-sub span{flex:1;min-width:0}
+.mx-sum{display:flex;gap:10px;align-items:center;background:color-mix(in srgb,var(--pr) 10%,var(--sf));border-radius:16px;padding:10px 12px;font-size:12px;line-height:1.7;margin-top:12px;color:var(--fg)}
+.mx-sum svg{color:var(--pr);width:20px;height:20px;flex:none}
+.mx-out{display:flex;flex-direction:column;gap:6px}.mx-out h4{font:800 13px/1.5 Cairo,sans-serif;color:var(--mu)}
+.mx-fmt{display:flex;gap:6px;flex-wrap:wrap}.mx-fmt button{flex:1;padding:9px 6px;border-radius:13px;background:var(--sf);font-weight:800;font-size:12.5px;color:var(--mu);transition:all .25s}
+.mx-fmt button.sel{background:linear-gradient(135deg,var(--pr),#0c9a5c);color:var(--on);box-shadow:0 8px 16px -8px var(--pr)}
+/* شاشة المعالجة */
+.mx-prog{text-align:center;padding:26px 16px 20px}
+.mx-ring{position:relative;width:170px;height:170px;margin:0 auto 14px;--rc:#ff5e62}
+.mx-ring svg{width:170px;height:170px;transform:rotate(-90deg);fill:none}.mx-ring circle{stroke-width:10;stroke-linecap:round}
+.mx-ring .bg{stroke:var(--sf)}.mx-ring .fg{stroke:var(--rc);stroke-dasharray:408;stroke-dashoffset:408;filter:drop-shadow(0 0 6px var(--rc))}
+.mx-ring b{position:absolute;inset:0;display:grid;place-items:center;font:800 34px/1 Cairo,sans-serif;font-variant-numeric:tabular-nums;color:var(--rc);text-shadow:0 0 18px color-mix(in srgb,var(--rc) 40%,transparent)}
+.mx-ring i{position:absolute;inset:-9px;border-radius:50%;border:2px solid var(--rc);opacity:0;animation:mxring 2.4s ease-out infinite}
+.mx-prog h3{font:800 15.5px/1.6 Cairo,sans-serif}.mx-prog p{color:var(--mu);font-size:12.5px;min-height:22px}
+.mx-eta{display:inline-flex;align-items:center;gap:7px;margin-top:6px;padding:6px 12px;border-radius:14px;background:var(--sf);font-size:12px;color:var(--mu);font-weight:700}
+.mx-eta svg{width:15px;height:15px}.mx-eta b{font:800 13px/1 Cairo,sans-serif;color:var(--fg);direction:ltr;display:inline-block;min-width:34px;text-align:center;font-variant-numeric:tabular-nums}
+.mx-prog .mx-eq{height:34px;margin:14px 0}
+.mx-bgn{display:block;margin:10px auto 0;font-size:11.5px;color:var(--pr);font-weight:800;text-decoration:underline}
+/* مشغّل */
+.mx-tp{display:flex;align-items:center;justify-content:center;gap:18px;margin:12px 0 2px}
+.mx-pb{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--pr),#0c9a5c);color:#fff;display:grid;place-items:center;box-shadow:0 12px 26px -10px var(--pr);transition:transform .2s}.mx-pb:active{transform:scale(.9)}
+.mx-pb svg{width:30px;height:30px}.mx-sk{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:var(--fg);background:var(--sf)}.mx-sk:active{transform:scale(.9)}
+.mx-sk b{position:absolute;font-size:9.5px;font-weight:800;top:50%;left:50%;transform:translate(-50%,-46%)}.mx-sk svg{width:30px;height:30px}
+.mx-seek{-webkit-appearance:none;appearance:none;display:block;width:100%;height:6px;border-radius:4px;outline:none;direction:ltr;margin:14px 0 6px;background:linear-gradient(to right,var(--pr) var(--v,0%),var(--ln) var(--v,0%))}
+.mx-seek::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--pr);border:3px solid var(--cd);box-shadow:0 3px 10px #0004}
+.mx-tm{display:flex;justify-content:space-between;color:var(--mu);font-size:12px;direction:ltr;font-variant-numeric:tabular-nums}
+.mx-ok{display:flex;align-items:center;gap:12px}.mx-ok .mx-fi{background:linear-gradient(135deg,#2ee08a,#22d3ee)}
+.mx-ok .mx-fi svg{animation:mxpop .6s cubic-bezier(.3,1.6,.5,1) both}@keyframes mxpop{from{transform:scale(0) rotate(-40deg)}}
+.mx-bgs{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border-radius:16px;background:color-mix(in srgb,var(--pr) 10%,var(--sf));font-size:12px;font-weight:700}
+.mx-bgs .mx-spin{--c2:var(--pr)}.mx-bgs span{flex:1;min-width:0}.mx-bgs button{padding:6px 11px;border-radius:11px;background:var(--cd);color:#e5484d;font-weight:800;font-size:11.5px}
+.mx-bgp{height:4px;border-radius:3px;background:var(--ln);margin-top:7px;overflow:hidden}.mx-bgp i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pr),#22d3ee);transition:width .6s}
+/* زر الحفظ */
+.mx-act{display:flex;gap:10px;margin-top:14px}.mx-act>*{margin:0!important}
+.mx-save{position:relative;isolation:isolate;flex:1.6;height:54px;border-radius:20px;display:flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;font:800 15px/1 Cairo,sans-serif;color:#fff;background:linear-gradient(135deg,var(--pr),#0c9a5c);overflow:visible}
+.mx-save svg{width:20px;height:20px;flex:none}.mx-save:active{transform:scale(.96)}
+.mx-save:before{content:"";position:absolute;inset:-3px;border-radius:23px;z-index:-1;background:conic-gradient(from var(--mxa),#2ee08a,#22d3ee,#b794f6,#ffb142,#2ee08a);filter:blur(9px);opacity:.75;animation:mxspn 3.2s linear infinite}
+.mx-save:after{content:"";position:absolute;inset:0;border-radius:20px;background:linear-gradient(110deg,transparent 30%,#fff5 50%,transparent 70%);background-size:220% 100%;animation:mxsh 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes mxspn{to{--mxa:360deg}}@keyframes mxsh{0%{background-position:160% 0}100%{background-position:-60% 0}}
+.mx-new{flex:1;height:54px;border-radius:20px;background:var(--sf);font-weight:800;font-size:14px;color:var(--fg);white-space:nowrap}
+/* منتقي الملفات */
+.mx-pk .shh{display:flex;align-items:center;justify-content:space-between}
+.mx-fl{display:flex;gap:8px;margin:6px 0 10px;overflow-x:auto;padding-bottom:2px}.mx-fl::-webkit-scrollbar{display:none}
+.mx-fl button{display:flex;align-items:center;gap:7px;padding:8px 15px;border-radius:20px;border:1.5px solid var(--ln);font-weight:800;font-size:13px;color:var(--fg);white-space:nowrap;flex:none;transition:all .25s}
+.mx-fl button svg{width:17px;height:17px}.mx-fl button.on{background:var(--pr);border-color:var(--pr);color:var(--on)}
+.mx-bt{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 10px}.mx-bt::-webkit-scrollbar{display:none}
+.mx-bt button{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none;width:76px;font-size:11.5px;font-weight:700;color:var(--fg)}
+.mx-bt button i{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--sf);color:var(--pr);transition:transform .2s}.mx-bt button:active i{transform:scale(.9)}.mx-bt svg{width:26px;height:26px}
+.mx-pk h4{font:800 12.5px/1.6 Cairo,sans-serif;color:var(--mu);margin:8px 4px 4px}
+.mx-fr{display:flex;align-items:center;gap:11px;width:100%;padding:9px 6px;border-radius:16px;text-align:start}
+.mx-fr:active{background:var(--sf)}
+.mx-fr .mx-fp{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--sf);color:var(--pr);flex:none;transition:all .2s}.mx-fr .mx-fp svg{width:22px;height:22px}
+.mx-fr .mx-fp.pl{background:var(--pr);color:var(--on)}
+.mx-fr .mx-ft b{font-size:13px}.mx-fr .mx-ft b bdi{direction:ltr}
+.mx-brw{display:flex;align-items:center;gap:8px;color:var(--mu);font-size:11px;direction:ltr;padding:2px 6px 6px;word-break:break-all}
+/* معاينة الملف */ .mx-vp{position:relative;background:#000;border-radius:20px;overflow:hidden}.mx-vp video{display:block;width:100%;max-height:320px;background:#000;object-fit:contain;border-radius:0}
+.mx-vbig{position:absolute;left:50%;top:calc(50% - 26px);transform:translate(-50%,-50%);width:66px;height:66px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--pr),#0c9a5c);box-shadow:0 10px 26px -8px #000a;transition:opacity .25s,transform .2s}.mx-vbig:active{transform:translate(-50%,-50%) scale(.9)}.mx-vbig svg{width:30px;height:30px}.mx-vp.pl .mx-vbig{opacity:0;pointer-events:none}
+.mx-vbar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cd)}.mx-vbar .mx-rp{width:40px;height:40px;--c1:var(--pr);--c2:#0c9a5c}.mx-vbar .mx-seek{margin:0;flex:1}.mx-vbar small{font-size:11.5px;color:var(--mu);direction:ltr;font-variant-numeric:tabular-nums;min-width:74px;text-align:center}
+.go.mx-pz{display:flex;align-items:center;justify-content:center;gap:10px;line-height:1;text-align:center;background:linear-gradient(135deg,#f6a23a,#e8770f);color:#fff;box-shadow:0 8px 18px -8px #e8770f;height:46px;width:100%;margin:10px 0 0;font-size:13px;white-space:nowrap}.go.mx-pz svg{width:20px;height:20px;flex:none;display:block}.go.mx-pz.rs{background:linear-gradient(135deg,var(--pr),#0c9a5c);box-shadow:0 8px 18px -8px var(--pr)}.go.cx{animation:none}
+.mx-home{display:block;margin:12px auto 2px;font-size:12.5px;color:var(--mu);font-weight:700;padding:6px 10px}
+.mx-pv{margin-top:14px;border-radius:20px;overflow:hidden;background:var(--sf)}
+.mx-pv video{display:block;width:100%;max-height:320px;background:#000;object-fit:contain;border-radius:20px}
+.mx-pvl{padding:22px;text-align:center;color:var(--mu);font-size:12.5px}.mx-pvl .mx-spin{margin:0 auto 8px;--c2:var(--pr)}
+.mx-ap{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.mx-ap .mx-rp{width:46px;height:46px;--c1:var(--pr);--c2:#0c9a5c}.mx-ap .mx-seek{margin:0;flex:1}.mx-ap small{font-size:11.5px;color:var(--mu);direction:ltr;font-variant-numeric:tabular-nums;min-width:74px;text-align:center}
+.mx-opn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-weight:800;font-size:13px;color:var(--pr)}.mx-opn svg{width:20px;height:20px}
+/* انتبه */
+.mx-warn{--hd:#9a5b00;--hg:#f59e0b;position:relative;overflow:hidden;padding:18px 16px;border:1px solid color-mix(in srgb,var(--hg) 40%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--hg) 11%,var(--cd)),var(--cd) 60%)}
+:root[data-theme=dark] .mx-warn{--hd:#ffd27a;--hg:#fbbf24}@media(prefers-color-scheme:dark){:root:not([data-theme]) .mx-warn{--hd:#ffd27a;--hg:#fbbf24}}
+.mx-warn:before{content:"";position:absolute;width:260px;height:260px;inset-inline-end:-90px;top:-110px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--hg) 30%,transparent),transparent);animation:mxbreath 5s ease-in-out infinite;pointer-events:none}
+@keyframes mxbreath{50%{transform:scale(1.25);opacity:.6}}
+.mx-wh{display:flex;align-items:center;gap:12px;position:relative}
+.mx-wi{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--hg),#ea580c);flex:none;animation:mxwp 2.4s ease-in-out infinite}.mx-wi svg{width:25px;height:25px}
+@keyframes mxwp{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--hg) 55%,transparent)}50%{box-shadow:0 0 0 11px transparent}}
+.mx-wh h3{font:800 19px/1.3 Cairo,sans-serif;color:var(--hd)}.mx-wh small{display:block;color:var(--mu);font-size:11.5px}
+.mx-nr{margin:14px 0 8px;font-size:12.5px;color:var(--mu);line-height:1.8;position:relative}
+.mx-hd{position:relative;overflow:hidden;padding:15px 16px;border-radius:18px;background:color-mix(in srgb,var(--hg) 10%,transparent);border-inline-start:4px solid var(--hg);font:800 17px/2.05 'Amiri','Scheherazade New',Cairo,serif;color:var(--hd);text-shadow:0 0 16px color-mix(in srgb,var(--hg) 45%,transparent);animation:mxgl 3.6s ease-in-out infinite;letter-spacing:.2px}
+.mx-hd:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,color-mix(in srgb,var(--hg) 22%,transparent) 50%,transparent 65%);background-size:250% 100%;animation:mxsh 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes mxgl{50%{text-shadow:0 0 26px color-mix(in srgb,var(--hg) 80%,transparent),0 0 3px color-mix(in srgb,var(--hg) 40%,transparent)}}
+.mx-pt{position:relative;margin-top:12px;padding:12px 13px;border-radius:16px;background:var(--sf);font-size:13px;line-height:1.95;animation:mxin .6s cubic-bezier(.2,.8,.3,1) both}.mx-pt:nth-of-type(2){animation-delay:.12s}.mx-pt:nth-of-type(3){animation-delay:.24s}
+.mx-hl{color:var(--hd);font-weight:800;text-shadow:0 0 12px color-mix(in srgb,var(--hg) 40%,transparent)}
+.mx-rm{background:linear-gradient(135deg,color-mix(in srgb,var(--hg) 16%,var(--sf)),var(--sf))}
+/* السجل */
+.mx-hh{display:flex;align-items:center;gap:10px;margin-bottom:6px}.mx-hh h3{flex:1;font:800 16px/1.4 Cairo,sans-serif}.mx-hh small{color:var(--mu);font-size:12px}
+.mx-hq{padding:7px 12px;border-radius:13px;background:var(--sf);font-weight:800;font-size:12px;color:var(--pr)}
+.mx-hr{position:relative;margin-top:9px;border-radius:20px;overflow:hidden;touch-action:pan-y}
+.mx-hd2{position:absolute;inset:0;background:linear-gradient(90deg,#e5484d,#ff6b6b);display:flex;align-items:center;justify-content:flex-start;padding-inline-start:0;padding-left:22px;color:#fff;border-radius:20px}.mx-hd2 svg{width:26px;height:26px;transition:transform .2s}.mx-hd2.go svg{transform:scale(1.4) rotate(-12deg)}
+.mx-hi{position:relative;display:flex;align-items:center;gap:11px;padding:11px 12px;background:var(--sf);border-radius:20px;transition:transform .25s cubic-bezier(.2,.9,.3,1),background .2s;will-change:transform}
+.mx-hi.drag{transition:none}.mx-hi.sel{background:color-mix(in srgb,var(--pr) 16%,var(--sf));box-shadow:inset 0 0 0 1.5px var(--pr)}
+.mx-hi .mx-fi{width:44px;height:44px;border-radius:15px}.mx-hi .mx-fi svg{width:22px;height:22px}
+.mx-hi .mx-ft small{display:block;margin-top:1px}
+.mx-chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--ln);display:none;place-items:center;flex:none;color:#fff}.mx-chk svg{width:14px;height:14px;stroke-width:3.4}
+.mx-selm .mx-chk{display:grid}.mx-hi.sel .mx-chk{background:var(--pr);border-color:var(--pr)}
+.mx-sb{display:flex;align-items:center;gap:8px;margin-bottom:8px}.mx-sb b{flex:1;font-size:14px}.mx-sb button{padding:8px 12px;border-radius:13px;background:var(--sf);font-weight:800;font-size:12px}.mx-sb .rd{color:#e5484d}
+.mx-em{text-align:center;color:var(--mu);font-size:12.5px;padding:18px 8px;line-height:1.8}
+nav [data-t=mx].a span{max-width:118px}
+`;document.head.appendChild(css);
+
+/* ===== الجزء 2: المحرك ===== */
+const COMPS=['voc','bak','drm','bas','amb','oth'];
+const rowOf=c=>c==='bak'||c==='amb'?'nat':c;
+const compsOf=r=>r==='nat'?['bak','amb']:[r];
+const rowHave=r=>r==='oth'||(r==='nat'?!!MX.have.nat:!!MX.have[r]);
+const compGain=c=>c==='voc'?eff('voc'):c==='bak'||c==='amb'?eff('nat'):c==='drm'?eff('drm'):c==='bas'?eff('bas'):eff('oth');
+const AC=()=>window.OfflineAudioContext||window.webkitOfflineAudioContext;
+const mkBuf=(L,R)=>{const b=new (AC())(2,L.length,44100).createBuffer(2,L.length,44100);b.copyToChannel(L,0);b.copyToChannel(R,1);return b};
+function peaks(L,R,n){n=n||180;const o=new Float32Array(n),N=L.length,st=Math.max(1,Math.floor(N/n));let mx=0;for(let i=0;i<n;i++){let m=0;const a=i*st,e=Math.min(N,a+st),step=Math.max(1,(e-a)>>6);for(let j=a;j<e;j+=step){const v=Math.max(Math.abs(L[j]),Math.abs(R[j]));if(v>m)m=v}o[i]=m;if(m>mx)mx=m}if(mx>0)for(let i=0;i<n;i++)o[i]/=mx;return o}
+function sumOf(keys){const N=MX.len,L=new Float32Array(N),R=new Float32Array(N);keys.forEach(k=>{const b=MX.st[k];if(!b)return;const a=b.getChannelData(0),c=b.getChannelData(1);for(let i=0;i<N;i++){L[i]+=a[i];R[i]+=c[i]}});return[L,R]}
+function getMix(){return MX.buf?[MX.buf.getChannelData(0),MX.buf.getChannelData(1)]:sumOf(COMPS)}
+function calcPeaks(){['voc','drm','bas','oth'].forEach(k=>{const b=MX.st[k];if(b)MX.pk[k]=peaks(b.getChannelData(0),b.getChannelData(1))});
+ const ks=['bak','amb'].filter(k=>MX.st[k]);if(ks.length){const[L,R]=sumOf(ks);MX.pk.nat=peaks(L,R)}}
+
+/* ---------- قراءة الملفات ---------- */
+async function readParts(p,cap,onp,total,chk){
+ const CH=3145728,parts=[];let off=0;
+ for(;;){
+  if(chk)chk();
+  const b=Native.readB64(p,off,CH);if(!b)break;
+  const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);
+  parts.push(u);off+=u.length;if(cap&&off>cap)throw new Error('الملف كبير جدًا للمعالجة داخل التطبيق');
+  if(onp&&total)onp(Math.min(1,off/total));await Y();
+ }
+ if(!off)throw new Error('تعذر قراءة الملف (تحقق من صلاحية الوصول للملفات)');
+ return{parts,off};
+}
+async function decode(ab){
+ const OC=AC();if(!OC)throw new Error('المتصفح لا يدعم فك الصوت');const ctx=new OC(2,44100,44100);
+ return new Promise((ok,no)=>{try{const pr=ctx.decodeAudioData(ab,ok,no);if(pr&&pr.catch)pr.catch(no)}catch(e){no(e)}});
+}
+const mimeOf=n=>{const e=(n.split('.').pop()||'').toLowerCase();return({mp4:'video/mp4',m4v:'video/mp4',mov:'video/quicktime',webm:'video/webm',mkv:'video/x-matroska','3gp':'video/3gpp',mp3:'audio/mpeg',m4a:'audio/mp4',aac:'audio/aac',ogg:'audio/ogg',opus:'audio/ogg',wav:'audio/wav',flac:'audio/flac'})[e]||(isVid(n)?'video/mp4':'audio/mpeg')};
+
+/* ---------- المعاينة قبل المعالجة ---------- */
+function releasePv(){
+ if(MX.pa){try{MX.pa.pause()}catch(e){}MX.pa=null}
+ const v=$('#mxVid');if(v){try{v.pause()}catch(e){}}
+ if(MX.pvUrl){try{URL.revokeObjectURL(MX.pvUrl)}catch(e){}MX.pvUrl=''}
+}
+function resetSession(){
+ stopPlay();releasePv();MX.buf=null;MX.st={};MX.pk={};MX.have={};MX.parts=null;MX.rd=null;MX.rdP=null;MX.solo='';MX.mute={};MX.res=null;MX.cur='';MX.len=0;MX.dur=0;MX.bg=null;MX.bgId=(MX.bgId||0)+1;
+}
+async function chooseFile(p,s){
+ closeSheet();stopPick();resetSession();killMdx();MX.runId++;MX.busy=0;
+ MX.file={p,n:nameOf(p),s:+s||0,dur:0,vid:isVid(nameOf(p))};MX.stage='setup';
+ try{const a=J(Native.ls(p.slice(0,p.lastIndexOf('/'))))||[],x=a.find(y=>y.n===MX.file.n);if(x)MX.file.s=x.s}catch(e){}
+ redraw();MX.rdP=loadPreview(MX.runId);
+}
+async function loadPreview(rid){
+ const f=MX.file,cap=f.vid?260e6:400e6;
+ if(f.s>cap){setPv('big');return}
+ try{
+  setPv('load',0);
+  const r=await readParts(f.p,cap,q=>setPv('load',q),f.s,()=>{if(rid!==MX.runId||MX.file!==f)throw new Error(CX)});
+  if(rid!==MX.runId||MX.file!==f)return;
+  MX.rd=r;f.s=r.off;
+  MX.pvUrl=URL.createObjectURL(new Blob(r.parts,{type:mimeOf(f.n)}));
+  setPv('ok');
+ }catch(e){if(e&&e.message!==CX)setPv('err',0,e.message)}
+}
+function setPv(st,q,msg){
+ const el=$('#mxPv');if(!el||MX.stage!=='setup')return;const f=MX.file;
+ if(st==='load'){const l=el.querySelector('.mx-pvl small');if(l)l.textContent='جارٍ تجهيز المعاينة… '+toArN(Math.round((q||0)*100))+'٪';else el.innerHTML=`<div class="mx-pvl"><div class="mx-spin"></div><small>جارٍ تجهيز المعاينة… ${toArN(Math.round((q||0)*100))}٪</small></div>`;return}
+ if(st==='big'){el.innerHTML=`<div class="mx-pvl">الملف كبير فلا تتوفر معاينة داخل التطبيق</div><button class="mx-opn" data-mx="ext">${ic('play')}فتح في مشغّل الهاتف</button>`;return}
+ if(st==='err'){el.innerHTML=`<div class="mx-pvl">${esc(msg||'تعذرت المعاينة')}</div>`;return}
+ if(f.vid){
+  el.innerHTML=`<div class="mx-vp" id="mxVp"><video id="mxVid" src="${MX.pvUrl}" playsinline preload="metadata"></video><button class="mx-vbig" data-mx="vpl" aria-label="تشغيل">${ic('play')}</button><div class="mx-vbar"><button class="mx-rp" data-mx="vpl" id="mxVb" aria-label="تشغيل">${ic('play')}</button><input class="mx-seek" id="mxVs" type="range" min="0" max="1000" value="0"><small id="mxVt">0:00 / 0:00</small></div></div>`;
+  const v=$('#mxVid'),vs=$('#mxVs'),vt=$('#mxVt'),vb=$('#mxVb'),vp=$('#mxVp');let vd=0;
+  const vu=()=>{const d=isFinite(v.duration)?v.duration:0,c=v.currentTime||0;if(!vd&&vs){vs.value=d?c/d*1000:0;vs.style.setProperty('--v',(d?c/d*100:0)+'%')}if(vt)vt.textContent=fmt(c)+' / '+fmt(d)};
+  v.onloadedmetadata=()=>{if(isFinite(v.duration)&&v.duration>0){f.dur=v.duration;refreshSum();const s=$('#mxFm');if(s)s.textContent=fmt(f.dur)}vu()};
+  v.ontimeupdate=vu;v.onplay=()=>{vp.classList.add('pl');vb.innerHTML=ic('pause')};v.onpause=()=>{vp.classList.remove('pl');vb.innerHTML=ic('play')};v.onended=()=>{vp.classList.remove('pl');vb.innerHTML=ic('play')};
+  v.onclick=()=>{v.paused?v.play():v.pause()};
+  vs.oninput=()=>{vd=1;const d=v.duration||0;vs.style.setProperty('--v',(vs.value/10)+'%');if(vt)vt.textContent=fmt(vs.value/1000*d)+' / '+fmt(d)};
+  vs.onchange=()=>{vd=0;const d=v.duration||0;if(d)v.currentTime=vs.value/1000*d};
+ }else{
+  if(MX.pa){try{MX.pa.pause()}catch(e){}}const a=new Audio(MX.pvUrl);MX.pa=a;
+  el.innerHTML=`<div class="mx-ap"><button class="mx-rp" data-mx="apl" id="mxApb" aria-label="تشغيل">${ic('play')}</button><input class="mx-seek" id="mxAs" type="range" min="0" max="1000" value="0"><small id="mxAt">0:00 / 0:00</small></div>`;
+  const s=$('#mxAs'),t=$('#mxAt'),b=$('#mxApb');let drag=0;
+  const upd=()=>{const d=a.duration||0,c=a.currentTime||0;if(!drag&&s){s.value=d?c/d*1000:0;s.style.setProperty('--v',(d?c/d*100:0)+'%')}if(t)t.textContent=fmt(c)+' / '+fmt(d)};
+  a.onloadedmetadata=()=>{if(isFinite(a.duration)&&a.duration>0){f.dur=a.duration;refreshSum();const q=$('#mxFm');if(q)q.textContent=fmt(f.dur)}upd()};
+  a.ontimeupdate=upd;a.onended=()=>{if(b)b.innerHTML=ic('play')};a.onplay=()=>{if(b)b.innerHTML=ic('pause')};a.onpause=()=>{if(b)b.innerHTML=ic('play')};
+  s.oninput=()=>{drag=1;const d=a.duration||0;s.style.setProperty('--v',(s.value/10)+'%');if(t)t.textContent=fmt(s.value/1000*d)+' / '+fmt(d)};
+  s.onchange=()=>{drag=0;if(a.duration)a.currentTime=s.value/1000*a.duration};
+ }
+}
+
+/* ---------- الملفات الأحدث في الهاتف ---------- */
+let recentCache=null;
+async function scanRecent(force){
+ if(recentCache&&!force&&Date.now()-recentCache.t<60000)return recentCache.list;
+ let root='/storage/emulated/0';try{const d=J(Native.dirs(''));if(d&&d.p)root=d.p}catch(e){}
+ const roots=[Native.outDir&&Native.outDir(),root+'/Download',root+'/Music',root+'/Movies',root+'/DCIM',root+'/Recordings',root+'/Voice Recorder',root+'/Sounds',root+'/Podcasts',root+'/Audiobooks',root+'/Telegram',root+'/WhatsApp/Media',root+'/Android/media/com.whatsapp/WhatsApp/Media'].filter(Boolean);
+ const seen=new Set(),out=[],q=roots.map(p=>[p,0]);let n=0;
+ while(q.length&&n<70){
+  const[p,dep]=q.shift();if(seen.has(p))continue;seen.add(p);n++;
+  try{
+   const fl=J(Native.ls(p))||[];fl.forEach(f=>{if(f.s>2048&&(VID.test(f.n)||AUD.test(f.n)))out.push({p:p+'/'+f.n,n:f.n,s:f.s,t:f.t||0,v:VID.test(f.n)})});
+   if(dep<3){const d=J(Native.dirs(p));(d&&d.d||[]).forEach(x=>{if(!/^\.|cache|thumb|\.trash/i.test(x))q.push([p+'/'+x,dep+1])})}
+  }catch(e){}
+  if(n%4===0)await Y();
+ }
+ out.sort((a,b)=>b.t-a.t);recentCache={t:Date.now(),list:out.slice(0,80)};return recentCache.list;
+}
+
+/* ---------- العمال ---------- */
+async function textOf(u){const r=await fetch(u);if(!r.ok)throw new Error('تعذر تحميل مكوّنات المحرك ('+u+')');return r.text()}
+async function blobUrl(u){const r=await fetch(u);if(!r.ok)throw new Error('ملف المحرك مفقود: '+u);return URL.createObjectURL(await r.blob())}
+let W={mdx:null};
+async function mdxWorker(){
+ if(W.mdx)return W.mdx;
+ const[a,b]=await Promise.all([textOf('ort.wasm.min.js'),textOf('mdx-worker.js')]);
+ const w=new Worker(URL.createObjectURL(new Blob([a+'\n;\n'+b],{type:'text/javascript'})));
+ const o={w,h:null,rj:null,rd:null},rdy=new Promise(r=>{o.rd=r});
+ w.onmessage=e=>{const m=e.data;if(m.t==='ready'){o.rd();return}if(o.h)o.h(m)};
+ w.onerror=e=>{if(o.h)o.h({t:'err',e:'تعذر تشغيل المحرك: '+(e.message||'')})};
+ o.call=(msg,tr,until,onp)=>new Promise((ok,no)=>{o.rj=no;o.h=m=>{if(m.t==='p'){onp&&onp(m);return}if(m.t==='err'){o.h=null;no(new Error(m.e));return}if(m.t===until){o.h=null;ok(m)}};w.postMessage(msg,tr||[])});
+ const iso=!!self.crossOriginIsolated,th=Math.max(1,Math.min(4,navigator.hardwareConcurrency||2));
+ const paths={'ort-wasm-simd.wasm':await blobUrl('ort-wasm-simd.wasm')};
+ if(iso&&th>1)paths['ort-wasm-simd-threaded.wasm']=await blobUrl('ort-wasm-simd-threaded.wasm');
+ await Promise.race([rdy,sleep(20000).then(()=>{throw new Error('تعذر تشغيل محرك الفصل')})]);
+ const ini=await o.call({t:'init',paths,threads:th},[],'init');o.threads=ini.threads;o.iso=ini.iso;o.wmix='';
+ return W.mdx=o;
+}
+function killMdx(){if(W.mdx){const o=W.mdx;W.mdx=null;try{o.w.terminate()}catch(e){}try{o.rj&&o.rj(new Error(CX))}catch(e){}}}
+let MUXL=null;
+async function muxLib(){if(MUXL)return MUXL;const t=await textOf('mux-lib.js');(0,eval)(t);if(!window.MUX)throw new Error('تعذر تحميل مكتبة الترميز');return MUXL=window.MUX}
+
+/* ---------- محرك التقدم السلس ---------- */
+const PG={shown:0,target:0,cap:0,rate:0,ph:'',etaEnd:0,last:0,raf:0,jn:0,on:0,paused:0,act:0,spd:0,ls:0,lt:0,hb:0};
+function pgReset(){Object.assign(PG,{rem:null,remF:null,spS:0,shown:0,target:0,cap:0,rate:0,ph:'جارٍ التحضير…',etaEnd:0,last:0,jn:0,paused:0,act:0,spd:0,ls:0,lt:0});MX.paused=0;pgStart()}
+function pgStart(){if(PG.on)return;PG.on=1;PG.last=performance.now();PG.raf=requestAnimationFrame(pgTick);clearInterval(PG.hb);PG.hb=setInterval(()=>{if(PG.on&&performance.now()-PG.last>450)pgStep(performance.now(),.7)},500)}
+function pgStop(){PG.on=0;cancelAnimationFrame(PG.raf);clearInterval(PG.hb)}
+function pgSet(o){
+ if(o.target!=null&&o.target>PG.target)PG.target=o.target;
+ if(o.cap!=null)PG.cap=Math.max(PG.cap,Math.min(99,o.cap));
+ if(o.rate!=null)PG.rate=o.rate;if(o.ph!=null)PG.ph=o.ph;
+ if(o.eta!=null){const e=Date.now()+o.eta*1000;PG.etaEnd=PG.etaEnd?PG.etaEnd+(e-PG.etaEnd)*(e>PG.etaEnd?.3:.55):e}
+}
+const ringCol=p=>{const h=8+137*Math.pow(Math.max(0,Math.min(1,p/100)),.85),dk=document.documentElement.dataset.theme==='dark';return `hsl(${h.toFixed(1)} ${dk?84:88}% ${dk?50:41}%)`};
+const PAUSE_COL='hsl(32 86% 50%)';
+function pgRem(){return PG.rem==null?-1:PG.rem}
+function pgCalc(dt){
+ if(PG.shown>=100){PG.rem=0;PG.remF=0;return}
+ if(PG.remF==null)return;
+ let v=1;
+ if(PG.act>=5&&PG.shown>=6){const c=PG.shown/PG.act;PG.spS=PG.spS?PG.spS+(c-PG.spS)*Math.min(1,dt*.25):c;const est=Math.max(1,(100-PG.shown)/PG.spS),r=PG.remF/est;v=r>1?Math.min(2.5,r):Math.max(.35,r)}
+ PG.remF=Math.max(1,PG.remF-v*dt);PG.rem=Math.ceil(PG.remF);
+}
+function pgInitEta(){let d=MX.dur||(MX.file&&MX.file.dur)||0;if(!(d>0))d=60;let t=0;try{t=estSec(makePlan(),d)}catch(e){}if(!(t>0))t=d*1.2;t+=6+d*.04;PG.remF=Math.max(5,t);PG.rem=Math.ceil(PG.remF)}
+function pgRemOld(){
+ if(PG.shown>=100)return 0;
+ if(PG.act>=4&&PG.shown>=3){const sp=PG.spd>0?(PG.spd*.5+PG.shown/PG.act*.5):PG.shown/PG.act;if(sp>0)return Math.max(1,Math.ceil((100-PG.shown)/sp))}
+ return PG.etaEnd?Math.max(1,Math.ceil((PG.etaEnd-Date.now())/1000)):-1;
+}
+function pgTick(ts){if(!PG.on)return;pgStep(ts,.08);if(PG.on)PG.raf=requestAnimationFrame(pgTick)}
+function pgStep(ts,mx){
+ if(!PG.on)return;
+ const rdt=Math.max(0,(ts-PG.last)/1000),dt=Math.min(mx,rdt);PG.last=ts;
+ if(!PG.paused){
+  PG.act+=Math.min(rdt,2);
+  if(PG.shown<PG.target){PG.shown=Math.min(PG.target,PG.shown+Math.max((PG.target-PG.shown)*2.4*dt,6*dt))}
+  else if(PG.shown<PG.cap){PG.shown=Math.min(PG.cap,PG.shown+PG.rate*dt)}
+  pgCalc(Math.min(rdt,2));
+  if(PG.act-PG.lt>=.6){const i=(PG.shown-PG.ls)/(PG.act-PG.lt);PG.spd=PG.spd?PG.spd*.85+i*.15:i;PG.ls=PG.shown;PG.lt=PG.act}
+ }
+ const el=$('#mxRing');
+ if(el&&MX.stage==='work'){
+  const p=Math.floor(PG.shown),c=PG.paused?PAUSE_COL:ringCol(PG.shown);
+  el.style.setProperty('--rc',c);const fg=$('#mxFg');if(fg)fg.style.strokeDashoffset=408*(1-PG.shown/100);
+  const a=$('#mxPct');if(a&&a._v!==p){a._v=p;a.textContent=toArN(p)+'٪'}
+  const ph=PG.paused?'المعالجة متوقفة مؤقتًا':PG.ph,b=$('#mxPh');if(b&&b._v!==ph){b._v=ph;b.textContent=ph}
+  const e=$('#mxEta');if(e){const s=pgRem();if(e._v!==s){e._v=s;e.textContent=s<0?'…':fmt(s)}}
+ }
+ if(Date.now()-PG.jn>2000&&MX.stage==='work'){PG.jn=Date.now();mxNotif()}
+}
+function mxNotif(){
+ const p=Math.floor(PG.shown),r=pgRem();
+ try{if(PG.paused)Native.jn('mx','إزالة الموسيقى','متوقف مؤقتًا · '+toArN(p)+'٪',p,2);else Native.jn('mx','إزالة الموسيقى','جارٍ المعالجة · '+toArN(p)+'٪'+(r>=0?' · المتبقي '+fmt(r):''),p,0)}catch(e){}
+}
+const mxGate=async rid=>{while(MX.paused){await sleep(250);if(rid!=null&&rid!==MX.runId)return}};
+function mxPzUi(){const b=$('#mxPz');if(!b)return;b.classList.toggle('rs',!!MX.paused);b.innerHTML=MX.paused?ic('play')+' استئناف المعالجة':ic('pause')+' إيقاف مؤقت';const el=$('#mxRing');if(el)el.style.setProperty('--rc',MX.paused?PAUSE_COL:ringCol(PG.shown))}
+function mxPause(){if(!MX.busy||MX.stage!=='work'||MX.paused)return;MX.paused=1;PG.paused=1;try{W.mdx&&W.mdx.w.postMessage({t:'pause',v:1})}catch(e){}try{if(MX.dlId)Native.dctl(String(MX.dlId),'pause')}catch(e){}mxPzUi();PG.jn=Date.now();mxNotif()}
+function mxResume(){if(!MX.busy||MX.stage!=='work'||!MX.paused)return;MX.paused=0;PG.paused=0;PG.last=performance.now();try{W.mdx&&W.mdx.w.postMessage({t:'pause',v:0})}catch(e){}try{if(MX.dlId)Native.dctl(String(MX.dlId),'resume')}catch(e){}mxPzUi();PG.jn=Date.now();mxNotif()}
+function mxToggle(){MX.paused?mxResume():mxPause()}
+{const _o=window.onShared;window.onShared=t=>{if(t==='@@mx'){try{hide()}catch(e){}tab='mx';draw(1);return}return _o&&_o(t)}}
+{const _n=window.nctl;window.nctl=(k,a)=>{if(k==='mx'){if(a==='pause')mxPause();else if(a==='resume')mxResume();else if(a==='cancel'&&MX.busy)cancelRun();return}if(_n)_n(k,a)}}
+function notifEnd(txt){try{if(txt==='')Native.jn('mx','إزالة الموسيقى','',0,3);else Native.jn('mx','إزالة الموسيقى',txt,100,1)}catch(e){}}
+
+/* ---------- النماذج ---------- */
+const dlDir=()=>Native.fdir()+'/tmp';
+function modelOk(m){const M=MODELS[m],name='mdx_'+M.f;try{const a=J(Native.ls(dlDir()))||[],x=a.find(y=>y.n===name);return !!(x&&x.s===M.sz)}catch(e){return false}}
+function refreshModels(){Object.keys(MODELS).forEach(m=>MX.dlOk[m]=modelOk(m))}
+async function ensureModel(m,onp,chk){
+ const M=MODELS[m],name='mdx_'+M.f,path=dlDir()+'/'+name;
+ if(modelOk(m)){MX.dlOk[m]=true;return path}
+ const id=Native.download(BASE+M.f,name,'{}','تنزيل نموذج فصل الصوت','1');
+ if(!id)throw new Error('تعذر بدء تنزيل النموذج، تحقق من الاتصال والصلاحيات');
+ MX.dlId=id;
+ try{
+  for(;;){
+   try{chk&&chk()}catch(e){try{Native.remove(id)}catch(_){}throw e}
+   await mxGate();await sleep(500);
+   const r=(J(Native.status(String(id)))||[]).find(y=>y.id==id);
+   if(!r)throw new Error('انقطع تنزيل النموذج');
+   if(r.s===16)throw new Error('فشل تنزيل النموذج'+(r.e?': '+r.e:'')+' — تحقق من الاتصال بالإنترنت');
+   onp(r.b||0,r.t||M.sz);if(r.s===8)break;
+  }
+ }finally{MX.dlId=''}
+ if(!modelOk(m))throw new Error('النموذج المُنزَّل غير مكتمل، أعد المحاولة');
+ MX.dlOk[m]=true;return path;
+}
+async function modelBuf(path,sz,chk){const b=await window.__getModel(path);if(!b||b.byteLength!==sz)throw new Error('تعذر قراءة النموذج');return b}
+const stepsOf=(m,len)=>{const P=MODELS[m].P,ch=P.hop*(P.dimT-1),gen=ch-P.nfft;return Math.max(1,Math.ceil(len/gen))};
+const spOf=m=>{const sp=J(localStorage.getItem('mxsp'))||{};return sp[m]||MODELS[m].sp};
+function saveSp(m,v){const sp=J(localStorage.getItem('mxsp'))||{};sp[m]=v;try{localStorage.setItem('mxsp',JSON.stringify(sp))}catch(e){}}
+
+/* ---------- الخطة ---------- */
+function makePlan(){
+ const g={};ST.forEach(s=>g[s.k]=eff(s.k));const gO=g.oth,e=1e-6,d=(a,b)=>Math.abs(a-b)>e;
+ const n={voc:false,bak:false,drm:false,bas:false,amb:false};
+ const needV=d(g.voc,gO)||(MX.bakOn&&d(g.nat,gO));
+ n.voc=needV&&!MX.have.voc;n.bak=!!(MX.bakOn&&needV&&d(g.nat,g.voc)&&!MX.have.bak);
+ n.drm=d(g.drm,gO)&&!MX.have.drm;n.bas=d(g.bas,gO)&&!MX.have.bas;n.amb=d(g.nat,gO)&&!MX.have.nat;
+ return n;
+}
+function estSec(n,dur){
+ const len=(dur||60)*44100,eng=MX.eng;let s=0;
+ if(n.voc)s+=dur*spOf(mkey('voc',eng));if(n.bak)s+=dur*spOf('kara');if(n.drm)s+=dur*spOf('drm');if(n.bas)s+=dur*spOf('bas');if(n.amb)s+=dur*0.05;
+ return s;
+}
+const modelsOf=n=>{const a=[];if(n.voc)a.push(mkey('voc',MX.eng));if(n.bak)a.push('kara');if(n.drm)a.push('drm');if(n.bas)a.push('bas');return a};
+
+/* ---------- تحميل الوسائط وفك الترميز ---------- */
+async function loadMedia(rid,rep){
+ const f=MX.file;
+ if(MX.rdP){rep({ph:'جارٍ قراءة الملف…',target:2});await MX.rdP;guard(rid)}
+ if(!MX.rd){rep({ph:'جارٍ قراءة الملف…',target:2});const r=await readParts(f.p,f.vid?900e6:300e6,q=>rep({target:1+q*7}),f.s,()=>guard(rid));guard(rid);MX.rd=r;f.s=r.off}
+ rep({ph:'جارٍ فك ترميز الصوت…',target:9,cap:11,rate:1.2});
+ const{parts,off}=MX.rd;let ab=null;
+ if(f.vid&&off>60e6){try{const M=await muxLib();ab=await decode(await M.extractAudio(new Blob(parts)))}catch(e){ab=null}guard(rid)}
+ if(!ab){
+  const all=new Uint8Array(off);let q=0;parts.forEach(u=>{all.set(u,q);q+=u.length});
+  try{ab=await decode(all.buffer)}catch(e){guard(rid);throw new Error('تعذر فك ترميز الصوت — الصيغة غير مدعومة على هذا الجهاز')}
+ }
+ guard(rid);
+ if(ab.duration>MAXSEC)throw new Error('الحد الأقصى للمدة '+Math.round(MAXSEC/60)+' دقائق. قصّ الملف ثم أعد المحاولة');
+ if(ab.numberOfChannels<2){const b2=mkBuf(ab.getChannelData(0),ab.getChannelData(0));ab=b2}
+ MX.buf=ab;MX.len=ab.length;MX.dur=ab.duration;f.dur=ab.duration;
+ if(f.vid)MX.parts=parts;MX.rd=null;releasePv();
+}
+
+/* ---------- خط الفصل ---------- */
+async function runSteps(rid,n,p0,p1,rep){
+ const eng=MX.eng,dur=MX.dur,order=['voc','bak','drm','bas'].filter(k=>n[k]),total=order.length+(n.amb?1:0);
+ if(!total)return;
+ const span=(p1-p0)/total;let vraw=null,rem=estSec(n,dur);
+ let w=null;
+ for(let i=0;i<order.length;i++){
+  await mxGate(rid);guard(rid);
+  const k=order[i],m=mkey(k,eng),M=MODELS[m],base=p0+i*span,nm=k==='bak'?'الأصوات الخلفية والكورال':SK[k].n;
+  const stepEst=dur*spOf(m);
+  rep({ph:'تجهيز نموذج «'+nm+'»…',target:base,cap:base+span*.08,rate:span*.01,eta:rem});
+  const path=await ensureModel(m,(b,t)=>rep({ph:'تنزيل نموذج «'+nm+'»',target:base+span*.1*Math.min(1,b/t),eta:rem+(t-b)/1.2e6}),()=>guard(rid));
+  guard(rid);rep({ph:'تحميل نموذج «'+nm+'»…',target:base+span*.11,cap:base+span*.145,rate:span*.01,eta:rem});
+  w=await mdxWorker();guard(rid);
+  const mb=await modelBuf(path,M.sz,()=>guard(rid));guard(rid);
+  await w.call({t:'load',id:m,buf:mb},[mb],'loaded');guard(rid);
+  const want=k==='bak'?'voc':'mix';
+  if(w.wmix!==want){
+   let L,R;if(k==='bak'){L=MX.st.voc.getChannelData(0).slice();R=MX.st.voc.getChannelData(1).slice()}else{const mx=getMix();L=mx[0].slice();R=mx[1].slice()}
+   await w.call({t:'mix',L:L.buffer,R:R.buffer},[L.buffer,R.buffer],'mix');w.wmix=want;guard(rid);
+  }
+  const NS=stepsOf(m,MX.len),s0=base+span*.15,sSpan=span*.85;
+  rep({ph:'فصل «'+nm+'»'+(w.threads>1?' · '+toArN(w.threads)+' خيوط':''),target:s0,cap:s0+sSpan/NS*.97,rate:sSpan/NS/Math.max(1,stepEst/NS),eta:rem});
+  const r=await w.call({t:'sep',job:i+1,P:M.P},[],'done',e=>{
+   guard(rid);const p=e.p,chunk=e.el/(p*NS);
+   rep({target:s0+sSpan*p,cap:s0+sSpan*Math.min(1,p+1/NS)*.985,rate:sSpan/NS/Math.max(.5,chunk),eta:Math.max(0,e.el*(1-p)/p+(rem-stepEst))});
+  });
+  guard(rid);saveSp(m,r.el/dur);rem=Math.max(0,rem-stepEst);
+  if(k==='voc'){if(order.includes('bak')){vraw=[r.L,r.R]}MX.st.voc=mkBuf(r.L,r.R);MX.have.voc=1}
+  else if(k==='bak'){const vl=MX.st.voc.getChannelData(0),vr=MX.st.voc.getChannelData(1),N=vl.length,a=new Float32Array(N),b=new Float32Array(N);for(let j=0;j<N;j++){a[j]=vl[j]-r.L[j];b[j]=vr[j]-r.R[j]}MX.st.bak=mkBuf(r.L,r.R);MX.st.voc=mkBuf(a,b);MX.have.bak=1}
+  else if(k==='drm'){MX.st.drm=mkBuf(r.L,r.R);MX.have.drm=1}
+  else if(k==='bas'){MX.st.bas=mkBuf(r.L,r.R);MX.have.bas=1}
+  await Y();
+ }
+ /* المتبقي + الأصوات الطبيعية */
+ const withAmb=n.amb||MX.have.nat;
+ const[mL,mR]=getMix(),N=MX.len,RL=new Float32Array(N),RR=new Float32Array(N);RL.set(mL);RR.set(mR);
+ ['voc','bak','drm','bas'].forEach(k=>{const b=MX.st[k];if(!b)return;const a=b.getChannelData(0),c=b.getChannelData(1);for(let j=0;j<N;j++){RL[j]-=a[j];RR[j]-=c[j]}});
+ if(withAmb){
+  const base=p0+order.length*span;rep({ph:'استخراج الأصوات الطبيعية…',target:base,cap:base+span*.9,rate:span/Math.max(3,dur*.06),eta:Math.max(1,dur*.06)});
+  w=w||await mdxWorker();guard(rid);
+  const l=RL.slice(),r=RR.slice();
+  const a=await w.call({t:'amb',job:99,L:l.buffer,R:r.buffer},[l.buffer,r.buffer],'ambdone',e=>{guard(rid);rep({target:base+span*e.p,cap:base+span*Math.min(1,e.p+.1),eta:Math.max(0,(1-e.p)*dur*.06)})});
+  guard(rid);MX.st.amb=mkBuf(a.L,a.R);MX.have.nat=1;
+  for(let j=0;j<N;j++){RL[j]-=a.L[j];RR[j]-=a.R[j]}
+ }
+ MX.st.oth=mkBuf(RL,RR);
+ if(w){try{await w.call({t:'free'},[],'freed')}catch(e){}}
+ killMdx();calcPeaks();
+}
+
+/* ---------- التشغيل الرئيسي ---------- */
+let wl=null;
+async function start(){
+ if(MX.busy)return;const rid=++MX.runId;MX.busy=1;MX.stage='work';pgReset();try{pgInitEta()}catch(e){}redraw();stopPlay();
+ try{wl=navigator.wakeLock&&await navigator.wakeLock.request('screen')}catch(e){}
+ const t0=Date.now();
+ try{
+  if(!MX.buf)await loadMedia(rid,pgSet);
+  guard(rid);
+  await mxGate(rid);guard(rid);
+  const n=makePlan();pgSet({ph:'جارٍ المعالجة…',target:12});
+  await runSteps(rid,n,12,97,pgSet);guard(rid);
+  if(!MX.st.oth){const[L,R]=getMix();MX.st.oth=mkBuf(L.slice(),R.slice());calcPeaks()}
+  if(MX.auto){await autoFinish(rid);return}
+  pgSet({ph:'جارٍ تجهيز المسارات…',target:100});await sleep(450);guard(rid);
+  MX.res={sec:Math.round((Date.now()-t0)/1000)};MX.stage='done';MX.busy=0;pgStop();
+  vib([10,30,14]);toast('✓ تمت إزالة الموسيقى');MX.paused=0;notifEnd('✓ اكتملت إزالة الموسيقى');
+  try{wl&&wl.release()}catch(e){}
+  redraw();autoSplit();
+ }catch(e){
+  try{wl&&wl.release()}catch(_){}
+  if(rid!==MX.runId)return;
+  killMdx();pgStop();MX.busy=0;MX.paused=0;MX.stage=MX.buf||MX.file?'setup':'pick';
+  toast('تعذرت المعالجة: '+String((e&&e.message)||e).slice(0,100),5000);notifEnd('تعذرت المعالجة');redraw();
+ }
+}
+function cancelRun(){
+ MX.runId++;MX.busy=0;MX.paused=0;PG.paused=0;try{if(MX.dlId)Native.remove(MX.dlId)}catch(e){}
+ killMdx();pgStop();try{wl&&wl.release()}catch(e){}
+ if(MX.hl){MX.hl=0;resetSession();MX.stage='pick'}else{MX.stage='setup';MX.st={};MX.pk={};MX.have={};MX.rd=null;MX.rdP=loadPreview(MX.runId)}
+ notifEnd('');toast('تم الإلغاء');redraw();
+}
+/* فصل باقي المسارات تلقائيًا في الخلفية بعد ظهور النتيجة */
+function missing(){return{voc:!MX.have.voc,bak:false,drm:!MX.have.drm,bas:!MX.have.bas,amb:!MX.have.nat}}
+function autoSplit(force,only){
+ let m=missing();
+ if(only){const key=only==='nat'?'amb':only,o={voc:false,bak:false,drm:false,bas:false,amb:false};if(m[key])o[key]=true;m=o}
+ if(!m.voc&&!m.drm&&!m.bas&&!m.amb){if(!only)finalizeAll();return}
+ if(MX.dur>AUTOSEC&&!force){histSave();return}
+ if(MX.bg)return;const id=MX.bgId=(MX.bgId||0)+1,gO=eff('oth'),was={...MX.have};
+ MX.bg={id,pct:0,txt:'جارٍ فصل باقي المسارات…'};bgUi();
+ const rid=MX.runId,rep=o=>{if(MX.bg&&MX.bg.id===id){if(o.ph)MX.bg.txt=o.ph;if(o.target!=null)MX.bg.pct=Math.max(MX.bg.pct,Math.round(o.target));bgUi()}};
+ const chk=()=>{if(!MX.bg||MX.bg.id!==id||rid!==MX.runId)throw new Error(CX)};
+ (async()=>{
+  try{
+   await runSteps(MX.runId,m,0,100,o=>{chk();rep(o)});chk();
+   ['voc','drm','bas'].forEach(k=>{if(!was[k]&&MX.have[k]){MX.on_[k]=gO>0;MX.lv[k]=Math.round(gO*100)}});
+   if(!was.nat&&MX.have.nat){MX.on_.nat=gO>0;MX.lv.nat=Math.round(gO*100)}
+   MX.bg=null;toast(only?'✓ تم فصل المسار':'✓ تم فصل كل المسارات');vib([8,20,8]);finalizeAll();
+   if(MX.stage==='done'){const keep=MX.pl.playing;redrawKeep();if(keep)tickLoop()}
+  }catch(e){
+   killMdx();if(MX.bg&&MX.bg.id===id){MX.bg=null;if(!e||e.message!==CX)toast('تعذر فصل باقي المسارات: '+String((e&&e.message)||e).slice(0,80),4500)}
+   if(MX.stage==='done')redrawKeep();
+  }
+ })();
+}
+function stopBg(){MX.bg=null;MX.bgId=(MX.bgId||0)+1;killMdx();redrawKeep()}
+function finalizeAll(){const m=missing();if(!m.voc&&!m.drm&&!m.bas&&!m.amb){MX.buf=null;histSave()}else if(MX.dur>AUTOSEC)histSave()}
+function bgUi(){
+ const a=$('#mxBgT'),b=$('#mxBgB');if(a)a.textContent=(MX.bg?MX.bg.txt:'')+(MX.bg?' · '+toArN(MX.bg.pct)+'٪':'');if(b)b.style.width=(MX.bg?MX.bg.pct:0)+'%';
+ if(!$('#mxBgS')&&MX.stage==='done')redrawKeep();
+}
+
+/* ---------- المشغّل ---------- */
+function ensureCtx(){const P=MX.pl;if(!P.ctx){const C=window.AudioContext||window.webkitAudioContext;P.ctx=new C()}if(P.ctx.state==='suspended')P.ctx.resume();return P.ctx}
+const soloGain=c=>{const r=rowOf(c);if(MX.solo)return MX.solo===r?1:0;return MX.mute[r]?0:compGain(c)};
+function applyGains(){const P=MX.pl;if(!P.ctx)return;COMPS.forEach(c=>{const g=P.gn[c];if(g)g.gain.setTargetAtTime(soloGain(c),P.ctx.currentTime,.02)})}
+function curTime(){const P=MX.pl;if(!MX.dur)return 0;return P.playing?Math.min(MX.dur,P.ctx.currentTime-P.t0):P.off}
+function play(at){
+ const P=MX.pl;if(!MX.dur)return;const ctx=ensureCtx();stopSrc();
+ if(at!=null)P.off=at;if(P.off>=MX.dur-.05)P.off=0;
+ P.gn={};P.src={};let first=null;
+ COMPS.forEach(c=>{const b=MX.st[c];if(!b)return;const src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=b;g.gain.value=soloGain(c);src.connect(g).connect(ctx.destination);P.gn[c]=g;P.src[c]=src;src.start(0,P.off);first=first||src});
+ P.t0=ctx.currentTime-P.off;P.playing=1;
+ if(first)first.onended=()=>{if(P.playing&&curTime()>=MX.dur-.2){P.playing=0;P.off=0;MX.solo='';uiPlay();syncSeek();drawAllWaves()}};
+ uiPlay();tickLoop();
+}
+function stopSrc(){const P=MX.pl;Object.values(P.src).forEach(s=>{try{s.onended=null;s.stop()}catch(e){}try{s.disconnect()}catch(e){}});P.src={}}
+function pause(){const P=MX.pl;if(!P.playing)return;P.off=curTime();P.playing=0;stopSrc();uiPlay();drawAllWaves()}
+function stopPlay(){const P=MX.pl;P.playing=0;P.off=0;stopSrc();cancelAnimationFrame(P.raf)}
+function seekTo(t){t=Math.max(0,Math.min(MX.dur-.05,t));if(MX.pl.playing)play(t);else{MX.pl.off=t;syncSeek();drawAllWaves()}}
+function uiPlay(){
+ const b=$('#mxPlay');if(b)b.innerHTML=ic(MX.pl.playing&&!MX.solo?'pause':'play');
+ document.querySelectorAll('.mx-rp[data-k]').forEach(x=>{x.innerHTML=ic(MX.pl.playing&&MX.solo===x.dataset.k?'pause':'play')});
+}
+function tickLoop(){const P=MX.pl;cancelAnimationFrame(P.raf);const f=()=>{if(!P.playing||MX.stage!=='done'||(typeof tab!=='undefined'&&tab!=='mx'))return;syncSeek();drawAllWaves();P.raf=requestAnimationFrame(f)};P.raf=requestAnimationFrame(f)}
+function syncSeek(){
+ if(!MX.dur)return;const t=curTime(),d=MX.dur,s=$('#mxSeek');
+ if(s&&!s._drag){s.value=Math.round(t/d*1000);s.style.setProperty('--v',(t/d*100)+'%')}
+ const a=$('#mxT0');if(a)a.textContent=fmt(t);
+}
+function drawWave(k){
+ const c=document.querySelector(`canvas[data-w="${k}"]`),pk=MX.pk[k];if(!c||!pk)return;
+ const dpr=Math.min(2,window.devicePixelRatio||1),w=c.clientWidth,h=c.clientHeight;if(!w)return;
+ if(c.width!==Math.round(w*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr)}
+ const x=c.getContext('2d'),W_=c.width,H=c.height,n=pk.length,bw=W_/n,pr=MX.dur?curTime()/MX.dur:0,s=SK[k];
+ x.clearRect(0,0,W_,H);const g=x.createLinearGradient(0,0,W_,0);g.addColorStop(0,s.c[0]);g.addColorStop(1,s.c[1]);
+ const live=(MX.solo?MX.solo===k:(eff(k)>0&&!MX.mute[k]));
+ for(let i=0;i<n;i++){const a=Math.max(2*dpr,pk[i]*H*.92),px=i*bw;x.globalAlpha=(i/n<=pr?1:.38)*(live?1:.3);x.fillStyle=g;const r=Math.min(bw*.3,3*dpr);x.beginPath();if(x.roundRect)x.roundRect(px+bw*.16,(H-a)/2,bw*.68,a,r);else x.rect(px+bw*.16,(H-a)/2,bw*.68,a);x.fill()}
+ x.globalAlpha=1;const px=pr*W_;x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--fg')||'#000';x.globalAlpha=.85;x.fillRect(px-dpr,2,2*dpr,H-4);x.globalAlpha=1;
+}
+const drawAllWaves=()=>ST.forEach(s=>drawWave(s.k));
+
+/* ---------- التصدير ---------- */
+function mixdown(gainOf){
+ const N=MX.len,L=new Float32Array(N),R=new Float32Array(N);
+ COMPS.forEach(c=>{const b=MX.st[c],g=gainOf(c);if(!b||!g)return;const a=b.getChannelData(0),d=b.getChannelData(1);for(let i=0;i<N;i++){L[i]+=a[i]*g;R[i]+=d[i]*g}});
+ let pk=0;for(let i=0;i<N;i+=3){const v=Math.max(Math.abs(L[i]),Math.abs(R[i]));if(v>pk)pk=v}
+ if(pk>1){const k=.98/pk;for(let i=0;i<N;i++){L[i]*=k;R[i]*=k}}
+ return[L,R];
+}
+async function encMp3(L,R,kbps,onp){
+ const enc=new lamejs.Mp3Encoder(2,44100,kbps),N=L.length,STEP=1152*40,out=[];
+ const cv=(f,a,b)=>{const o=new Int16Array(b-a);for(let i=a;i<b;i++){const s=Math.max(-1,Math.min(1,f[i]));o[i-a]=s<0?s*32768:s*32767}return o};
+ for(let i=0;i<N;i+=STEP){const e=Math.min(N,i+STEP),m=enc.encodeBuffer(cv(L,i,e),cv(R,i,e));if(m&&m.length)out.push(new Uint8Array(m.buffer,m.byteOffset,m.length).slice());onp(i/N);await Y()}
+ const m=enc.flush();if(m&&m.length)out.push(new Uint8Array(m.buffer,m.byteOffset,m.length).slice());return out;
+}
+function wavParts(L,R){
+ const N=L.length,h=new DataView(new ArrayBuffer(44)),w=(o,s)=>{for(let i=0;i<s.length;i++)h.setUint8(o+i,s.charCodeAt(i))};
+ w(0,'RIFF');h.setUint32(4,36+N*4,true);w(8,'WAVEfmt ');h.setUint32(16,16,true);h.setUint16(20,1,true);h.setUint16(22,2,true);h.setUint32(24,44100,true);h.setUint32(28,176400,true);h.setUint16(32,4,true);h.setUint16(34,16,true);w(36,'data');h.setUint32(40,N*4,true);
+ const parts=[new Uint8Array(h.buffer)];
+ for(let i=0;i<N;i+=44100){const e=Math.min(N,i+44100),d=new DataView(new ArrayBuffer((e-i)*4));for(let j=i;j<e;j++){const a=Math.max(-1,Math.min(1,L[j])),b=Math.max(-1,Math.min(1,R[j]));d.setInt16((j-i)*4,a<0?a*32768:a*32767,true);d.setInt16((j-i)*4+2,b<0?b*32768:b*32767,true)}parts.push(new Uint8Array(d.buffer))}
+ return parts;
+}
+const btoa_=u=>{let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s)};
+async function saveParts(parts,out){
+ let first=1,acc=[],al=0,tot=0;
+ const flush=()=>{if(!al)return;const u=new Uint8Array(al);let q=0;acc.forEach(a=>{u.set(a,q);q+=a.length});acc=[];al=0;const r=Native.saveB64(out,btoa_(u),first?0:1);first=0;if(r!=='1')throw new Error('تعذر الكتابة: '+r)};
+ for(const p of parts){acc.push(p);al+=p.length;tot+=p.length;if(al>=2097152){flush();await Y()}}
+ flush();return tot;
+}
+async function encodeAudio(L,R,fmtK,onp){
+ if(fmtK==='wav'){onp(.9);return{parts:wavParts(L,R),ext:'wav',l:'WAV'}}
+ if(fmtK==='m4a'){const M=await muxLib();const b=await M.encodeM4a(L.slice(),R.slice(),44100,192,onp);return{parts:[b],ext:'m4a',l:'M4A · 192 kbps'}}
+ return{parts:await encMp3(L,R,192,onp),ext:'mp3',l:'MP3 · 192 kbps'};
+}
+function regItem(out,ext,label,title,size){
+ let id='';try{id=Native.finish(out)}catch(e){}
+ const n={id:id||('mx'+Date.now()),key:'k'+Date.now(),nm:nameOf(out),title,thumb:'',l:label,ext,s:8,b:0,z:size,d:Math.round(MX.dur*1000),mg:0,cv:0,e:'',p:out,src:''};
+ try{items.unshift(n);keep()}catch(e){}return n;
+}
+const toastP=t=>{const x=$('#tt');x.textContent=t;x.className='on';clearTimeout(toast.t)};
+const toastHide=()=>{$('#tt').className=''};
+async function exportFinal(){
+ if(MX.busy||MX.exp)return;MX.exp=1;
+ const dir=Native.outDir();if(!dir){toast('لا يوجد مكان للحفظ');MX.exp=0;return}
+ const b=baseOf(MX.file.n),vid=MX.file.vid&&MX.outV==='video',tag=' (بدون موسيقى)';let out='';
+ try{
+  toastP('جارٍ تجهيز الملف النهائي… ٠٪');
+  const[L,R]=mixdown(compGain);let res;
+  if(vid){
+   let parts=MX.parts;
+   if(!parts){try{parts=(await readParts(MX.file.p,900e6)).parts}catch(e){throw new Error('ملف الفيديو الأصلي غير متاح — احفظ كصوت فقط')}}
+   const M=await muxLib();
+   const x=await M.muxVideo(new Blob(parts),L.slice(),R.slice(),44100,192,p=>toastP('جارٍ دمج الصوت في الفيديو… '+toArN(Math.round(p*100))+'٪'));
+   res={parts:[x.bytes],ext:x.ext,l:'فيديو · بدون موسيقى'};
+  }else res=await encodeAudio(L,R,MX.outA,p=>toastP('جارٍ الترميز… '+toArN(Math.round(p*100))+'٪'));
+  out=dir+'/'+clean(b)+tag+'.'+res.ext;try{Native.rm(out)}catch(e){}
+  const tot=await saveParts(res.parts,out);const n=regItem(out,res.ext,res.l,clean(b)+tag,tot);
+  toastHide();toast('✓ تم الحفظ في التحميلات',3500);vib([10,30,14]);openDone(n);
+ }catch(e){if(out)try{Native.rm(out)}catch(_){};toastHide();toast('تعذر الحفظ: '+String((e&&e.message)||e).slice(0,90),5000)}
+ MX.exp=0;
+}
+async function exportStem(k){
+ if(MX.exp)return;const cs=compsOf(k).filter(c=>MX.st[c]);if(!cs.length)return;MX.exp=1;closeSheet();
+ const dir=Native.outDir();if(!dir){toast('لا يوجد مكان للحفظ');MX.exp=0;return}
+ let out='';
+ try{
+  const[L,R]=mixdown(c=>cs.includes(c)?1:0);
+  const res=await encodeAudio(L,R,MX.outA,p=>toastP('جارٍ تجهيز «'+SK[k].n+'»… '+toArN(Math.round(p*100))+'٪'));
+  const bn=clean(baseOf(MX.file.n))+' - '+SK[k].n;out=dir+'/'+bn+'.'+res.ext;try{Native.rm(out)}catch(e){}
+  const tot=await saveParts(res.parts,out);const n=regItem(out,res.ext,res.l,bn,tot);
+  toastHide();toast('✓ تم حفظ «'+SK[k].n+'» في التحميلات',3500);openDone(n);
+ }catch(e){if(out)try{Native.rm(out)}catch(_){};toastHide();toast('تعذر الحفظ: '+String((e&&e.message)||e).slice(0,90),5000)}
+ MX.exp=0;
+}
+
+/* ---------- السجل والسلة ---------- */
+
+/* ===== إزالة الموسيقى التلقائية بعد التحميل ===== */
+MX.auto=null;
+window.mxEng=()=>MX.eng;window.mxSetEng=v=>{if(v==='fast'||v==='hq'){MX.eng=v;keepCfg()}};
+const AQ=[];let ARUN=0;
+const aLive=it=>items.includes(it);
+window.mxAuto=it=>{if(!AQ.includes(it)){AQ.push(it);aPump()}};
+window.mxAutoCancel=it=>{const i=AQ.indexOf(it);if(i>=0)AQ.splice(i,1);if(MX.auto===it){it.cxd=1;cancelRun()}};
+function aRestore(it,why){
+ if(!aLive(it)||!it.px)return;
+ it.px=0;it.mg=0;it.s=8;it.z=it.z0||0;it.b=it.b0||it.z;it.l=String(it.l0||it.l||'')+' · '+why;
+ try{keep();if(tab==='dl')draw()}catch(e){}
+}
+async function aPump(){
+ if(ARUN)return;ARUN=1;
+ try{while(AQ.length){for(let j=AQ.length-1;j>=0;j--)if(!aLive(AQ[j]))AQ.splice(j,1);if(!AQ.length)break;const k=AQ.findIndex(z=>!z.pxPz);if(k<0){await sleep(300);continue}const it=AQ.splice(k,1)[0];try{await aOne(it)}catch(e){aRestore(it,'تعذرت إزالة الموسيقى')}}}
+ finally{ARUN=0}
+}
+async function aOne(it){
+ while(MX.busy||MX.bg||MX.exp){if(it.cxd||!aLive(it))return;await sleep(800)}
+ if(it.cxd||!aLive(it))return;
+ if(it.pxPz){AQ.push(it);return}
+ MX.auto=it;
+ try{
+  resetSession();killMdx();
+  MX.on_={voc:true,drm:false,bas:false,nat:false,oth:false};MX.lv={voc:100,drm:0,bas:0,nat:0,oth:0};MX.bakOn=false;MX.on=true;MX.hl=1;MX.paused=0;
+  const p=it.p,n=nameOf(p);
+  MX.file={p,n,s:+it.z0||0,dur:0,vid:isVid(n)};
+  try{const a=J(Native.ls(p.slice(0,p.lastIndexOf('/'))))||[],x=a.find(y=>y.n===n);if(x)MX.file.s=x.s}catch(e){}
+  await start();
+  if(!it.rmd&&!it.cxd)aRestore(it,'تعذرت إزالة الموسيقى');
+  else if(!it.rmd)aRestore(it,'أُلغيت إزالة الموسيقى');
+ }finally{
+  MX.auto=null;MX.hl=0;
+  if(!MX.busy){resetSession();MX.stage='pick';MX.paused=0;redraw()}
+ }
+}
+async function autoFinish(rid){
+ const it=MX.auto,dir=Native.outDir();
+ if(!dir)throw new Error('تعذر الوصول إلى مجلد التحميلات');
+ pgSet({ph:'جارٍ حفظ الملف النهائي…',target:97,cap:99,rate:.3});
+ const f=MX.file,[L,R]=mixdown(compGain),vid=!!f.vid;let res;
+ if(vid){
+  let parts=MX.parts;
+  if(!parts)parts=(await readParts(f.p,900e6,null,0,()=>guard(rid))).parts;
+  const M=await muxLib();
+  const x=await M.muxVideo(new Blob(parts),L.slice(),R.slice(),44100,192,q=>{guard(rid);pgSet({target:97+q*2})});
+  res={parts:[x.bytes],ext:x.ext};
+ }else{
+  const se=(f.n.split('.').pop()||'').toLowerCase(),ek=({mp3:1,m4a:1,wav:1})[se]?se:MX.outA;
+  res=await encodeAudio(L,R,ek,q=>{guard(rid);pgSet({target:97+q*2})});
+ }
+ guard(rid);
+ const out=dir+'/'+clean(baseOf(f.n))+' (بدون موسيقى).'+res.ext;
+ try{Native.rm(out)}catch(e){}
+ const tot=await saveParts(res.parts,out);
+ let id='';try{id=Native.finish(out)}catch(e){}
+ const n={id:id||('mx'+Date.now()),key:'k'+Date.now(),nm:nameOf(out),title:it.title,thumb:it.thumb||'',l:vid?'فيديو بدون موسيقى':'صوت بدون موسيقى',ext:res.ext,s:8,b:0,z:tot,d:Math.round(MX.dur*1000),mg:0,cv:0,e:'',p:out,src:it.src||'',mxd:1};
+ if(aLive(it)){
+  const idx=items.indexOf(it);
+  it.px=0;it.mg=0;it.s=8;
+  delItem(it.id,true,true);
+  items.splice(Math.min(idx,items.length),0,n);
+ }else items.unshift(n);
+ it.rmd=1;
+ try{keep();if(tab==='dl')draw(1)}catch(e){}
+ vib([10,30,14]);toast('✓ تمت إزالة الموسيقى',3500);notifEnd('✓ اكتملت إزالة الموسيقى');
+ pgSet({ph:'جارٍ حفظ السجل…',target:99.5});
+ histSave();await hq;
+ pgStop();MX.busy=0;MX.paused=0;try{wl&&wl.release()}catch(e){}
+}
+setInterval(()=>{
+ const it=MX.auto;if(!it||!aLive(it)||!it.px)return;
+ const b=Math.round(Math.min(99,PG.shown)*10),t=PG.paused?'المعالجة متوقفة مؤقتًا':(PG.ph||'جارٍ المعالجة…'),sr=pgRem(),r=sr>0&&!PG.paused?'المتبقي '+fmt(sr):'';
+ const ns=PG.paused?4:2;if(it.b!==b||it.pxT!==t||it.pxR!==r||it.s!==ns){it.b=b;it.pxT=t;it.pxR=r;it.s=ns;it.pxPz=PG.paused?1:0;try{if(tab==='dl')draw()}catch(e){}}
+},500);
+window.mxPxToggle=it=>{
+ if(!aLive(it)||!it.px||it.s>=8)return 0;
+ const rs=it.s==4;
+ if(MX.auto===it&&MX.busy&&MX.stage==='work'){if(rs){it.pxPz=0;mxResume()}else{it.pxPz=1;mxPause()}it.s=rs?2:4}
+ else{it.pxPz=rs?0:1;it.s=rs?2:4;it.pxT=rs?'في الانتظار…':'متوقفة مؤقتًا'}
+ try{keep()}catch(e){}
+ return 1;
+};
+/* إبقاء المعالجة شغّالة في الخلفية: قفل ويب يمنع تجميد الصفحة */
+const KA={r:null};
+setInterval(()=>{try{const need=!!(MX.busy&&navigator.locks);
+ if(need&&!KA.r){KA.r=1;navigator.locks.request('mx-keepalive',()=>new Promise(res=>{KA.r=res})).catch(()=>{KA.r=null})}
+ else if(!need&&KA.r&&KA.r!==1){const f=KA.r;KA.r=null;f()}}catch(e){}},1000);
+
+let HIST=J(localStorage.getItem('mxh'))||[],MTR=J(localStorage.getItem('mxtrash'))||[];
+const hkeep=()=>{try{localStorage.setItem('mxh',JSON.stringify(HIST));localStorage.setItem('mxtrash',JSON.stringify(MTR))}catch(e){}};
+const hdir=id=>Native.fdir()+'/mx/'+id;
+let hq=Promise.resolve();
+function histSave(){hq=hq.then(histSave0).catch(()=>{})}
+async function histSave0(){
+ if(!MX.file||!MX.dur||!MX.st.oth)return;
+ const id=MX.cur||('mx'+Date.now().toString(36)+Math.random().toString(36).slice(2,5)),comps=COMPS.filter(c=>MX.st[c]);
+ try{
+  try{Native.mkdir(Native.fdir()+'/mx');Native.mkdir(hdir(id))}catch(e){}
+  const M=await muxLib();
+  for(const c of comps){const b=MX.st[c],u=await M.encodeM4a(b.getChannelData(0).slice(),b.getChannelData(1).slice(),44100,256);const r=await saveParts([u],hdir(id)+'/'+c+'.m4a');}
+ }catch(e){return}
+ const ent={id,n:MX.file.n,p:MX.file.p,vid:MX.file.vid,t:Date.now(),dur:MX.dur,z:MX.file.s||0,on_:{...MX.on_},lv:{...MX.lv},have:{...MX.have},comps,eng:MX.eng};
+ const i=HIST.findIndex(x=>x.id===id);if(i>=0){ent.t=HIST[i].t;HIST[i]=ent}else HIST.unshift(ent);
+ MX.cur=id;hkeep();if(MX.stage==='pick')redrawKeep();
+}
+function histUpdateGains(){const e=HIST.find(x=>x.id===MX.cur);if(e){e.on_={...MX.on_};e.lv={...MX.lv};hkeep()}}
+async function openHist(id){
+ const e=HIST.find(x=>x.id===id);if(!e||MX.busy)return;
+ resetSession();killMdx();const rid=++MX.runId;MX.busy=1;MX.file={p:e.p,n:e.n,s:e.z,dur:e.dur,vid:e.vid};MX.stage='work';MX.hl=1;pgReset();pgSet({ph:'جارٍ فتح الملف من السجل…',target:5});redraw();
+ try{
+  let i=0;
+  for(const c of e.comps){
+   const r=await readParts(hdir(id)+'/'+c+'.m4a',300e6,null,0,()=>guard(rid));const all=new Uint8Array(r.off);let q=0;r.parts.forEach(u=>{all.set(u,q);q+=u.length});
+   const ab=await decode(all.buffer);guard(rid);MX.st[c]=ab.numberOfChannels<2?mkBuf(ab.getChannelData(0),ab.getChannelData(0)):ab;
+   i++;pgSet({target:5+90*i/e.comps.length})
+  }
+  MX.len=MX.st.oth.length;MX.dur=MX.len/44100;MX.have={...e.have};MX.on_={...e.on_};MX.lv={...e.lv};MX.cur=id;MX.buf=null;
+  MX.res={sec:0,hist:1};calcPeaks();pgSet({target:100});await sleep(250);guard(rid);
+  MX.stage='done';MX.busy=0;MX.hl=0;pgStop();redraw();autoSplit();
+ }catch(er){if(rid!==MX.runId)return;MX.busy=0;MX.hl=0;pgStop();MX.stage='pick';resetSession();toast('تعذر فتح الملف: '+String((er&&er.message)||er).slice(0,80)+' — ربما حُذفت ملفات السجل',4500);redraw()}
+}
+function histDelete(ids){
+ ids.forEach(id=>{const i=HIST.findIndex(x=>x.id===id);if(i<0)return;const e=HIST.splice(i,1)[0];e.dt=Date.now();MTR.unshift(e)});
+ if(ids.includes(MX.cur)&&MX.stage==='done'){/* يبقى مفتوحًا */}
+ hkeep();
+}
+function trashFiles(e){e.comps.forEach(c=>{try{Native.rm(hdir(e.id)+'/'+c+'.m4a')}catch(_){}})}
+function mxPurgeOld(){const lim=Date.now()-30*864e5,old=MTR.filter(x=>x.dt<lim);if(!old.length)return;old.forEach(trashFiles);MTR=MTR.filter(x=>x.dt>=lim);hkeep()}
+window.mxTrash={
+ list:()=>MTR.map(e=>({id:e.id,title:baseOf(e.n),nm:e.n,thumb:'',l:'إزالة الموسيقى',ext:'m4a',z:e.z,d:Math.round(e.dur*1000),t:e.dt,p:''})),
+ count:()=>MTR.length,
+ restore:ids=>{ids.forEach(id=>{const i=MTR.findIndex(x=>x.id===id);if(i<0)return;const e=MTR.splice(i,1)[0];delete e.dt;HIST.push(e)});HIST.sort((a,b)=>b.t-a.t);hkeep();if(typeof tab!=='undefined'&&tab==='mx'&&MX.stage==='pick')redraw()},
+ purge:ids=>{ids.forEach(id=>{const i=MTR.findIndex(x=>x.id===id);if(i<0)return;trashFiles(MTR.splice(i,1)[0])});hkeep()}
+};
+setTimeout(mxPurgeOld,3000);
+
+/* ===== الجزء 3: الواجهات والأحداث ===== */
+const sh=()=>$('#sh');
+function openSheet(html){pkV=null;const s=sh();s.innerHTML=html;s.hidden=0;requestAnimationFrame(()=>s.classList.add('on'))}
+function closeSheet(){pkV=null;stopPick();try{window.hide()}catch(e){const s=sh();s.classList.remove('on');setTimeout(()=>{s.hidden=1},220)}}
+{const _bx=window.back;window.back=()=>{const s=sh();
+ if(s&&!s.hidden&&pkV){if(pkV==='main'){closeSheet();return 1}if(pkV.up)pickBrowse(pkV.up);else pickMain();return 1}
+ if(typeof tab!=='undefined'&&tab==='mx'&&(!s||s.hidden)&&$('#cf').hidden&&!MX.busy&&MX.stage!=='pick'){const v=$('#mxVid');if(v)v.pause();if(MX.pa)try{MX.pa.pause()}catch(_){}MX.hl=0;resetSession();MX.stage='pick';redraw();return 1}
+ return _bx?_bx():0}}
+function redraw(){if(typeof tab!=='undefined'&&tab==='mx'){const m=$('#m');m.className='';m.innerHTML=window.mxPage()}}
+function redrawKeep(){const se=document.scrollingElement,y=se?se.scrollTop:0;redraw();if(se)se.scrollTop=y}
+window.mxRefresh=redraw;
+
+/* ---------- منتقي الملفات ---------- */
+let pkAudio=null,pkId='',pkV=null;
+function stopPick(){if(pkAudio){try{pkAudio.pause()}catch(e){}pkAudio=null}pkId='';document.querySelectorAll('.mx-fp.pl').forEach(b=>{b.classList.remove('pl');b.innerHTML=ic('play')})}
+const filtChips=()=>[['all','الكل','all'],['aud','الصوت','aud'],['vid','الفيديوهات','vid'],['dl','تحميلاتي','dl2']].map(([k,l,i])=>`<button data-mx="flt" data-v="${k}" class="${MX.filt===k?'on':''}">${ic(i)}${l}</button>`).join('');
+function fileRow(f){
+ const v=f.v;return `<div class="mx-fr" data-mx="open" data-p="${esc(f.p)}" data-s="${f.s||0}"><button class="mx-fp" data-mx="pp" data-p="${esc(f.p)}" data-v="${v?1:0}" aria-label="${v?'فتح في مشغّل الهاتف':'تشغيل'}">${ic(v?'vid':'play')}</button><div class="mx-ft"><b><bdi>${esc(f.n)}</bdi></b><small>${v?'فيديو':'صوت'} · ${fsz(f.s||0)}${f.t?' · '+ago(f.t):''}</small></div></div>`;
+}
+function recentList(list){
+ let a=list||[];
+ if(MX.filt==='aud')a=a.filter(f=>!f.v);else if(MX.filt==='vid')a=a.filter(f=>f.v);
+ else if(MX.filt==='dl'){a=(typeof items!=='undefined'?items:[]).filter(x=>x.s===8&&x.p&&(VID.test(x.p)||AUD.test(x.p))).map(x=>({p:x.p,n:nameOf(x.p),s:x.z||0,t:+(String(x.key||'').replace(/\D/g,'').slice(0,13))||0,v:VID.test(x.p)}))}
+ return a.length?a.slice(0,40).map(fileRow).join(''):'<p class="mx-em">لا توجد ملفات مطابقة</p>';
+}
+function webPick(){const i=document.createElement('input');i.type='file';i.accept='audio/*,video/*,.mp3,.m4a,.wav,.flac,.ogg,.aac,.opus,.mp4,.mkv,.webm,.mov';i.style.cssText='position:fixed;left:-9999px;top:0';i.onchange=async()=>{const f=i.files&&i.files[0];i.remove();if(!f)return;if(f.size>500e6){try{toastP('الملف كبير جدًا للمتصفح (الحد 500MB). استخدم تطبيق أندرويد')}catch(e){}setTimeout(()=>{try{toastHide()}catch(e){}},3500);return}try{toastP('جارٍ تحميل الملف…')}catch(e){}const u=new Uint8Array(await f.arrayBuffer());try{toastHide()}catch(e){}const p='/web/'+f.name.replace(/[\/\\]/g,'_');window.__MEM[p]=u;chooseFile(p,f.size)}; document.body.appendChild(i);i.click()}
+ function pickMain(){
+ openSheet(`<div class="bx mx-pk"><div class="gr"></div><div class="shh"><h3>اختيار ملف</h3><button class="xb" data-mx="shx" aria-label="إغلاق">${ic('x')}</button></div>
+ <div class="mx-fl">${filtChips()}</div>
+ <h4>تصفّح الملفات</h4><div class="mx-bt">${[['الملفات','folder',''],['المعرض','cam','DCIM'],['التحميلات','dl2','@out'],['الموسيقى','note','Music'],['الأفلام','vid','Movies'],['واتساب','whatsapp','@wa']].map(([l,i,p])=>`<button data-mx="br" data-p="${esc(p)}"><i>${ic(i)}</i>${l}</button>`).join('')}</div>
+ <h4>الأحدث على هاتفك</h4><div id="mxRc"><div class="mx-pvl"><div class="mx-spin" style="--c2:var(--pr)"></div><small>جارٍ البحث عن أحدث الملفات…</small></div></div>
+ <button class="mi" data-mx="perm">${ic('folder')}منح صلاحية الوصول لكل الملفات</button></div>`);
+ pkV='main';scanRecent().then(l=>{const e=$('#mxRc');if(e)e.innerHTML=recentList(l)}).catch(()=>{const e=$('#mxRc');if(e)e.innerHTML='<p class="mx-em">تعذر البحث. استخدم «الملفات» للتصفح</p>'});
+}
+function pickBrowse(path){
+ let root='/storage/emulated/0';try{const d=J(Native.dirs(''));if(d&&d.p)root=d.p}catch(e){}
+ if(path==='@out')path=Native.outDir();else if(path==='@wa'){path=root+'/Android/media/com.whatsapp/WhatsApp/Media'}else if(path&&path[0]!=='/')path=root+'/'+path;
+ let d={};try{d=J(Native.dirs(path||''))||{}}catch(e){}
+ const cur=d.p||path||root;let fl=[];
+ try{fl=(J(Native.ls(cur))||[]).filter(f=>f.s>0&&(VID.test(f.n)||AUD.test(f.n))).sort((a,b)=>(b.t||0)-(a.t||0)).map(f=>({p:cur+'/'+f.n,n:f.n,s:f.s,t:f.t,v:VID.test(f.n)}))}catch(e){}
+ openSheet(`<div class="bx mx-pk"><div class="gr"></div><div class="shh"><h3>تصفّح الملفات</h3><button class="xb" data-mx="shx" aria-label="إغلاق">${ic('x')}</button></div>
+ <div class="mx-fl"><button data-mx="pm">${ic('all')}الرئيسية</button></div>
+ <div class="mx-brw">${esc(cur)}</div>
+ ${d.up?`<button class="mi" data-mx="br" data-p="${esc(d.up)}">${ic('up')}المجلد الأعلى</button>`:''}
+ ${(d.d||[]).map(n=>`<button class="mi" data-mx="br" data-p="${esc(cur+'/'+n)}">${ic('folder')}<span>${esc(n)}</span></button>`).join('')}
+ ${fl.map(fileRow).join('')}
+ ${!(d.d||[]).length&&!fl.length?'<p class="mx-em">لا توجد مجلدات أو ملفات وسائط هنا</p>':''}</div>`);
+ pkV={up:d.up||''};
+}
+async function previewPick(btn){
+ const p=btn.dataset.p;
+ if(btn.dataset.v==='1'){try{Native.open('',p)}catch(e){toast('تعذر فتح الفيديو')}return}
+ if(pkId===p){stopPick();return}
+ stopPick();pkId=p;btn.classList.add('pl');btn.innerHTML=ic('pause');
+ try{
+  const r=await readParts(p,60e6);if(pkId!==p)return;
+  const a=new Audio(URL.createObjectURL(new Blob(r.parts,{type:mimeOf(p)})));pkAudio=a;a.onended=()=>stopPick();await a.play();
+ }catch(e){stopPick();toast(String(e&&e.message).includes('كبير')?'الملف كبير للمعاينة':'تعذر التشغيل')}
+}
+
+/* ---------- المسارات (الصفوف) ---------- */
+function stemRow(s,o){
+ o=o||{};const k=s.k,on=MX.on_[k]&&MX.lv[k]>0,v=MX.on_[k]?MX.lv[k]:0,lock=o.lock;
+ const act=lock?`<div class="mx-spin"></div>`:`<button class="mx-sw" data-mx="tg" data-k="${k}" aria-pressed="${on}" aria-label="تفعيل"></button>`;
+ return `<div class="mx-row${on&&!lock?' act':''}${lock?' mx-lock':''}" data-k="${k}" style="--c1:${s.c[0]};--c2:${s.c[1]}">
+ <div class="mx-rh"><div class="mx-ib">${ic(SI[k])}</div><div class="mx-rt"><b>${s.n}</b><small>${o.sub||s.h}</small></div>${lock&&!MX.bg?`<button class="mx-mini" data-mx="split" data-k="${k}" aria-label="فصل">${ic('lock')}</button>`:act}</div>
+ <div class="mx-sl"><input class="mx-r" type="range" min="0" max="100" value="${v}" data-mx-r="${k}" style="--v:${v}%" ${lock?'disabled':''}><span class="mx-v" id="mxv-${k}">${toArN(v)}٪</span>${o.menu&&!lock?`<button class="mx-mini" data-mx="menu" data-k="${k}" aria-label="خيارات">${ic('dots')}</button>`:''}</div>
+ ${o.bak?`<div class="mx-sub"><span><b>تضمين الآهات والأصوات البشرية الخلفية</b><br>يفصل الكورال والآهات عن الصوت الرئيسي (نموذج إضافي ووقت أطول)</span><button class="mx-sw" data-mx="bak" aria-pressed="${MX.bakOn}" aria-label="تضمين الأصوات الخلفية"></button></div>`:''}
+ ${o.wave&&!lock?`<div class="mx-wr"><button class="mx-rp" data-mx="rplay" data-k="${k}" aria-label="تشغيل هذا المسار">${ic('play')}</button><canvas class="mx-wv" data-w="${k}"></canvas></div>`:''}</div>`;
+}
+
+/* ---------- الصفحات ---------- */
+const eqBars=()=>'<div class="mx-eq">'+'<i></i>'.repeat(9)+'</div>';
+window.mxPage=()=>{
+ const h=MX.stage==='pick'?vPick():MX.stage==='setup'?vSetup():MX.stage==='work'?vWork():vDone();
+ requestAnimationFrame(postRender);return h;
+};
+function postRender(){
+ if(MX.stage==='done'){drawAllWaves();syncSeek();uiPlay()}
+ if(MX.stage==='setup'){refreshModels();refreshSum();if(MX.pvUrl)setPv('ok');else if(MX.file&&MX.file.s>(MX.file.vid?260e6:400e6))setPv('big');else setPv('load',0)}
+ if(MX.stage==='work'){pgStart()}
+}
+function vPick(){
+ return `<div class="cd mx-hero">${eqBars()}<h2>إزالة الموسيقى من أي ملف</h2><p>افصل الصوت عن الموسيقى بدقة واحتفظ بما تريد فقط</p>
+ <button class="go mx-big" data-mx="pick">${ic('folder')}اختيار ملف صوت أو فيديو</button>
+ <div class="mx-chips"><span>${ic('shield')}المعالجة على جهازك دون رفع</span><span>${ic('bolt')}كل الصيغ مدعومة</span><span>${ic('magic')}تحكم بكل مسار</span></div></div>
+ ${warnCard()}${histCard()}`;
+}
+function warnCard(){
+ return `<div class="cd mx-warn"><div class="mx-wh"><div class="mx-wi">${ic('warn')}</div><div><h3>انتبه!</h3><small>تذكرة مهمة قبل أن تبدأ</small></div></div>
+ <p class="mx-nr">عن أنس بن مالك رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم:</p>
+ <div class="mx-hd">«صَوْتَانِ مَلْعُونانِ في الدُّنْيا والآخِرَةِ: مِزْمارٌ عِنْدَ نِعْمَةٍ، ورَنَّةٌ عِنْدَ مُصِيبَةٍ».</div>
+ <p class="mx-pt"><span class="mx-hl">• المزمار عند النعمة:</span> ربنا يكرمك بنعمة، أو فرح، أو نجاح.. بدل ما تشكر ربنا وتتواضع، تروح تجيب أغاني وموسيقى ومعازف وتعيش في البطر؟ إياك! ده جحود بالنعمة وسبب للّعن.</p>
+ <p class="mx-pt"><span class="mx-hl">• الرنّة عند المصيبة:</span> تحصل مشكلة أو يموت حد عزيز.. تقوم تصرخ، وتنوح، وتلطم، وتعتصم على قضاء ربنا؟ احذر! ده قلة صبر وعدم رضا بمكتوب ربنا، ويدخل في نفس الذنب.</p>
+ <p class="mx-pt mx-rm"><span class="mx-hl">افتكرها دايمًا:</span> عند الفرح اشكر وافرح بالحلال، وعند المصيبة اصبر واسترجع (قول إنا لله وإنا إليه راجعون).. بلاش نخسر رحمة ربنا في لحظة انفعال!</p></div>`;
+}
+function histRow(e){
+ const sel=MX.sel.has(e.id);
+ return `<div class="mx-hr" data-id="${e.id}"><div class="mx-hd2" style="direction:ltr">${ic('trash')}</div>
+ <div class="mx-hi${sel?' sel':''}" data-id="${e.id}"><span class="mx-chk">${ic('check')}</span><div class="mx-fi">${ic(e.vid?'vid':'aud')}</div>
+ <div class="mx-ft"><b><bdi>${esc(e.n)}</bdi></b><small>${ago(e.t)} · ${fmt(e.dur)} · ${e.vid?'فيديو':'صوت'}${e.comps&&e.comps.length>=5?' · كل المسارات':''}</small></div>${MX.selM?'':ic('hist')}</div></div>`;
+}
+function histCard(){
+ const n=HIST.length,bar=MX.selM?`<div class="mx-sb"><button data-mx="hcx" aria-label="إلغاء">${ic('x')}</button><b>${toArN(MX.sel.size)} محدد</b><button data-mx="hsa">${MX.sel.size===n?'إلغاء التحديد':'تحديد الكل'}</button><button class="rd" data-mx="hdel"${MX.sel.size?'':' disabled'}>${ic('trash')} حذف</button></div>`:'';
+ return `<div class="cd mx-hist"><div class="mx-hh"><div><h3>السجل</h3><small>${n?toArN(n)+' ملف تمت معالجته':'الملفات التي تعالجها تظهر هنا'}</small></div><span style="flex:1"></span><button class="mx-hq" data-mx="htr" aria-label="سلة المهملات">${ic('trash')}${MTR.length?' '+toArN(MTR.length):''}</button></div>
+ ${bar}<div class="${MX.selM?'mx-selm':''}">${n?HIST.map(histRow).join(''):`<p class="mx-em">${ic('hist')}<br>لا توجد ملفات في السجل بعد</p>`}</div>${n&&!MX.selM?'<p class="mx-note" style="text-align:center">اسحب الملف لليمين لحذفه · اضغط مطوّلًا للتحديد</p>':''}</div>`;
+}
+const fmtAud=()=>`<div class="mx-out"><h4>صيغة الصوت</h4><div class="mx-fmt">${[['mp3','MP3'],['m4a','M4A · AAC'],['wav','WAV']].map(([k,l])=>`<button data-mx="oa" data-v="${k}" class="${MX.outA===k?'sel':''}">${l}</button>`).join('')}</div></div>`;
+const fmtVid=()=>`<div class="mx-out" style="margin-bottom:12px"><h4>صيغة الناتج</h4><div class="mx-fmt"><button data-mx="ov" data-v="video" class="${MX.outV==='video'?'sel':''}">فيديو MP4</button><button data-mx="ov" data-v="audio" class="${MX.outV==='audio'?'sel':''}">صوت فقط</button></div></div>`;
+const engNote=()=>MX.eng==='fast'?'نموذج خفيف وسريع، مناسب للكلام والأناشيد.':'نموذج متقدم أدق في عزل الصوت، لكنه أبطأ.';
+const durTxt=s=>s<50?'أقل من دقيقة':'نحو '+toArN(Math.max(1,Math.round(s/60)))+' دقيقة';
+function sumHtml(){
+ if(!MX.on)return '';const n=makePlan(),any=Object.values(n).some(Boolean);let h;
+ if(!any)h='لا يوجد فصل مطلوب — المستويات متساوية، سيُحفظ الملف بمستوى صوت واحد.';
+ else{const dur=MX.file&&MX.file.dur;const t=estSec(n,dur||60);h=dur?`الوقت التقريبي للمعالجة: <b>${durTxt(t)}</b> (يختلف حسب جهازك).`:`الوقت التقريبي: <b>${durTxt(t)}</b> لكل دقيقة من الملف.`;if(modelsOf(n).some(m=>!MX.dlOk[m]))h+=' سيتم تنزيل مكوّنات المعالجة مرة واحدة فقط.'}
+ return ic('clock')+'<span>'+h+'</span>';
+}
+function refreshSum(){const e=$('#mxSum');if(e)e.innerHTML=sumHtml()}
+function vSetup(){
+ const f=MX.file,vid=f.vid;
+ return `<div class="cd"><div class="mx-file"><div class="mx-fi">${ic(vid?'vid':'aud')}</div><div class="mx-ft"><b><bdi>${esc(f.n)}</bdi></b><small>${vid?'فيديو':'صوت'} · ${fsz(f.s)} · <span id="mxFm">${f.dur?fmt(f.dur):'—'}</span></small></div><button class="mx-chg" data-mx="pick">تغيير</button></div>
+ <div class="mx-pv" id="mxPv"></div></div>
+ <div class="cd"><div class="mx-mh"><div class="mx-fi">${ic('magic')}</div><div style="flex:1;min-width:0"><h3>إزالة الموسيقى</h3><small id="mxMs">${MX.on?'اختر مستوى كل مسار في الناتج':'فعّل الزر لفصل المسارات والتحكم بكل منها'}</small></div><button class="mx-sw" data-mx="master" aria-pressed="${MX.on}" aria-label="إزالة الموسيقى"></button></div>
+ <div class="mx-p${MX.on?' on':''}" id="mxPanel"><div>
+  <div class="mx-eng"><div class="tb"><button data-mx="eng" data-v="fast" class="${MX.eng==='fast'?'sel':''}">سريع</button><button data-mx="eng" data-v="hq" class="${MX.eng==='hq'?'sel':''}">دقة عالية</button></div><p class="mx-note" id="mxEngN">${engNote()}</p></div>
+  <div class="mx-sum" id="mxSum">${sumHtml()}</div>
+  ${ST.map(s=>stemRow(s,{bak:s.k==='nat'})).join('')}
+ </div></div></div>
+ <div class="cd">${vid?fmtVid():''}${!vid||MX.outV==='audio'?fmtAud():''}<div id="mxAfx"></div></div>
+ <button class="go mx-big" id="mxStart" data-mx="start" ${MX.on?'':'disabled'}>${ic('magic')}بدء المعالجة</button><button class="mx-home" data-mx="home">↩ العودة إلى الصفحة الرئيسية</button><div style="height:6px"></div>`;
+}
+function vWork(){
+ const hl=MX.hl;
+ return `<div class="cd mx-prog"><div class="mx-ring" id="mxRing"><i></i><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" id="mxFg" cx="75" cy="75" r="65" style="stroke-dashoffset:${408*(1-PG.shown/100)}"/></svg><b id="mxPct">٠٪</b></div>
+ <h3 id="mxPh">${esc(PG.ph||'جارٍ التحضير…')}</h3>
+ ${`<div class="mx-eta">${ic('clock')}المتبقي <b id="mxEta">…</b></div>`}${eqBars()}
+ <button class="go cx" data-mx="cancel" style="height:46px;width:100%;margin:0">✕ ${hl?'إلغاء':'إلغاء المعالجة'}</button>
+ <button class="go mx-pz${MX.paused?' rs':''}" id="mxPz" data-mx="pz">${MX.paused?ic('play')+' استئناف المعالجة':ic('pause')+' إيقاف مؤقت'}</button>
+ ${`<p class="mx-note">يمكنك الخروج من التطبيق أو التنقل بين الصفحات، وتستمر المعالجة في الخلفية.</p><button class="mx-bgn" data-mx="batt">لثبات أكبر في الخلفية: تجاهل توفير البطارية للتطبيق</button>`}</div>`;
+}
+function vDone(){
+ const r=MX.res||{},f=MX.file,miss=missing(),anyMiss=miss.voc||miss.drm||miss.bas||miss.amb;
+ const rows=ST.map(s=>{const k=s.k,lock=!rowHave(k);const sub=k==='nat'&&MX.have.bak?'ضوضاء الخلفية + الآهات والأصوات الخلفية':(k==='oth'&&anyMiss?'الباقي (قد يشمل مسارات لم تُفصل بعد)':s.h);return stemRow(s,{lock,menu:true,wave:true,sub})}).join('');
+ const bg=MX.bg?`<div class="mx-bgs" id="mxBgS"><div class="mx-spin"></div><span><div id="mxBgT">${esc(MX.bg.txt)} · ${toArN(MX.bg.pct)}٪</div><div class="mx-bgp"><i id="mxBgB" style="width:${MX.bg.pct}%"></i></div></span><button data-mx="bgx">إيقاف</button></div>`:(anyMiss?`<button class="sec" data-mx="split" style="margin-top:12px;width:100%">${ic('magic')}فصل كل المسارات للتحكم الكامل</button>`:'');
+ return `<div class="cd"><div class="mx-ok"><div class="mx-fi">${ic('check')}</div><div class="mx-ft"><b>${r.hist?'ملف من السجل':'تمت المعالجة بنجاح'}</b><small><bdi>${esc(f.n)}</bdi>${r.sec?' · استغرقت '+fmt(r.sec):''}</small></div></div>
+ <input class="mx-seek" id="mxSeek" type="range" min="0" max="1000" value="0">
+ <div class="mx-tm"><span id="mxT0">0:00</span><span id="mxT1">${fmt(MX.dur)}</span></div>
+ <div class="mx-tp"><button class="mx-sk" data-mx="skip" data-v="-10" aria-label="رجوع 10 ثوانٍ">${ic('b10')}<b>10</b></button><button class="mx-pb" data-mx="play" id="mxPlay" aria-label="تشغيل النتيجة">${ic('play')}</button><button class="mx-sk" data-mx="skip" data-v="10" aria-label="تقدم 10 ثوانٍ">${ic('f10')}<b>10</b></button></div></div>
+ <div class="cd"><div class="mx-mh" style="margin-bottom:2px"><div class="mx-fi">${ic('aud')}</div><div><h3>مازج المسارات</h3><small>اضبط مستوى كل مسار واسمع النتيجة فورًا</small></div></div>${rows}${bg}</div>
+ <div class="cd">${f.vid?fmtVid():''}${!f.vid||MX.outV==='audio'?fmtAud():''}
+ <div class="mx-act"><button class="mx-save" data-mx="save">${ic('dl')}<span>حفظ الملف النهائي</span></button><button class="mx-new" data-mx="new">ملف جديد</button></div></div>`;
+}
+
+/* ---------- نوافذ ---------- */
+function openDone(n){
+ openSheet(`<div class="bx"><div class="gr"></div><div class="mx-ok" style="margin:6px 0 10px"><div class="mx-fi">${ic('check')}</div><div class="mx-ft"><b>تم الحفظ</b><small><bdi>${esc(n.nm)}</bdi> · ${fsz(n.z)}</small></div></div>
+ <button class="mi" data-mx="opn" data-p="${esc(n.p)}" data-i="${esc(n.id)}">${ic('play')}فتح الملف</button><button class="mi" data-mx="shr" data-p="${esc(n.p)}">${ic('share')}مشاركة</button><button class="mi" data-mx="goDl">${ic('dl')}عرض في التحميلات</button><button class="mi" data-mx="shx">${ic('x')}إغلاق</button></div>`);
+}
+function stemMenu(k){
+ const s=SK[k];
+ openSheet(`<div class="bx"><div class="gr"></div><div class="mx-mh" style="margin:4px 0 8px"><div class="mx-fi" style="background:linear-gradient(135deg,${s.c[0]},${s.c[1]})">${ic(SI[k])}</div><div><h3>${s.n}</h3><small>${s.h}</small></div></div>
+ <button class="mi" data-mx="solo" data-k="${k}">${ic('solo')}${MX.solo===k?'إلغاء التشغيل المنفرد':'تشغيل هذا المسار منفردًا'}</button>
+ <button class="mi" data-mx="mut" data-k="${k}">${ic('mute')}${MX.mute[k]?'إلغاء الكتم (للمعاينة)':'كتم للمعاينة'}</button>
+ <button class="mi" data-mx="stem" data-k="${k}">${ic('dl')}تحميل هذا المسار فقط (${MX.outA==='m4a'?'M4A':MX.outA.toUpperCase()})</button>
+ <button class="mi" data-mx="shx">${ic('x')}إغلاق</button></div>`);
+}
+
+/* ---------- مستويات المسارات ---------- */
+let gtm=0;
+function setLevel(k,v,fromRange){
+ MX.lv[k]=v;MX.on_[k]=v>0;
+ const row=document.querySelector(`.mx-row[data-k="${k}"]`);
+ if(row){row.classList.toggle('act',v>0&&!row.classList.contains('mx-lock'));const r=row.querySelector('.mx-r'),sw=row.querySelector('[data-mx=tg]'),vv=$('#mxv-'+k);
+  if(r){if(!fromRange)r.value=v;r.style.setProperty('--v',v+'%')}if(sw)sw.setAttribute('aria-pressed',v>0);if(vv)vv.textContent=toArN(v)+'٪'}
+ if(MX.stage==='setup')refreshSum();else{applyGains();drawWave(k);clearTimeout(gtm);gtm=setTimeout(histUpdateGains,800)}
+}
+function openTrash(){const b=document.createElement('button');b.dataset.a='trh';b.style.display='none';document.body.appendChild(b);b.click();b.remove()}
+
+/* ---------- الأحداث ---------- */
+document.addEventListener('input',e=>{
+ const r=e.target;
+ if(r.dataset&&r.dataset.mxR){setLevel(r.dataset.mxR,+r.value,1)}
+ else if(r.id==='mxSeek'){r._drag=1;const t=r.value/1000*MX.dur;r.style.setProperty('--v',(r.value/10)+'%');const a=$('#mxT0');if(a)a.textContent=fmt(t)}
+});
+document.addEventListener('change',e=>{const r=e.target;if(r.id==='mxSeek'){r._drag=0;seekTo(r.value/1000*MX.dur)}});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-mx]');if(!b)return;const a=b.dataset.mx,k=b.dataset.k;
+ switch(a){
+  case 'pick':webPick();break; case 'pm':webPick();break;
+  case 'home':{const v=$('#mxVid');if(v)v.pause();if(MX.pa)try{MX.pa.pause()}catch(_){}MX.hl=0;resetSession();MX.stage='pick';redraw()}break;
+  case 'pz':mxToggle();break;
+  case 'vpl':{const v=$('#mxVid');if(v){v.paused?v.play():v.pause()}}break;
+  case 'flt':MX.filt=b.dataset.v;document.querySelectorAll('.mx-fl [data-mx=flt]').forEach(x=>x.classList.toggle('on',x.dataset.v===MX.filt));scanRecent().then(l=>{const el=$('#mxRc');if(el)el.innerHTML=recentList(l)});break;
+  case 'br':pickBrowse(b.dataset.p);break;
+  case 'pp':previewPick(b);break;
+  case 'perm':try{Native.allFiles()}catch(_){}break;
+  case 'shx':closeSheet();break;
+  case 'open':chooseFile(b.dataset.p,b.dataset.s);break;
+  case 'ext':try{Native.open('',MX.file.p)}catch(_){}break;
+  case 'apl':{const au=MX.pa;if(au){au.paused?au.play():au.pause()}}break;
+  case 'master':MX.on=!MX.on;{const p=$('#mxPanel'),st=$('#mxStart'),ms=$('#mxMs');b.setAttribute('aria-pressed',MX.on);if(p)p.classList.toggle('on',MX.on);if(st)st.disabled=!MX.on;if(ms)ms.textContent=MX.on?'اختر مستوى كل مسار في الناتج':'فعّل الزر لفصل المسارات والتحكم بكل منها'}
+   if(MX.on){ST.forEach(s=>{const keepV=s.k==='voc';MX.on_[s.k]=keepV;MX.lv[s.k]=keepV?100:0});ST.forEach(s=>setLevel(s.k,MX.lv[s.k]))}refreshSum();vib(10);break;
+  case 'tg':{const on=!(MX.on_[k]&&MX.lv[k]>0);setLevel(k,on?(MX.lv[k]>0?MX.lv[k]:100):0);vib(8)}break;
+  case 'bak':MX.bakOn=!MX.bakOn;b.setAttribute('aria-pressed',MX.bakOn);refreshSum();break;
+  case 'eng':MX.eng=b.dataset.v;keepCfg();document.querySelectorAll('[data-mx=eng]').forEach(x=>x.classList.toggle('sel',x.dataset.v===MX.eng));{const n=$('#mxEngN');if(n)n.textContent=engNote()}refreshSum();break;
+  case 'ov':MX.outV=b.dataset.v;if(MX.stage==='done')redrawKeep();else redraw();break;
+  case 'oa':MX.outA=b.dataset.v;keepCfg();document.querySelectorAll('[data-mx=oa]').forEach(x=>x.classList.toggle('sel',x.dataset.v===MX.outA));break;
+  case 'start':{const v=$('#mxVid');if(v)v.pause();if(MX.pa)MX.pa.pause();start()}break;
+  case 'cancel':cancelRun();break;
+  case 'batt':try{Native.batt()}catch(_){}break;
+  case 'play':if(MX.pl.playing&&!MX.solo)pause();else{MX.solo='';applyGains();play(MX.pl.playing?curTime():null)}break;
+  case 'rplay':if(MX.pl.playing&&MX.solo===k)pause();else{MX.solo=k;if(MX.pl.playing){applyGains();uiPlay();drawAllWaves()}else play()}break;
+  case 'skip':seekTo(curTime()+(+b.dataset.v));break;
+  case 'menu':stemMenu(k);break;
+  case 'solo':MX.solo=MX.solo===k?'':k;closeSheet();applyGains();drawAllWaves();toast(MX.solo?'تشغيل منفرد: '+SK[k].n:'عودة للمزج');if(MX.solo&&!MX.pl.playing)play();else uiPlay();break;
+  case 'mut':MX.mute[k]=!MX.mute[k];closeSheet();applyGains();drawAllWaves();break;
+  case 'stem':exportStem(k);break;
+  case 'split':closeSheet();autoSplit(true,k);redrawKeep();break;
+  case 'bgx':stopBg();break;
+  case 'save':exportFinal();break;
+  case 'new':stopPlay();MX.runId++;killMdx();resetSession();MX.stage='pick';MX.file=null;MX.bg=null;redraw();break;
+  case 'opn':try{Native.open(b.dataset.i,b.dataset.p)}catch(_){}break;
+  case 'shr':try{Native.share(b.dataset.p)}catch(_){toast('تعذرت المشاركة')}break;
+  case 'goDl':closeSheet();stopPlay();tab='dl';draw(1);break;
+  case 'hopen':{const id=b.dataset.id;if(MX.selM){MX.sel.has(id)?MX.sel.delete(id):MX.sel.add(id);if(!MX.sel.size)MX.selM=0;redraw()}else openHist(id)}break;
+  case 'hcx':MX.selM=0;MX.sel.clear();redraw();break;
+  case 'hsa':MX.sel=MX.sel.size===HIST.length?new Set():new Set(HIST.map(x=>x.id));redraw();break;
+  case 'hdel':{const ids=[...MX.sel];histDelete(ids);MX.selM=0;MX.sel.clear();redraw();toast('نُقل '+toArN(ids.length)+' إلى سلة المهملات')}break;
+  case 'htr':openTrash();break;
+ }
+});
+/* سحب/ضغط مطوّل على عناصر السجل */
+(()=>{
+ let st=null;
+ document.addEventListener('pointerdown',e=>{
+  const hi=e.target.closest&&e.target.closest('.mx-hi');if(!hi||MX.stage!=='pick')return;
+  st={el:hi,x:e.clientX,y:e.clientY,dx:0,mv:0,lp:0,id:hi.dataset.id,w:hi.offsetWidth,pid:e.pointerId};
+  st.t=setTimeout(()=>{if(st&&!st.mv&&!MX.selM){st.lp=1;MX.selM=1;MX.sel=new Set([st.id]);vib(15);MX.lpJust=1;redraw()}},520);
+ });
+ document.addEventListener('pointermove',e=>{
+  if(!st)return;const dx=e.clientX-st.x,dy=e.clientY-st.y;
+  if(!st.mv&&(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.3)&&!MX.selM){st.mv=1;clearTimeout(st.t);st.el.classList.add('drag');try{st.el.setPointerCapture(e.pointerId)}catch(_){}}
+  else if(!st.mv&&Math.abs(dy)>10){clearTimeout(st.t);st=null;return}
+  if(st.mv){st.dx=Math.max(0,dx);st.el.style.transform=`translateX(${st.dx}px)`;const g=st.dx>st.w*.42,d=st.el.parentNode.querySelector('.mx-hd2');if(d)d.classList.toggle('go',g)}
+ });
+ const end=e=>{
+  if(!st)return;clearTimeout(st.t);const s=st;st=null;
+  if(s.mv){s.el.classList.remove('drag');if(s.dx>s.w*.42){s.el.style.transform='translateX(110%)';vib(12);setTimeout(()=>{histDelete([s.id]);redraw();toast('نُقل إلى سلة المهملات')},180)}else s.el.style.transform='';s.el._sw=1;setTimeout(()=>{s.el._sw=0},50)}
+  else if(!s.lp){/* ضغطة عادية تُعالج في click */}
+ };
+ document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);
+ document.addEventListener('click',e=>{const hi=e.target.closest&&e.target.closest('.mx-hi');if(hi&&hi._sw){e.stopImmediatePropagation();e.preventDefault()}},true);
+ /* ضغط على الصف = فتح */
+ document.addEventListener('click',e=>{const hi=e.target.closest&&e.target.closest('.mx-hi');if(!hi||hi._sw||MX.stage!=='pick')return;if(MX.lpJust){MX.lpJust=0;return}const id=hi.dataset.id;if(MX.selM){MX.sel.has(id)?MX.sel.delete(id):MX.sel.add(id);if(!MX.sel.size)MX.selM=0;redraw()}else openHist(id)});
+})();
+/* سحب على الموجات للتنقل */
+(()=>{
+ let c=null;const at=e=>{const r=c.getBoundingClientRect();return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*MX.dur};
+ document.addEventListener('pointerdown',e=>{const w=e.target.closest&&e.target.closest('canvas.mx-wv');if(!w)return;c=w;try{w.setPointerCapture(e.pointerId)}catch(_){}seekTo(at(e))});
+ document.addEventListener('pointermove',e=>{if(c)seekTo(at(e))});
+ const up=()=>{c=null};document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);
+})();
+document.addEventListener('click',e=>{const t=e.target.closest('nav button');if(t&&t.dataset.t!=='mx'&&MX.stage==='done')pause()},true);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&MX.pl.playing)pause()});
+window.mxStop=stopPlay;
+
+})();
+
 </script>
 </body>
 </html>
